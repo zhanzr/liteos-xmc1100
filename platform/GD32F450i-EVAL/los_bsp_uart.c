@@ -3,12 +3,15 @@
 #include <stdarg.h>
 
 #include "los_bsp_uart.h"
+#include "los_demo_debug.h"
 
 
 #ifdef GD32F4XX
 #include "systick.h"
 #include "gd32f4xx.h"
 #include "gd32f450i_eval.h"
+#include <stdio.h>
+#include "gd32f4xx_usart.h"
 
 static char _buffer[128];
 
@@ -161,4 +164,15 @@ void LOS_EvbUartWriteStr(const char* str)
 #endif
     return;
 }
+
+#ifndef LOS_KERNEL_TEST_KEIL_SWSIMU
+/* retarget the C library printf function to the USART */
+int fputc(int ch, FILE *f)
+{
+    usart_data_transmit(EVAL_COM1, (uint8_t)ch);
+    while(RESET == usart_flag_get(EVAL_COM1, USART_FLAG_TBE));
+	
+    return ch;
+}
+#endif
 

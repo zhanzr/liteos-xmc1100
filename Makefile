@@ -86,14 +86,26 @@ endif
 ############################################################
 
 ARCH_LIST:=arm arc riscv
-CPU_LIST:=cortex-m3 cortex-m4 cortex-m7
-PLAT_LIST:=STM32F429I_DISCO STM32F746ZG_NUCLEO STM32F103ZE-ISO M2S150_RV32
-ARMV_LIST:=armv7-m armv7e-m armv7ve
+CPU_LIST:=cortex-m0 cortex-m0plus cortex-m3 cortex-m4 cortex-m7
+PLAT_LIST:=STM32F429I_DISCO STM32F411RE-NUCLEO STM32F412ZG-NUCLEO STM32F746ZG_NUCLEO STM32L476RG_NUCLEO STM32F103ZE-ISO GD32F450i-EVAL M2S150_RV32 ATSAMD21-XPRO Arduino_M0_Pro ATSAM4S-XPRO NUTINY-NUC472H NuTiny-Nano130K STM32F103RB-NUCLEO NRF52-DK NRF52840-PDK
+ARMV_LIST:=armv7-m armv7e-m armv7ve armv6-m
 RISCV_LIST:=rv32im
 
 #ARCH:=arm
 #PLAT:=STM32F429I_DISCO
-
+ifeq (${ARCH}, arm)
+ifeq (${CPU}, cortex-m0)
+ARMV:=armv6-m
+else ifeq (${CPU}, cortex-m0plus)
+ARMV:=armv6-m
+else ifeq (${CPU}, cortex-m3)
+ARMV:=armv7-m
+else ifeq (${CPU}, cortex-m4)
+ARMV:=armv7e-m
+else ifeq (${CPU}, cortex-m7)
+ARMV:=armv7e-m
+endif
+endif
 
 # we do need them if we want to build anything else
 $(if $(filter ${ARCH},${ARCH_LIST}),, \
@@ -143,9 +155,15 @@ ASFLAGS += -Wall -mlittle-endian  -mcpu=${CPU}  -march=${ARMV}  -ffreestanding -
 LDFLAGS += -Wall -mlittle-endian  -mcpu=${CPU}  -march=${ARMV}  -ffreestanding -mthumb -mthumb-interwork -std=gnu99 --specs=rdimon.specs
 DEFINES += ARCH_ARM
 ifeq (${CPU}, cortex-m4)
+ifeq (${GCOV}, true)
+CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16 -lgcov
+ASFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16 -lgcov
+LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16 -lgcov
+else
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16 
 ASFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16 
 LDFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16 
+endif
 else ifeq (${CPU}, cortex-m7)
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16 
 ASFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16 
@@ -169,6 +187,10 @@ DEFINES += -DARM_MATH_CM4
 endif
 endif
 
+ifeq (${GCOV}, true)
+DEFINES += -DLOS_GCOV_TEST_COMPILE
+endif
+
 ifeq (${PLAT}, M2S150_RV32)
 DEFINES += -DLOS_M2S150_RV32
 endif
@@ -183,6 +205,8 @@ endif
 vpath %.c    ${SOURCE_ROOT}
 vpath %.h    ${SOURCE_ROOT}
 vpath %.S    ${SOURCE_ROOT}
+vpath %.s    ${SOURCE_ROOT}
+
 
 INCLUDE_DIRS = ${SOURCE_ROOT}/example/include                 \
 	       ${SOURCE_ROOT}/kernel/include                  \
@@ -198,22 +222,11 @@ INCLUDES += "-I${SOURCE_ROOT}/kernel/cpu/${ARCH}/${CPU}"
 INCLUDES += "-I${SOURCE_ROOT}/kernel/link/gcc"
 INCLUDES += "-I${SOURCE_ROOT}/platform/${PLAT}"
 
-ifeq (${PLAT}, M2S150_RV32)
-INCLUDES += "-I${SOURCE_ROOT}/platform/${PLAT}/CoreGPIO"
-INCLUDES += "-I${SOURCE_ROOT}/platform/${PLAT}/CoreUARTapb"
-INCLUDES += "-I${SOURCE_ROOT}/platform/${PLAT}/hal"
-INCLUDES += "-I${SOURCE_ROOT}/platform/${PLAT}/riscv_hal"
-endif
-
-
-
-
-
 
 CFLAGS += ${DEFINES}
 CFLAGS += ${INCLUDES}
 
-LINKER_SCRIPT = platform/${PLAT}/LiteOS.ld
+LINKER_SCRIPT = ${SOURCE_ROOT}/platform/${PLAT}/LiteOS.ld
 LDFLAGS    +=  -T $(LINKER_SCRIPT) 
 ifeq (${ARCH}, riscv)
 LDFLAGS    += -nostartfiles
@@ -225,8 +238,16 @@ endif
 
 include ${SOURCE_ROOT}/example/api/Makefile
 include ${SOURCE_ROOT}/kernel/Makefile
+ifeq (${GCOV}, true)
+include ${SOURCE_ROOT}/thirdparty/FatFS/src/Makefile
+include ${SOURCE_ROOT}/example/test_suite/Makefile
+else
 include ${SOURCE_ROOT}/user/Makefile
+endif
 include ${SOURCE_ROOT}/platform/${PLAT}/Makefile
+ifeq (${CMBACKTRACE}, true)
+include ${SOURCE_ROOT}/thirdparty/CmBacktrace/Makefile
+endif
 
 OBJECTS += ${C_SOURCES:.c=.o}
 OBJECTS += ${ASM_SOURCES:.s=.o}
@@ -250,12 +271,32 @@ $(TARGET_HEX):$(TARGET_ELF)
 	$(OBJCOPY) $(OBJCPFLAGS_ELF_TO_HEX) -S  $(TARGET_ELF)   $(TARGET_HEX) 
 
 $(TARGET_ELF):$(OBJECTS) $(BUILD)
+ifeq (${GCOV}, true)
+	$(CC)  $(LDFLAGS) -fprofile-arcs -ftest-coverage $^  -o $@
+else
 	$(CC)  $(LDFLAGS) $^  -o $@ 
-
+endif
 
 %.o:%.c  
+ifeq (${GCOV}, true)
+	if test $(findstring kernel/base, $*); then \
+		$(CC) $(CFLAGS) -fprofile-arcs -ftest-coverage -c  -o $@ $^; \
+#	elif test $(findstring kernel/cmsis, $*); then \
+#		$(CC) $(CFLAGS) -fprofile-arcs -ftest-coverage -c  -o $@ $^; \
+	elif test $(findstring kernel/config, $*); then \
+		$(CC) $(CFLAGS) -fprofile-arcs -ftest-coverage -c  -o $@ $^; \
+	elif test $(findstring kernel/cpu, $*); then \
+		$(CC) $(CFLAGS) -fprofile-arcs -ftest-coverage -c  -o $@ $^; \
+	elif test $(findstring kernel/include, $*); then \
+		$(CC) $(CFLAGS) -fprofile-arcs -ftest-coverage -c  -o $@ $^; \
+	elif test $(findstring kernel/link, $*); then \
+		$(CC) $(CFLAGS) -fprofile-arcs -ftest-coverage -c  -o $@ $^; \
+	else \
+		$(CC) $(CFLAGS) -c  -o $@ $^; \
+	fi;
+else
 	$(CC) $(CFLAGS) -c  -o $@ $^
-
+endif
 %.o:%.s 
 	$(CC) $(ASFLAGS) -c  -o $@ $^
 
@@ -265,3 +306,8 @@ clean:
 	find $(SOURCE_ROOT) -iname '*.bin' -delete
 	find $(SOURCE_ROOT) -iname '*.elf' -delete
 	find $(SOURCE_ROOT) -iname '*.map' -delete
+ifeq (${GCOV}, true)
+	find $(SOURCE_ROOT) -iname '*.gcno' -delete
+	find $(SOURCE_ROOT) -iname '*.gcov' -delete
+	find $(SOURCE_ROOT) -iname '*.gcda' -delete
+endif
