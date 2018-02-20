@@ -54,7 +54,7 @@ extern "C" {
  * @ingroup los_config
  * System clock (unit: HZ)
  */
-#define OS_SYS_CLOCK                                    16000000
+#define OS_SYS_CLOCK                                    32000000
 /**
 * @ingroup los_config
 * limit addr range when search for  'func local(frame pointer)' or 'func name'

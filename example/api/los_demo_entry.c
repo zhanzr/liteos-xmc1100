@@ -37,23 +37,26 @@ extern "C" {
 #endif /* __cpluscplus */
 #endif /* __cpluscplus */
 
+
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <assert.h>
+#include <stdarg.h> 
+	
+#include <XMC1100.h>
+#include <xmc_scu.h>
+#include <xmc_rtc.h>
+#include <xmc_uart.h>
+#include <xmc_gpio.h>
+#include <xmc_flash.h>
+	
 #include "los_demo_entry.h"
 #include "los_task.h"
-#include <string.h>
-#include <stdarg.h> 
+#include "los_bsp_uart.h"
 
 static UINT32 g_uwDemoTaskID;
-
-int dprintf_1(const char *format,...)
-{
-    return 0;
-}
-
-#define ITM_Port8(n)    (*((volatile unsigned char *)(0xE0000000+4*n)))
-#define ITM_Port16(n)   (*((volatile unsigned short*)(0xE0000000+4*n)))
-#define ITM_Port32(n)   (*((volatile unsigned long *)(0xE0000000+4*n))) 
-#define DEMCR           (*((volatile unsigned long *)(0xE000EDFC))) 
-#define TRCENA          0x01000000
 
 #ifndef NUTINY_M2351
 
@@ -68,24 +71,15 @@ typedef struct __FILE FILE;
 FILE __stdout;
 FILE __stdin; 
 
-#ifdef LOS_KERNEL_TEST_KEIL_SWSIMU
-int fputc(int ch, FILE *f) 
-{ 
-    if (DEMCR & TRCENA) 
-    {      
-        while (ITM_Port32(0) == 0);
-        ITM_Port8(0) = ch; 
-    }
-    return(ch);
-}
-#else
+
 int fputc(int ch, FILE *f)
 {
     LOS_EvbUartWriteByte((char)ch);
 
     return (ch);
 }
-#endif
+
+
 #endif
 #endif
 #ifdef LOS_GCC_COMPILE

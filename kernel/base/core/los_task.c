@@ -44,6 +44,8 @@
 #include "string.h"
 #endif
 
+#include <cmsis_compiler.h>
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {
@@ -75,10 +77,9 @@ TSKSWITCHHOOK g_pfnTskSwitchHook = NULL;
  *****************************************************************************/
 LITE_OS_SEC_TEXT VOID osIdleTask(VOID)
 {
-
     while (1)
     {
-
+			__WFI();
     }
 }
 

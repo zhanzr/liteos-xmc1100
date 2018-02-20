@@ -49,7 +49,7 @@ extern "C" {
 
 #include "los_bsp_adapter.h"
 #include "los_bsp_led.h"
-#include "los_bsp_key.h"
+//#include "los_bsp_key.h"
 #include "los_bsp_uart.h"
 
 /* task schedule */
@@ -115,7 +115,7 @@ static osInspect_Def gInspect[LOS_INSPECT_BUFF] = {
 /*****************************************************************************
     LOS function private
  *****************************************************************************/
-static void LOS_Inspect_KeyAndLed(UINT32 KeyID,UINT32 LedID);
+//static void LOS_Inspect_KeyAndLed(UINT32 KeyID,UINT32 LedID);
 
 
 /*****************************************************************************
@@ -225,34 +225,34 @@ UINT32 LOS_InspectByID(enInspectID InspectID)
  Output      : None
  Return      : None
  *****************************************************************************/
-static void LOS_Inspect_KeyAndLed(UINT32 KeyID,UINT32 LedID)
-{
-    /* check if the user key is pressed */
-    if(LOS_KEY_PRESS == LOS_EvbGetKeyVal(KeyID)){
-                 
-        (void)LOS_TaskDelay(50);
-            
-        if(LOS_KEY_PRESS == LOS_EvbGetKeyVal(KeyID)){
-                    
-            /* turn on LED1 */
-            LOS_EvbLedControl(LedID,LED_ON);
+//void LOS_Inspect_KeyAndLed(UINT32 KeyID,UINT32 LedID)
+//{
+//    /* check if the user key is pressed */
+//    if(LOS_KEY_PRESS == LOS_EvbGetKeyVal(KeyID)){
+//                 
+//        (void)LOS_TaskDelay(50);
+//            
+//        if(LOS_KEY_PRESS == LOS_EvbGetKeyVal(KeyID)){
+//                    
+//            /* turn on LED1 */
+//            LOS_EvbLedControl(LedID,LED_ON);
 
-            /* output a message on hyperterminal using dprintf function */
-            dprintf("\r\nKey test example \r\n");
-            
-            while(LOS_KEY_PRESS == LOS_EvbGetKeyVal(KeyID));
+//            /* output a message on hyperterminal using dprintf function */
+//            dprintf("\r\nKey test example \r\n");
+//            
+//            while(LOS_KEY_PRESS == LOS_EvbGetKeyVal(KeyID));
 
-        }else{
-            /* turn off LED1 */
-            LOS_EvbLedControl(LedID,LED_OFF);
-        }
-    }else{
-        /* turn off LED1 */
-        LOS_EvbLedControl(LedID,LED_OFF);
-    }
+//        }else{
+//            /* turn off LED1 */
+//            LOS_EvbLedControl(LedID,LED_OFF);
+//        }
+//    }else{
+//        /* turn off LED1 */
+//        LOS_EvbLedControl(LedID,LED_OFF);
+//    }
 
-    return;
-}
+//    return;
+//}
 
 /*****************************************************************************
  Function    : LOS_Inspect_TskDeal
@@ -263,33 +263,33 @@ static void LOS_Inspect_KeyAndLed(UINT32 KeyID,UINT32 LedID)
  *****************************************************************************/
 static void LOS_Inspect_TskDeal(void)
 {
-    UINT32 ulRet = LOS_OK;
-     
-    gInspectErrCnt = 0;
-      
-     /* output a message on hyperterminal using printf function */
-    dprintf("\r\nLos Inspect start.\r\n");
-      
-    for(int index = 0;index < LOS_INSPECT_BUFF;index++)
-    {
-        ulRet = LOS_InspectByID((enInspectID)index);
-        if(LOS_OK != ulRet)
-        {
-            gInspectErrCnt++;
-            
-            /* turn on LED2 */
-            LOS_EvbLedControl(LOS_LED2,LED_ON);
-        }
-    }
-     
-    dprintf("Inspect completed,gInspectErrCnt = [%d]\r\n\r\n",gInspectErrCnt);
-     
-     /* output a message on hyperterminal using printf function */
-    dprintf("\r\nLos Key example: please press the UserKey key \r\n");
-    while(1)
-    {
-        LOS_Inspect_KeyAndLed(USER_KEY,LOS_LED1);
-    }
+//    UINT32 ulRet = LOS_OK;
+//     
+//    gInspectErrCnt = 0;
+//      
+//     /* output a message on hyperterminal using printf function */
+//    dprintf("\r\nLos Inspect start.\r\n");
+//      
+//    for(int index = 0;index < LOS_INSPECT_BUFF;index++)
+//    {
+//        ulRet = LOS_InspectByID((enInspectID)index);
+//        if(LOS_OK != ulRet)
+//        {
+//            gInspectErrCnt++;
+//            
+//            /* turn on LED2 */
+//            LED_On(2);
+//        }
+//    }
+//     
+//    dprintf("Inspect completed,gInspectErrCnt = [%d]\r\n\r\n",gInspectErrCnt);
+//     
+//     /* output a message on hyperterminal using printf function */
+//    dprintf("\r\nLos Key example: please press the UserKey key \r\n");
+//    while(1)
+//    {
+//        LOS_Inspect_KeyAndLed(USER_KEY,LOS_LED1);
+//    }
 }
 
 /*****************************************************************************
