@@ -1,7 +1,12 @@
+//TODO: Need Rewrite according to the CMSIS Standard
+//Conditional compiling directive usage should be kept as few as possible
+
 #ifdef LOS_XMC1100
 	#include <stdint.h>
 	#include <stdlib.h>
 	#include <assert.h>
+	#include <stdio.h>
+	#include <string.h>
 
 	#include <XMC1100.h>
 	#include <xmc_scu.h>
@@ -11,10 +16,6 @@
 	#include <xmc_flash.h>
 #endif
 
-#include <stdio.h>
-#include <string.h>
-#include "los_bsp_adapter.h"
-//#include "los_bsp_key.h"
 #include "los_bsp_led.h"
 #include "los_bsp_uart.h"
 
@@ -26,7 +27,7 @@
 /* while use bsp code to start system tick, don't use LOS header */
 #define INCLUDE_LOS_HEADER
 #ifdef INCLUDE_LOS_HEADER
-#include "los_tick.ph"
+#include "los_tick.h"
 #include "los_base.h"
 #include "los_task.ph"
 #include "los_swtmr.h"
@@ -43,13 +44,11 @@ const unsigned int tick_per_second = LOSCFG_BASE_CORE_TICK_PER_SECOND;
 static unsigned int g_ucycle_per_tick = 0;
 
 /*
-    if g_use_ram_vect == 1, we should use sct file STM32F429I-LiteOS.sct
+    if g_use_ram_vect == 1, we should use sct file ram_vect.sct
     and we can use LOS_HwiCreate(), LOS_HwiDelete() dynamically regist a irq func
     if g_use_ram_vect == 0, we use default vector table in rom start at address 0x00000000
 */
 const unsigned char g_use_ram_vect = 0;
-
-extern __IO uint32_t g_Ticks;
 
 /*****************************************************************************
     LOS function extern 
@@ -57,17 +56,6 @@ extern __IO uint32_t g_Ticks;
 extern void LOS_SetTickSycle(unsigned int);
 extern void LOS_TickHandler(void);
 extern unsigned int osGetVectorAddr(void);
-
-void LOS_EvbLedInit(void)
-{
-	LED_Initialize();
-}
-
-void LOS_EvbKeyInit(void)
-{
-	//No key for XMC1100 Bootkit
-	printf("No key for XMC1100 Bootkit\n");
-}
 
 /*****************************************************************************
  Function    : osTickStart
@@ -102,15 +90,7 @@ unsigned int osTickStart(void)
  *****************************************************************************/
 void SysTick_Handler(void)
 {
-    /*
-        LOS need call LOS_TickHandler() in SysTick_Handler, don't change it,
-        otherwise, LiteOS will not work.
-    */
-    LOS_TickHandler();
-    
-		g_Ticks++;
-    
-    return;
+    LOS_TickHandler();   
 }
 
 /*****************************************************************************
@@ -134,8 +114,10 @@ void LosAdapIntInit(void)
     */
     if (g_use_ram_vect)
     {
-        *(volatile UINT32 *)OS_NVIC_VTOR = osGetVectorAddr();
-        *(volatile UINT32 *)OS_NVIC_AIRCR = (0x05FA0000 | OS_NVIC_AIRCR_PRIGROUP << 8);
+			//TODO: Relocate the vector table, for the core types which doesn't have vector offset feature(such as Cortex M0),
+			//other methods should be used
+//        *(volatile UINT32 *)OS_NVIC_VTOR = osGetVectorAddr();
+//        *(volatile UINT32 *)OS_NVIC_AIRCR = (0x05FA0000 | OS_NVIC_AIRCR_PRIGROUP << 8);
     }
 
     return;
@@ -153,18 +135,12 @@ void LosAdapIntInit(void)
  Return      : None
  *****************************************************************************/
 void LosAdapIrqEnable(unsigned int irqnum, unsigned short prior)
-{
-    /*
-        enable irq , for example in stm32 bsp you can use
-        NVIC_EnableIRQ((IRQn_Type)irqnum);
-    */
-    nvicSetIRQ(irqnum);
-    /*
-        set irq priority , for example in stm32 bsp you can use
-        NVIC_SetPriority((IRQn_Type)irqnum, prior);
-    */
-    nvicSetIrqPRI(irqnum, prior << 4);
-    return;
+{       
+	NVIC_EnableIRQ((IRQn_Type)irqnum);
+    
+	NVIC_SetPriority((IRQn_Type)irqnum, prior);
+
+	return;
 }
 
 /*****************************************************************************
@@ -179,42 +155,6 @@ void LosAdapIrqEnable(unsigned int irqnum, unsigned short prior)
  *****************************************************************************/
 void LosAdapIrqDisable(unsigned int irqnum)
 {
-    /*
-        disable irq, for example in stm32 bsp you can use
-        NVIC_DisableIRQ((IRQn_Type)irqnum);
-    */
-    nvicClrIRQ(irqnum);
+    NVIC_DisableIRQ((IRQn_Type)irqnum);
     return;
 }
-
-
-/*****************************************************************************
- Function    : LOS_EvbSetup
- Description : enable the device on the dev baord
- Input       : None
- Output      : None
- Return      : None
- *****************************************************************************/
-void LOS_EvbSetup(void)
-{
-    LOS_EvbUartInit();
-    LOS_EvbLedInit();
-    LOS_EvbKeyInit();
-
-    return;
-}
-
-/*****************************************************************************
- Function    : LOS_EvbTrace
- Description : trace printf
- Input       : const char *str
- Output      : None
- Return      : None
- *****************************************************************************/
-void LOS_EvbTrace(const char *str)
-{
-    LOS_EvbUartWriteStr(str);
-    return;
-}
-
-

@@ -34,7 +34,7 @@
 
 #include "los_sys.ph"
 #include "los_task.ph"
-#include "los_tick.ph"
+#include "los_tick.h"
 #include "los_typedef.ph"
 
 #ifdef __cplusplus
@@ -53,7 +53,7 @@ LITE_OS_SEC_BSS OS_TASK_ROBIN_S        g_stTaskTimeSlice;
  Output       : None
  Return       : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT VOID osTimesliceInit(VOID)
+LITE_OS_SEC_TEXT_INIT void osTimesliceInit(void)
 {
     g_stTaskTimeSlice.pstTask = (LOS_TASK_CB *)NULL;
     g_stTaskTimeSlice.usTout = LOSCFG_BASE_CORE_TIMESLICE_TIMEOUT;
@@ -66,15 +66,15 @@ LITE_OS_SEC_TEXT_INIT VOID osTimesliceInit(VOID)
  Output       : None
  Return       : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT VOID osTimesliceCheck(VOID)
+LITE_OS_SEC_TEXT void osTimesliceCheck(void)
 {
     if (g_stTaskTimeSlice.pstTask != g_stLosTask.pstRunTask)
     {
         g_stTaskTimeSlice.pstTask = g_stLosTask.pstRunTask;
-        g_stTaskTimeSlice.usTime = (UINT16)g_ullTickCount + g_stTaskTimeSlice.usTout - 1;
+        g_stTaskTimeSlice.usTime = (uint16_t)g_ullTickCount + g_stTaskTimeSlice.usTout - 1;
     }
 
-    if (g_stTaskTimeSlice.usTime == (UINT16)g_ullTickCount)
+    if (g_stTaskTimeSlice.usTime == (uint16_t)g_ullTickCount)
     {
         g_stTaskTimeSlice.pstTask = (LOS_TASK_CB *)NULL;
         if (LOS_TaskYield() != LOS_OK)

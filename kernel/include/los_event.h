@@ -142,7 +142,7 @@ extern "C" {
  */
 typedef struct tagEvent
 {
-    UINT32      uwEventID;      /**< Event mask in the event control block, indicating the event that has been logically processed.*/
+    uint32_t      uwEventID;      /**< Event mask in the event control block, indicating the event that has been logically processed.*/
     LOS_DL_LIST stEventList;    /**< Event control block linked list*/
 } EVENT_CB_S, *PEVENT_CB_S;
 
@@ -166,7 +166,7 @@ typedef struct tagEvent
  *@see LOS_EventClear
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_EventInit(PEVENT_CB_S pstEventCB);
+extern uint32_t LOS_EventInit(PEVENT_CB_S pstEventCB);
 
 /**
  *@ingroup los_event
@@ -190,7 +190,7 @@ extern UINT32 LOS_EventInit(PEVENT_CB_S pstEventCB);
  *@see LOS_EventRead | LOS_EventWrite
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_EventPoll(UINT32 *uwEventID, UINT32 uwEventMask, UINT32 uwMode);
+extern uint32_t LOS_EventPoll(uint32_t *uwEventID, uint32_t uwEventMask, uint32_t uwMode);
 
 /**
  *@ingroup los_event
@@ -222,7 +222,7 @@ extern UINT32 LOS_EventPoll(UINT32 *uwEventID, UINT32 uwEventMask, UINT32 uwMode
  *@see LOS_EventPoll | LOS_EventWrite
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_EventRead(PEVENT_CB_S pstEventCB, UINT32 uwEventMask, UINT32 uwMode, UINT32 uwTimeOut);
+extern uint32_t LOS_EventRead(PEVENT_CB_S pstEventCB, uint32_t uwEventMask, uint32_t uwMode, uint32_t uwTimeOut);
 
 /**
  *@ingroup los_event
@@ -246,7 +246,7 @@ extern UINT32 LOS_EventRead(PEVENT_CB_S pstEventCB, UINT32 uwEventMask, UINT32 u
  *@see LOS_EventPoll | LOS_EventRead
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_EventWrite(PEVENT_CB_S pstEventCB, UINT32 uwEvents);
+extern uint32_t LOS_EventWrite(PEVENT_CB_S pstEventCB, uint32_t uwEvents);
 
 /**
  *@ingroup los_event
@@ -271,7 +271,7 @@ extern UINT32 LOS_EventWrite(PEVENT_CB_S pstEventCB, UINT32 uwEvents);
  *@see LOS_EventPoll | LOS_EventRead，LOS_EventWrite
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_EventClear(PEVENT_CB_S pstEventCB, UINT32 uwEvents);
+extern uint32_t LOS_EventClear(PEVENT_CB_S pstEventCB, uint32_t uwEvents);
 
 /**
  *@ingroup los_event
@@ -295,7 +295,7 @@ extern UINT32 LOS_EventClear(PEVENT_CB_S pstEventCB, UINT32 uwEvents);
  *@see LOS_EventPoll | LOS_EventRead，LOS_EventWrite
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_EventDestory(PEVENT_CB_S pstEventCB);
+extern uint32_t LOS_EventDestory(PEVENT_CB_S pstEventCB);
 
 
 #ifdef __cplusplus

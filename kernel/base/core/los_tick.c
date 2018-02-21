@@ -46,9 +46,9 @@ extern "C" {
 #endif /* __cplusplus */
 
 
-LITE_OS_SEC_BSS UINT64      g_ullTickCount;
-LITE_OS_SEC_BSS UINT32      g_uwTicksPerSec;
-LITE_OS_SEC_BSS UINT32      g_uwCyclePerSec;
+LITE_OS_SEC_BSS uint64_t      g_ullTickCount;
+LITE_OS_SEC_BSS uint32_t      g_uwTicksPerSec;
+LITE_OS_SEC_BSS uint32_t      g_uwCyclePerSec;
 
 /*****************************************************************************
  Description : Tick interruption handler
@@ -57,7 +57,7 @@ LITE_OS_SEC_BSS UINT32      g_uwCyclePerSec;
  Return      : None
  *****************************************************************************/
 extern void hal_clock_irqclear(void);
-LITE_OS_SEC_TEXT VOID osTickHandler(VOID)
+LITE_OS_SEC_TEXT void osTickHandler(void)
 {
     g_ullTickCount ++;
 

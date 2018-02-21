@@ -59,10 +59,10 @@ LITE_OS_SEC_DATA_INIT LOS_DL_LIST    g_stUnusedMuxList;
  Output       : None
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 osMuxInit(VOID)
+LITE_OS_SEC_TEXT_INIT uint32_t osMuxInit(void)
 {
     MUX_CB_S *pstMuxNode;
-    UINT32   uwIndex;
+    uint32_t   uwIndex;
 
     LOS_ListInit(&g_stUnusedMuxList);
     if (LOSCFG_BASE_IPC_MUX_LIMIT > 0)   /*lint !e506*/
@@ -91,9 +91,9 @@ LITE_OS_SEC_TEXT_INIT UINT32 osMuxInit(VOID)
  Output       : puwMuxHandle ------ Mutex operation handle
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT  UINT32  LOS_MuxCreate (UINT32 *puwMuxHandle)
+LITE_OS_SEC_TEXT_INIT  uint32_t  LOS_MuxCreate (uint32_t *puwMuxHandle)
 {
-    UINT32      uwIntSave;
+    uint32_t*      uwIntSave;
     MUX_CB_S    *pstMuxCreated;
     LOS_DL_LIST *pstUnusedMux;
 
@@ -117,7 +117,7 @@ LITE_OS_SEC_TEXT_INIT  UINT32  LOS_MuxCreate (UINT32 *puwMuxHandle)
     pstMuxCreated->usPriority   = 0;
     pstMuxCreated->pstOwner     = (LOS_TASK_CB *)NULL;
     LOS_ListInit(&pstMuxCreated->stMuxList);
-    *puwMuxHandle               = (UINT32)pstMuxCreated->ucMuxID;
+    *puwMuxHandle               = (uint32_t)pstMuxCreated->ucMuxID;
     LOS_IntRestore(uwIntSave);
     return LOS_OK;
 }
@@ -129,14 +129,14 @@ LITE_OS_SEC_TEXT_INIT  UINT32  LOS_MuxCreate (UINT32 *puwMuxHandle)
  Output       : None
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 LOS_MuxDelete(UINT32 uwMuxHandle)
+LITE_OS_SEC_TEXT_INIT uint32_t LOS_MuxDelete(uint32_t uwMuxHandle)
 {
-    UINT32    uwIntSave;
+    uint32_t*    uwIntSave;
     MUX_CB_S *pstMuxDeleted;
 
    pstMuxDeleted = GET_MUX(uwMuxHandle);
    uwIntSave = LOS_IntLock();
-   if ((uwMuxHandle >= (UINT32)LOSCFG_BASE_IPC_MUX_LIMIT) ||
+   if ((uwMuxHandle >= (uint32_t)LOSCFG_BASE_IPC_MUX_LIMIT) ||
         (OS_MUX_UNUSED == pstMuxDeleted->ucMuxStat))
    {
         LOS_IntRestore(uwIntSave);
@@ -165,17 +165,17 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_MuxDelete(UINT32 uwMuxHandle)
  Output       : None
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT UINT32 LOS_MuxPend(UINT32 uwMuxHandle, UINT32 uwTimeout)
+LITE_OS_SEC_TEXT uint32_t LOS_MuxPend(uint32_t uwMuxHandle, uint32_t uwTimeout)
 {
-    UINT32     uwIntSave;
+    uint32_t*     uwIntSave;
     MUX_CB_S  *pstMuxPended;
-    UINT32     uwRetErr;
+    uint32_t     uwRetErr;
     LOS_TASK_CB  *pstRunTsk;
     LOS_DL_LIST  *pstPendObj;
 
     pstMuxPended = GET_MUX(uwMuxHandle);
     uwIntSave = LOS_IntLock();
-    if ((uwMuxHandle >= (UINT32)LOSCFG_BASE_IPC_MUX_LIMIT)
+    if ((uwMuxHandle >= (uint32_t)LOSCFG_BASE_IPC_MUX_LIMIT)
     || (OS_MUX_UNUSED == pstMuxPended->ucMuxStat))
     {
         LOS_IntRestore(uwIntSave);
@@ -220,7 +220,7 @@ LITE_OS_SEC_TEXT UINT32 LOS_MuxPend(UINT32 uwMuxHandle, UINT32 uwTimeout)
 
     LOS_PriqueueDequeue(&pstRunTsk->stPendList);
     pstRunTsk->usTaskStatus &= (~OS_TASK_STATUS_READY);
-    pstRunTsk->pTaskMux = (VOID *)pstMuxPended;
+    pstRunTsk->pTaskMux = (void *)pstMuxPended;
     pstPendObj = &pstRunTsk->stPendList;
     pstRunTsk->usTaskStatus |= OS_TASK_STATUS_PEND;
     if ((pstMuxPended->pstOwner->usPriority) > pstRunTsk->usPriority)
@@ -233,13 +233,13 @@ LITE_OS_SEC_TEXT UINT32 LOS_MuxPend(UINT32 uwMuxHandle, UINT32 uwTimeout)
     {
         pstRunTsk->usTaskStatus |= OS_TASK_STATUS_TIMEOUT;
         osTaskAdd2TimerList((LOS_TASK_CB *)pstRunTsk, uwTimeout);
-        (VOID)LOS_IntRestore(uwIntSave);
+        (void)LOS_IntRestore(uwIntSave);
         LOS_Schedule();
     }
     else
     {
         pstRunTsk->usTaskStatus &= (~OS_TASK_STATUS_TIMEOUT);
-        (VOID)LOS_IntRestore(uwIntSave);
+        (void)LOS_IntRestore(uwIntSave);
         LOS_Schedule();
     }
 
@@ -247,7 +247,7 @@ LITE_OS_SEC_TEXT UINT32 LOS_MuxPend(UINT32 uwMuxHandle, UINT32 uwTimeout)
     {
         uwIntSave = LOS_IntLock();
         pstRunTsk->usTaskStatus &= (~OS_TASK_STATUS_TIMEOUT);
-        (VOID)LOS_IntRestore(uwIntSave);
+        (void)LOS_IntRestore(uwIntSave);
         uwRetErr = LOS_ERRNO_MUX_TIMEOUT;
         goto error_uniMuxPend;
     }
@@ -255,7 +255,7 @@ LITE_OS_SEC_TEXT UINT32 LOS_MuxPend(UINT32 uwMuxHandle, UINT32 uwTimeout)
     return LOS_OK;
 
 errre_uniMuxPend:
-    (VOID)LOS_IntRestore(uwIntSave);
+    (void)LOS_IntRestore(uwIntSave);
 error_uniMuxPend:
     return (uwRetErr);
 }
@@ -267,16 +267,16 @@ error_uniMuxPend:
  Output       : None
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT UINT32 LOS_MuxPost(UINT32 uwMuxHandle)
+LITE_OS_SEC_TEXT uint32_t LOS_MuxPost(uint32_t uwMuxHandle)
 {
-    UINT32      uwIntSave;
+    uint32_t*      uwIntSave;
     MUX_CB_S    *pstMuxPosted = GET_MUX(uwMuxHandle);
     LOS_TASK_CB *pstResumedTask;
     LOS_TASK_CB *pstRunTsk;
 
     uwIntSave = LOS_IntLock();
 
-    if ((uwMuxHandle >= (UINT32)LOSCFG_BASE_IPC_MUX_LIMIT) ||
+    if ((uwMuxHandle >= (uint32_t)LOSCFG_BASE_IPC_MUX_LIMIT) ||
         (OS_MUX_UNUSED == pstMuxPosted->ucMuxStat))
     {
         LOS_IntRestore(uwIntSave);
@@ -329,12 +329,12 @@ LITE_OS_SEC_TEXT UINT32 LOS_MuxPost(UINT32 uwMuxHandle)
             LOS_PriqueueEnqueue(&pstResumedTask->stPendList, pstResumedTask->usPriority);
         }
 
-        (VOID)LOS_IntRestore(uwIntSave);
+        (void)LOS_IntRestore(uwIntSave);
         LOS_Schedule();
     }
     else
     {
-        (VOID)LOS_IntRestore(uwIntSave);
+        (void)LOS_IntRestore(uwIntSave);
     }
 
     return LOS_OK;

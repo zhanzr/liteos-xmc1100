@@ -1,36 +1,4 @@
-/*----------------------------------------------------------------------------
- * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice, this list of
- * conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
- * provided with the distribution.
- * 3. Neither the name of the copyright holder nor the names of its contributors may be used
- * to endorse or promote products derived from this software without specific prior written
- * permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *---------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------
- * Notice of Export Control Law
- * ===============================================
- * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
- * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
- * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
- * applicable export control laws and regulations.
- *---------------------------------------------------------------------------*/
+//TODO:Need Rewrite
 
 /**@defgroup los_config System configuration items
  * @ingroup kernel
@@ -82,15 +50,7 @@ extern char __bss_start;
  * @ingroup los_config
  * Configuration item for hardware interrupt tailoring
  */
-#if defined (RAM_SIZE_LEVEL_0)
 #define LOSCFG_PLATFORM_HWI                             NO
-#elif defined(RAM_SIZE_LEVEL_1)
-#define LOSCFG_PLATFORM_HWI                             YES
-#elif defined(RAM_SIZE_LEVEL_2)
-#define LOSCFG_PLATFORM_HWI                             YES
-#else
-#define LOSCFG_PLATFORM_HWI                             YES
-#endif
 
 /**
  * @ingroup los_config
@@ -109,41 +69,33 @@ extern char __bss_start;
  * @ingroup los_config
  * Maximum supported number of tasks except the idle task rather than the number of usable tasks
  */
-#if defined (RAM_SIZE_LEVEL_0)
-#define LOSCFG_BASE_CORE_TSK_LIMIT                      4              // max num task
-#elif defined (RAM_SIZE_LEVEL_1)
-#define LOSCFG_BASE_CORE_TSK_LIMIT                      7              // max num task
-#elif defined (RAM_SIZE_LEVEL_2)
-#define LOSCFG_BASE_CORE_TSK_LIMIT                      15              // max num task
-#else
-#define LOSCFG_BASE_CORE_TSK_LIMIT                      15              // max num task
-#endif
+#define LOSCFG_BASE_CORE_TSK_LIMIT                      7
 
 /**
  * @ingroup los_config
  * Size of the idle task stack
  */
 #if defined (RAM_SIZE_LEVEL_0)
-#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            SIZE(0x2D0)     // IDLE task stack
+#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            (size_t)(0x2D0)     // IDLE task stack
 #elif defined (RAM_SIZE_LEVEL_1)
-#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            SIZE(0x300)     // IDLE task stack
+#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            (size_t)(0x300)     // IDLE task stack
 #elif defined (RAM_SIZE_LEVEL_2)
-#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            SIZE(0x500)     // IDLE task stack
+#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            (size_t)(0x500)     // IDLE task stack
 #else
-#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            SIZE(0x500)     // IDLE task stack
+#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            (size_t)(0x500)     // IDLE task stack
 #endif
 /**
  * @ingroup los_config
  * Default task stack size
  */
 #if defined (RAM_SIZE_LEVEL_0)
-#define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         SIZE(0x200)     // default stack
+#define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         (size_t)(0x200)     // default stack
 #elif defined (RAM_SIZE_LEVEL_1)
-#define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         SIZE(0x2D0)     // default stack
+#define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         (size_t)(0x2D0)     // default stack
 #elif defined (RAM_SIZE_LEVEL_2)
-#define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         SIZE(0x2D0)     // default stack
+#define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         (size_t)(0x2D0)     // default stack
 #else
-#define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         SIZE(0x2D0)     // default stack
+#define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         (size_t)(0x2D0)     // default stack
 #endif
 /**
  * @ingroup los_config
@@ -290,7 +242,7 @@ extern char __bss_start;
  * @ingroup los_config
  * Ending address of the memory
  */
-extern UINT32 g_sys_mem_addr_end;
+extern uint32_t g_sys_mem_addr_end;
 extern char _PT0_ADDR;
 extern char _PT0_END;
 
@@ -337,7 +289,8 @@ extern char _PT0_END;
  * @ingroup los_config
  * Version number
  */
-#define VER                                                 "Huawei LiteOS KernelV100R001c00B021"
+//#define VER                                                 "Huawei LiteOS KernelV100R001c00B021"
+#define VER                                                 "TinyOS"
 
 /****************************** others **************************/
 /**
@@ -376,7 +329,7 @@ extern char _PT0_END;
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 osTaskInit(VOID);
+extern uint32_t osTaskInit(void);
 
 
 
@@ -399,7 +352,7 @@ extern UINT32 osTaskInit(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID osHwiInit(void);
+extern void osHwiInit(void);
 
 
 
@@ -423,7 +376,7 @@ extern VOID osHwiInit(void);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 osSemInit(void);
+extern uint32_t osSemInit(void);
 
 
 
@@ -447,7 +400,7 @@ extern UINT32 osSemInit(void);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 osMuxInit(void);
+extern uint32_t osMuxInit(void);
 
 
 
@@ -472,7 +425,7 @@ extern UINT32 osMuxInit(void);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 osQueueInit(void);
+extern uint32_t osQueueInit(void);
 
 
 
@@ -500,7 +453,7 @@ extern UINT32 osQueueInit(void);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 osSwTmrInit(void);
+extern uint32_t osSwTmrInit(void);
 
 
 
@@ -523,7 +476,7 @@ extern UINT32 osSwTmrInit(void);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_StartToRun(VOID);
+extern void LOS_StartToRun(void);
 
 
 
@@ -546,7 +499,7 @@ extern VOID LOS_StartToRun(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 los_TestInit(VOID);
+extern uint32_t los_TestInit(void);
 
 
 /**
@@ -568,7 +521,7 @@ extern UINT32 los_TestInit(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID   osStart(void);
+extern void   osStart(void);
 
 
 
@@ -591,7 +544,7 @@ extern VOID   osStart(void);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID   osHwInit(VOID);
+extern void   osHwInit(void);
 
 
 
@@ -616,7 +569,7 @@ extern VOID   osHwInit(VOID);
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID osRegister(VOID);
+extern void osRegister(void);
 
 
 
@@ -687,7 +640,7 @@ extern int LOS_KernelInit(void);
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_EnableTick(void);
+extern uint32_t LOS_EnableTick(void);
 
 /**
  *@ingroup los_config
@@ -710,7 +663,7 @@ extern UINT32 LOS_EnableTick(void);
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_Start(void);
+extern uint32_t LOS_Start(void);
 
 /**
  *@ingroup los_config
@@ -734,7 +687,7 @@ extern UINT32 LOS_Start(void);
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 osTickStart(VOID);
+extern uint32_t osTickStart(void);
 
 
 /**
@@ -758,7 +711,7 @@ extern UINT32 osTickStart(VOID);
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID osTimesliceInit(VOID);
+extern void osTimesliceInit(void);
 
 
 
@@ -775,14 +728,14 @@ extern VOID osTimesliceInit(VOID);
  * @param: None.
  *
  * @retval #LOS_OK                                  0:System memory initialization success.
- * @retval #OS_ERROR                                (UINT32)(-1):System memory initialization failed.
+ * @retval #OS_ERROR                                (uint32_t)(-1):System memory initialization failed.
  *
  * @par Dependency:
  * <ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 osMemSystemInit(VOID);
+extern uint32_t osMemSystemInit(void);
 
 
 
@@ -805,7 +758,7 @@ extern UINT32 osMemSystemInit(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID osTaskMonInit(VOID);
+extern void osTaskMonInit(void);
 
 
 
@@ -829,9 +782,9 @@ extern VOID osTaskMonInit(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 osCpupInit(VOID);
+extern uint32_t osCpupInit(void);
 
-extern void osBackTrace(VOID);
+extern void osBackTrace(void);
 
 #ifdef __cplusplus
 #if __cplusplus

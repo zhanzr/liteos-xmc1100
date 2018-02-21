@@ -53,14 +53,14 @@ extern "C" {
 #define TASK_PRIO_TEST  5
 
 /*任务PID*/
-static UINT32 g_TestTaskID01,g_TestTaskID02;
+static uint32_t g_TestTaskID01,g_TestTaskID02;
 /*信号量结构体ID*/
-static UINT32 g_usSemID;
+static uint32_t g_usSemID;
 
 
-static VOID Example_SemTask1(void)
+static void Example_SemTask1(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
 
     dprintf("Example_SemTask1 try get sem g_usSemID ,timeout 10 ticks.\n");
     /*定时阻塞模式申请信号量，定时时间为10Tick*/
@@ -93,9 +93,9 @@ static VOID Example_SemTask1(void)
     return;
 }
 
-static VOID Example_SemTask2(void)
+static void Example_SemTask2(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
     dprintf("Example_SemTask2 try get sem g_usSemID wait forever.\n");
     /*永久阻塞模式申请信号量*/
     uwRet = LOS_SemPend(g_usSemID, LOS_WAIT_FOREVER);
@@ -115,9 +115,9 @@ static VOID Example_SemTask2(void)
     return;
 }
 
-UINT32 Example_Semphore(VOID)
+uint32_t Example_Semphore(void)
 {
-    UINT32 uwRet = LOS_OK;
+    uint32_t uwRet = LOS_OK;
     TSK_INIT_PARAM_S stTask1;
     TSK_INIT_PARAM_S stTask2;
 

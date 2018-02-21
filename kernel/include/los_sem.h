@@ -181,7 +181,7 @@ extern "C" {
  *@see LOS_EventDelete
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_SemCreate(UINT16 usCount, UINT32 *puwSemHandle);
+extern uint32_t LOS_SemCreate(uint16_t usCount, uint32_t *puwSemHandle);
 
 /**
  *@ingroup los_sem
@@ -204,7 +204,7 @@ extern UINT32 LOS_SemCreate(UINT16 usCount, UINT32 *puwSemHandle);
  *@see LOS_SemCreate
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_SemDelete(UINT32 uwSemHandle);
+extern uint32_t LOS_SemDelete(uint32_t uwSemHandle);
 
 /**
  *@ingroup los_sem
@@ -231,7 +231,7 @@ extern UINT32 LOS_SemDelete(UINT32 uwSemHandle);
  *@see LOS_SemPost
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_SemPend(UINT32 uwSemHandle, UINT32 uwTimeout);
+extern uint32_t LOS_SemPend(uint32_t uwSemHandle, uint32_t uwTimeout);
 
 /**
  *@ingroup los_sem
@@ -254,7 +254,7 @@ extern UINT32 LOS_SemPend(UINT32 uwSemHandle, UINT32 uwTimeout);
  *@see LOS_SemPend
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_SemPost(UINT32 uwSemHandle);
+extern uint32_t LOS_SemPost(uint32_t uwSemHandle);
 
 
 #ifdef __cplusplus

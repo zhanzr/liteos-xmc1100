@@ -46,16 +46,16 @@ extern "C" {
 #endif /* __cpluscplus */
 
 
-static UINT32 g_uwTskHiID;
-static UINT32 g_uwTskLoID;
+static uint32_t g_uwTskHiID;
+static uint32_t g_uwTskLoID;
 
 
 #define TSK_PRIOR_HI 4
 #define TSK_PRIOR_LO 5
 
-static UINT32 Example_TaskHi(VOID)
+static uint32_t Example_TaskHi(void)
 {
-    UINT32 uwRet = LOS_OK;
+    uint32_t uwRet = LOS_OK;
 
     dprintf("Enter TaskHi Handler.\r\n");
 
@@ -102,9 +102,9 @@ static UINT32 Example_TaskHi(VOID)
 }
 
 /*低优先级任务入口函数*/
-static UINT32 Example_TaskLo(VOID)
+static uint32_t Example_TaskLo(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
 
     dprintf("Enter TaskLo Handler.\r\n");
 
@@ -143,12 +143,11 @@ static UINT32 Example_TaskLo(VOID)
 }
 
 /*任务测试入口函数，在里面创建优先级不一样的两个任务*/
-UINT32 Example_TskCaseEntry(VOID)
+uint32_t Example_TskCaseEntry(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
     TSK_INIT_PARAM_S stInitParam;
 
-    /*锁任务调度*/
     LOS_TaskLock();
 
     dprintf("LOS_TaskLock() Success!\r\n");
@@ -164,7 +163,7 @@ UINT32 Example_TskCaseEntry(VOID)
     {
         LOS_TaskUnlock();
 
-        dprintf("Example_TaskHi create Failed!\r\n");
+        dprintf("Example_TaskHi create Failed! %08X\n", uwRet);
         return LOS_NOK;
     }
 
@@ -179,7 +178,7 @@ UINT32 Example_TskCaseEntry(VOID)
     uwRet = LOS_TaskCreate(&g_uwTskLoID, &stInitParam);
     if (uwRet != LOS_OK)
     {
-        /*删除任务*/
+        dprintf("Example_TaskLo create Failed! %08X\n", uwRet);
         if(LOS_OK != LOS_TaskDelete(g_uwTskHiID))
         {
             dprintf("TaskHi delete failed .\n");

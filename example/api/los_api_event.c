@@ -51,8 +51,8 @@ extern "C" {
 
 
 /*任务PID*/
-static UINT32 g_TestTaskID;
-//static LITE_OS_SEC_BSS  UINT32  g_uweventTaskID;
+static uint32_t g_TestTaskID;
+//static LITE_OS_SEC_BSS  uint32_t  g_uweventTaskID;
 /*事件控制结构体*/
 static EVENT_CB_S  example_event;
 
@@ -60,10 +60,10 @@ static EVENT_CB_S  example_event;
 #define event_wait 0x00000001
 
 /*用例任务入口函数*/
-VOID Example_Event(VOID)
+void Example_Event(void)
 {
-    UINT32 uwEvent;
-    UINT32 uwRet = LOS_OK;
+    uint32_t uwEvent;
+    uint32_t uwRet = LOS_OK;
 
     /*超时 等待方式读事件,超时时间为100 Tick
     若100 Tick 后未读取到指定事件，读事件超时，任务直接唤醒*/
@@ -91,9 +91,9 @@ VOID Example_Event(VOID)
     return;
 }
 
-UINT32 Example_SndRcvEvent(VOID)
+uint32_t Example_SndRcvEvent(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
     TSK_INIT_PARAM_S stTask1;
 
     /*事件初始化*/

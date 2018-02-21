@@ -1,3 +1,6 @@
+//TODO: Need Rewrite according to the CMSIS Standard
+//The kernel should not impose any naming rule on the user part code.
+
 #include "los_bsp_led.h"
 
 #define LED_COUNT 5

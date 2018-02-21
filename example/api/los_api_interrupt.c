@@ -49,20 +49,17 @@ extern "C" {
 static void Example_Exti0_Init()
 {
     /*add your IRQ init code here*/
-    
-    return;
 }
 
-static VOID User_IRQHandler(void)
+static void User_IRQHandler(void)
 {
     dprintf("\n User IRQ test\n");
     //LOS_InspectStatusSetByID(LOS_INSPECT_INTERRUPT,LOS_INSPECT_STU_SUCCESS);
-    return;
 }
 
-UINT32 Example_Interrupt(VOID)
+uint32_t Example_Interrupt(void)
 {
-    UINTPTR uvIntSave;
+    uint32_t* uvIntSave;
     uvIntSave = LOS_IntLock();
     
     Example_Exti0_Init();

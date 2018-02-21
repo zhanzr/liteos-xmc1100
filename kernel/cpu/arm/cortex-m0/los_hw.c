@@ -52,7 +52,7 @@ extern "C" {
  Output      : None
  Return      : None
  *****************************************************************************/
-VOID osSchedule(VOID)
+void osSchedule(void)
 {
     osTaskSchedule();
 }
@@ -64,9 +64,9 @@ VOID osSchedule(VOID)
  Output      : None
  Return      : None
  *****************************************************************************/
-VOID LOS_Schedule(VOID)
+void LOS_Schedule(void)
 {
-    UINTPTR uvIntSave;
+    uint32_t* uvIntSave;
     uvIntSave = LOS_IntLock();
 
     /* Find the highest task */
@@ -77,7 +77,7 @@ VOID LOS_Schedule(VOID)
     {
         if ((!g_usLosTaskLock))
         {
-            (VOID)LOS_IntRestore(uvIntSave);
+            (void)LOS_IntRestore(uvIntSave);
 
             osTaskSchedule();
 
@@ -85,7 +85,7 @@ VOID LOS_Schedule(VOID)
         }
     }
 
-    (VOID)LOS_IntRestore(uvIntSave);
+    (void)LOS_IntRestore(uvIntSave);
 }
 
 /*****************************************************************************
@@ -95,7 +95,7 @@ VOID LOS_Schedule(VOID)
  Output      : None
  Return      : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR VOID osTaskExit(VOID)
+LITE_OS_SEC_TEXT_MINOR void osTaskExit(void)
 {
     osDisableIRQ();
     while(1);
@@ -110,19 +110,19 @@ LITE_OS_SEC_TEXT_MINOR VOID osTaskExit(VOID)
  Output      : None
  Return      : Context pointer
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT VOID *osTskStackInit(UINT32 uwTaskID, UINT32 uwStackSize, VOID *pTopStack)
+LITE_OS_SEC_TEXT_INIT void *osTskStackInit(uint32_t uwTaskID, uint32_t uwStackSize, void *pTopStack)
 {
-    UINT32 uwIdx;
+    uint32_t uwIdx;
     TSK_CONTEXT_S  *pstContext;
 
     /*initialize the task stack, write magic num to stack top*/
-    for (uwIdx = 1; uwIdx < (uwStackSize/sizeof(UINT32)); uwIdx++)
+    for (uwIdx = 1; uwIdx < (uwStackSize/sizeof(uint32_t)); uwIdx++)
     {
-        *((UINT32 *)pTopStack + uwIdx) = OS_TASK_STACK_INIT;
+        *((uint32_t *)pTopStack + uwIdx) = OS_TASK_STACK_INIT;
     }
-    *((UINT32 *)(pTopStack)) = OS_TASK_MAGIC_WORD;
+    *((uint32_t *)(pTopStack)) = OS_TASK_MAGIC_WORD;
 
-    pstContext    = (TSK_CONTEXT_S *)(((UINT32)pTopStack + uwStackSize) - sizeof(TSK_CONTEXT_S));
+    pstContext    = (TSK_CONTEXT_S *)(((uint32_t)pTopStack + uwStackSize) - sizeof(TSK_CONTEXT_S));
 
     pstContext->uwR4  = 0x04040404L;
     pstContext->uwR5  = 0x05050505L;
@@ -138,11 +138,11 @@ LITE_OS_SEC_TEXT_INIT VOID *osTskStackInit(UINT32 uwTaskID, UINT32 uwStackSize, 
     pstContext->uwR2  = 0x02020202L;
     pstContext->uwR3  = 0x03030303L;
     pstContext->uwR12 = 0x12121212L;
-    pstContext->uwLR  = (UINT32)osTaskExit;
-    pstContext->uwPC  = (UINT32)osTaskEntry;
+    pstContext->uwLR  = (uint32_t)osTaskExit;
+    pstContext->uwPC  = (uint32_t)osTaskEntry;
     pstContext->uwxPSR = 0x01000000L;
 
-    return (VOID *)pstContext;
+    return (void *)pstContext;
 }
 
 #ifdef __cplusplus

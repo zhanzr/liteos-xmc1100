@@ -50,7 +50,7 @@ extern "C" {
 #include "los_demo_debug.h"
 
 
-extern UINT32 Example_list(VOID);
+extern uint32_t Example_list(void);
 
 
 

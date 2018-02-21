@@ -32,7 +32,7 @@
  * applicable export control laws and regulations.
  *---------------------------------------------------------------------------*/
 
-#include "los_tick.ph"
+#include "los_tick.h"
 
 #include "los_base.h"
 #include "los_task.ph"
@@ -45,7 +45,7 @@ extern "C" {
 #endif /* __cpluscplus */
 #endif /* __cpluscplus */
 
-LITE_OS_SEC_BSS UINT32  g_uwCyclesPerTick;
+LITE_OS_SEC_BSS uint32_t  g_uwCyclesPerTick;
 
 /*lint -save -e40 -e10 -e26 -e1013*/
 /*****************************************************************************
@@ -57,7 +57,7 @@ return  : none
 *****************************************************************************/
 void LOS_TickHandler(void)
 {
-    UINT32 uwIntSave;
+    uint32_t* uwIntSave;
 
     uwIntSave = LOS_IntLock();
     g_vuwIntCount++;
@@ -79,7 +79,7 @@ Input   : ticks, the cpu Sycles per tick
 output  : none
 return  : none
 *****************************************************************************/
-void LOS_SetTickSycle(UINT32 ticks)
+void LOS_SetTickSycle(uint32_t ticks)
 {
     g_uwCyclesPerTick = ticks;
     return ;
@@ -93,25 +93,25 @@ output  : puwCntHi  --- CpuTick High 4 byte
           puwCntLo  --- CpuTick Low 4 byte
 return  : none
 *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR VOID LOS_GetCpuCycle(UINT32 *puwCntHi, UINT32 *puwCntLo)
+LITE_OS_SEC_TEXT_MINOR void LOS_GetCpuCycle(uint32_t *puwCntHi, uint32_t *puwCntLo)
 {
-    UINT64 ullSwTick;
-    UINT64 ullCycle;
-    UINT32 uwIntSta;
-    UINT32 uwHwCycle;
-    UINTPTR uwIntSave;
+    uint64_t ullSwTick;
+    uint64_t ullCycle;
+    uint32_t uwIntSta;
+    uint32_t uwHwCycle;
+    uint32_t* uwIntSave;
 
     uwIntSave = LOS_IntLock();
 
     ullSwTick = g_ullTickCount;
 
-    uwHwCycle = *(volatile UINT32*)OS_SYSTICK_CURRENT_REG;
-    uwIntSta  = *(volatile UINT32*)OS_NVIC_INT_CTRL;
+    uwHwCycle = *(volatile uint32_t*)OS_SYSTICK_CURRENT_REG;
+    uwIntSta  = *(volatile uint32_t*)OS_NVIC_INT_CTRL;
 
     /*tick has come, but may interrupt environment, not counting the Tick interrupt response, to do +1 */
     if (((uwIntSta & 0x4000000) != 0))
     {
-        uwHwCycle = *(volatile UINT32*)OS_SYSTICK_CURRENT_REG;
+        uwHwCycle = *(volatile uint32_t*)OS_SYSTICK_CURRENT_REG;
         ullSwTick++;
     }
 

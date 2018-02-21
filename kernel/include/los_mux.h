@@ -187,7 +187,7 @@ extern "C"{
  *@see LOS_MuxDelete
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_MuxCreate(UINT32 *puwMuxHandle);
+extern uint32_t LOS_MuxCreate(uint32_t *puwMuxHandle);
 
 /**
  *@ingroup los_mux
@@ -210,7 +210,7 @@ extern UINT32 LOS_MuxCreate(UINT32 *puwMuxHandle);
  *@see LOS_MuxDelete
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_MuxDelete(UINT32 puwMuxHandle);
+extern uint32_t LOS_MuxDelete(uint32_t puwMuxHandle);
 
 /**
  *@ingroup los_mux
@@ -240,7 +240,7 @@ extern UINT32 LOS_MuxDelete(UINT32 puwMuxHandle);
  *@see LOS_MuxPost
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_MuxPend(UINT32 uwMuxHandle, UINT32 uwTimeout);
+extern uint32_t LOS_MuxPend(uint32_t uwMuxHandle, uint32_t uwTimeout);
 
 /**
  *@ingroup los_mux
@@ -265,7 +265,7 @@ extern UINT32 LOS_MuxPend(UINT32 uwMuxHandle, UINT32 uwTimeout);
  *@see LOS_MuxPend
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_MuxPost(UINT32 uwMuxHandle);
+extern uint32_t LOS_MuxPost(uint32_t uwMuxHandle);
 
 
 #ifdef __cplusplus

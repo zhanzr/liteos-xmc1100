@@ -50,17 +50,17 @@ extern "C" {
 
 
 /*互斥锁句柄ID*/
-static UINT32 g_Testmux01;
+static uint32_t g_Testmux01;
 
 
 /*任务PID*/
-UINT32 g_TestTaskID01;
-UINT32 g_TestTaskID02;
+uint32_t g_TestTaskID01;
+uint32_t g_TestTaskID02;
 
 
-static VOID Example_MutexTask1()
+static void Example_MutexTask1()
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
 
     dprintf("task1 try to get mutex, wait 10 Tick.\n");
     /*申请互斥锁*/
@@ -94,9 +94,9 @@ static VOID Example_MutexTask1()
     return;
 }
 
-static VOID Example_MutexTask2()
+static void Example_MutexTask2()
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
 
     dprintf("task2 try to get mutex, wait forever.\n");
     /*申请互斥锁*/
@@ -118,9 +118,9 @@ static VOID Example_MutexTask2()
     return;
 }
 
-UINT32 Example_MutexLock(VOID)
+uint32_t Example_MutexLock(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
     TSK_INIT_PARAM_S stTask1;
     TSK_INIT_PARAM_S stTask2;
 

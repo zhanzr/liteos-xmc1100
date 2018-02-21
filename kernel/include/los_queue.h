@@ -355,16 +355,16 @@ extern "C" {
   */
 typedef struct tagQueueInfo
 {
-    UINT32     uwQueueID;                       /**< Queue ID                   */
-    UINT16     usQueueLen;                      /**< Queue length               */
-    UINT16     usQueueSize;                     /**< Node size                  */
-    UINT16     usQueueHead;                     /**< Node head                  */
-    UINT16     usQueueTail;                     /**< Node tail                  */
-    UINT16     usWritableCnt;                   /**< Count of writable resources               */
-    UINT16     usReadableCnt;                   /**< Count of readable resources               */
-    UINT32     uwWaitReadTask;                  /**< Resource reading task                     */
-    UINT32     uwWaitWriteTask;                 /**< Resource writing task                     */
-    UINT32     uwWaitMemTask;                   /**< Memory task                               */
+    uint32_t     uwQueueID;                       /**< Queue ID                   */
+    uint16_t     usQueueLen;                      /**< Queue length               */
+    uint16_t     usQueueSize;                     /**< Node size                  */
+    uint16_t     usQueueHead;                     /**< Node head                  */
+    uint16_t     usQueueTail;                     /**< Node tail                  */
+    uint16_t     usWritableCnt;                   /**< Count of writable resources               */
+    uint16_t     usReadableCnt;                   /**< Count of readable resources               */
+    uint32_t     uwWaitReadTask;                  /**< Resource reading task                     */
+    uint32_t     uwWaitWriteTask;                 /**< Resource writing task                     */
+    uint32_t     uwWaitMemTask;                   /**< Memory task                               */
 } QUEUE_INFO_S;
 
 /**
@@ -393,11 +393,11 @@ typedef struct tagQueueInfo
  *@see LOS_QueueDelete
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_QueueCreate(CHAR *pcQueueName,
-                             UINT16 usLen,
-                             UINT32 *puwQueueID,
-                             UINT32 uwFlags,
-                             UINT16 usMaxMsgSize);
+extern uint32_t LOS_QueueCreate(char *pcQueueName,
+                             uint16_t usLen,
+                             uint32_t *puwQueueID,
+                             uint32_t uwFlags,
+                             uint16_t usMaxMsgSize);
 
 
 /**
@@ -434,10 +434,10 @@ extern UINT32 LOS_QueueCreate(CHAR *pcQueueName,
  *@see LOS_QueueWrite
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_QueueRead(UINT32 uwQueueID,
-                                VOID *pBufferAddr,
-                                UINT32 uwBufferSize,
-                                UINT32 uwTimeOut);
+extern uint32_t LOS_QueueRead(uint32_t uwQueueID,
+                                void *pBufferAddr,
+                                uint32_t uwBufferSize,
+                                uint32_t uwTimeOut);
 
 /**
  *@ingroup los_queue
@@ -473,10 +473,10 @@ extern UINT32 LOS_QueueRead(UINT32 uwQueueID,
  *@see LOS_QueueRead
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_QueueWrite(UINT32 uwQueueID,
-                            VOID *pBufferAddr,
-                            UINT32 uwBufferSize,
-                            UINT32 uwTimeOut);
+extern uint32_t LOS_QueueWrite(uint32_t uwQueueID,
+                            void *pBufferAddr,
+                            uint32_t uwBufferSize,
+                            uint32_t uwTimeOut);
 
  /**
   *@ingroup los_queue
@@ -502,7 +502,7 @@ extern UINT32 LOS_QueueWrite(UINT32 uwQueueID,
   *@see LOS_QueueCreate
   *@since Huawei LiteOS V100R001C00
   */
-extern UINT32 LOS_QueueDelete(UINT32 uwQueueID);
+extern uint32_t LOS_QueueDelete(uint32_t uwQueueID);
 
 #ifdef __cplusplus
 #if __cplusplus

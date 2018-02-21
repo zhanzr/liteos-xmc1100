@@ -45,7 +45,7 @@ extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
-extern UINT8 *m_aucSysMem0;
+extern uint8_t *m_aucSysMem0;
 	
 #ifdef LOS_PACK_ALIGN_4_IAR
 #pragma data_alignment=4
@@ -58,11 +58,11 @@ __align(4)
 #ifdef LOS_PACK_ALIGN_4_GCC
 __attribute__ ((aligned (4)))
 #endif 
-UINT8 g_ucMemStart[OS_SYS_MEM_SIZE];
+uint8_t g_ucMemStart[OS_SYS_MEM_SIZE];
 
-LITE_OS_SEC_TEXT_INIT UINT32 osMemSystemInit()
+LITE_OS_SEC_TEXT_INIT uint32_t osMemSystemInit()
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
 
     m_aucSysMem0 = g_ucMemStart;
     uwRet = LOS_MemInit(m_aucSysMem0, OS_SYS_MEM_SIZE);
@@ -78,7 +78,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 osMemSystemInit()
  Return      :NULL--no suitable block found
                  pstTem--pointer a suitable free block
 *****************************************************************************/
-INLINE LOS_MEM_DYN_NODE *osMemFindSuitableFreeBlock(VOID *pPool, UINT32 uwAllocSize)
+LOS_MEM_DYN_NODE *osMemFindSuitableFreeBlock(void *pPool, uint32_t uwAllocSize)
 {
     LOS_DL_LIST *pstListHead = (LOS_DL_LIST *)NULL;
 
@@ -104,7 +104,7 @@ INLINE LOS_MEM_DYN_NODE *osMemFindSuitableFreeBlock(VOID *pPool, UINT32 uwAllocS
  Output      : None
  Return      : None
 *****************************************************************************/
-INLINE VOID osMemClearNode(LOS_MEM_DYN_NODE *pstNode)
+void osMemClearNode(LOS_MEM_DYN_NODE *pstNode)
 {
     pstNode->stFreeNodeInfo.pstPrev = (LOS_DL_LIST *)NULL;
     pstNode->stFreeNodeInfo.pstNext = (LOS_DL_LIST *)NULL;
@@ -118,12 +118,12 @@ INLINE VOID osMemClearNode(LOS_MEM_DYN_NODE *pstNode)
  Output      : None
  Return      : None
 *****************************************************************************/
-INLINE VOID osMemMergeNode(LOS_MEM_DYN_NODE *pstNode)
+void osMemMergeNode(LOS_MEM_DYN_NODE *pstNode)
 {
     LOS_MEM_DYN_NODE *pstNextNode = (LOS_MEM_DYN_NODE *)NULL;
 
     pstNode->pstPreNode->uwSizeAndFlag += pstNode->uwSizeAndFlag;
-    pstNextNode = (LOS_MEM_DYN_NODE *)((UINT32)pstNode + pstNode->uwSizeAndFlag);
+    pstNextNode = (LOS_MEM_DYN_NODE *)((uint32_t)pstNode + pstNode->uwSizeAndFlag);
     pstNextNode->pstPreNode = pstNode->pstPreNode;
     osMemClearNode(pstNode);
 }
@@ -138,14 +138,14 @@ INLINE VOID osMemMergeNode(LOS_MEM_DYN_NODE *pstNode)
  Output      : pstAllocNode -- save new node addr
  Return      : None
 *****************************************************************************/
-INLINE VOID osMemSpitNode(VOID *pPool,
-                            LOS_MEM_DYN_NODE *pstAllocNode, UINT32 uwAllocSize)
+void osMemSpitNode(void *pPool,
+                            LOS_MEM_DYN_NODE *pstAllocNode, uint32_t uwAllocSize)
 {
     LOS_MEM_DYN_NODE *pstNewFreeNode = (LOS_MEM_DYN_NODE *)NULL;
     LOS_MEM_DYN_NODE *pstNextNode = (LOS_MEM_DYN_NODE *)NULL;
     LOS_DL_LIST *pstListHead = (LOS_DL_LIST *)NULL;
 
-    pstNewFreeNode = (LOS_MEM_DYN_NODE *)((UINT8 *)pstAllocNode + uwAllocSize);
+    pstNewFreeNode = (LOS_MEM_DYN_NODE *)((uint8_t *)pstAllocNode + uwAllocSize);
     pstNewFreeNode->pstPreNode = pstAllocNode;
     pstNewFreeNode->uwSizeAndFlag = pstAllocNode->uwSizeAndFlag - uwAllocSize;
     pstAllocNode->uwSizeAndFlag = uwAllocSize;
@@ -176,7 +176,7 @@ INLINE VOID osMemSpitNode(VOID *pPool,
  Output      : None
  Return      : None
 *****************************************************************************/
-INLINE VOID osMemFreeNode(LOS_MEM_DYN_NODE *pstNode, VOID *pPool)
+void osMemFreeNode(LOS_MEM_DYN_NODE *pstNode, void *pPool)
 {
     LOS_MEM_DYN_NODE *pstNextNode = (LOS_MEM_DYN_NODE *)NULL;
     LOS_DL_LIST *pstListHead = (LOS_DL_LIST *)NULL;
@@ -234,7 +234,7 @@ INLINE VOID osMemFreeNode(LOS_MEM_DYN_NODE *pstNode, VOID *pPool)
  Return      : LOS_OK or LOS_NOK
 *****************************************************************************/
 #ifdef LOS_DLNK_SAFE_CHECK
-INLINE UINT32 osMemCheckUsedNode(VOID *pPool, LOS_MEM_DYN_NODE *pstNode)
+uint32_t osMemCheckUsedNode(void *pPool, LOS_MEM_DYN_NODE *pstNode)
 {
     LOS_MEM_DYN_NODE *pstTmp = NULL;
     LOS_MEM_POOL_INFO *pstPoolInfo = (LOS_MEM_POOL_INFO *)pPool;
@@ -257,7 +257,7 @@ INLINE UINT32 osMemCheckUsedNode(VOID *pPool, LOS_MEM_DYN_NODE *pstNode)
 }
 
 #elif defined(LOS_DLNK_SIMPLE_CHECK)
-INLINE UINT32 osMemCheckUsedNode(VOID *pPool, LOS_MEM_DYN_NODE *pstNode)
+uint32_t osMemCheckUsedNode(void *pPool, LOS_MEM_DYN_NODE *pstNode)
 {
     LOS_MEM_POOL_INFO *pstPoolInfo = (LOS_MEM_POOL_INFO *)pPool;
     LOS_MEM_DYN_NODE *pstStartNode = OS_MEM_FIRST_NODE(pPool);
@@ -283,12 +283,12 @@ INLINE UINT32 osMemCheckUsedNode(VOID *pPool, LOS_MEM_DYN_NODE *pstNode)
 }
 
 #else
-INLINE BOOL osMemIsNodeValid(const LOS_MEM_DYN_NODE *pstNode, const LOS_MEM_DYN_NODE *pstStartNode, const LOS_MEM_DYN_NODE *pstEndNode,
-       const UINT8 *pucStartPool, const UINT8 *pucEndPool)
+bool osMemIsNodeValid(const LOS_MEM_DYN_NODE *pstNode, const LOS_MEM_DYN_NODE *pstStartNode, const LOS_MEM_DYN_NODE *pstEndNode,
+       const uint8_t *pucStartPool, const uint8_t *pucEndPool)
 {
     if (!OS_MEM_MIDDLE_ADDR(pstStartNode, pstNode, pstEndNode))
     {
-        return FALSE;
+        return false;
     }
 
     if (OS_MEM_NODE_GET_USED_FLAG(pstNode->uwSizeAndFlag))
@@ -297,29 +297,29 @@ INLINE BOOL osMemIsNodeValid(const LOS_MEM_DYN_NODE *pstNode, const LOS_MEM_DYN_
              // || (!OS_MEM_MAGIC_VALID(pstNode->stFreeNodeInfo.pstNext))
              )
         {
-            return FALSE;
+            return false;
         }
-        return TRUE;
+        return true;
     }
 
     if ((!OS_MEM_MIDDLE_ADDR_OPEN_END(pucStartPool, pstNode->stFreeNodeInfo.pstPrev, pucEndPool))
        // || (!OS_MEM_MIDDLE_ADDR_OPEN_END(pucStartPool, pstNode->stFreeNodeInfo.pstNext, pucEndPool))
        )
     {
-        return FALSE;
+        return false;
     }
 
-    return TRUE;
+    return true;
 }
 
-INLINE UINT32 osMemCheckUsedNode(VOID *pPool, LOS_MEM_DYN_NODE *pstNode)
+uint32_t osMemCheckUsedNode(void *pPool, LOS_MEM_DYN_NODE *pstNode)
 {
     LOS_MEM_POOL_INFO *pstPoolInfo = (LOS_MEM_POOL_INFO *)pPool;
     LOS_MEM_DYN_NODE *pstStartNode = OS_MEM_FIRST_NODE(pPool);
     LOS_MEM_DYN_NODE *pstEndNode = OS_MEM_END_NODE(pPool, pstPoolInfo->uwPoolSize);
-    UINT8 *pucEndPool = (UINT8 *)pPool + pstPoolInfo->uwPoolSize;
+    uint8_t *pucEndPool = (uint8_t *)pPool + pstPoolInfo->uwPoolSize;
     const LOS_MEM_DYN_NODE *pstNextNode = (const LOS_MEM_DYN_NODE *)NULL;
-    if (!osMemIsNodeValid(pstNode, pstStartNode, pstEndNode, (UINT8 *)pPool, pucEndPool))
+    if (!osMemIsNodeValid(pstNode, pstStartNode, pstEndNode, (uint8_t *)pPool, pucEndPool))
     {
         return LOS_NOK;
     }
@@ -331,7 +331,7 @@ INLINE UINT32 osMemCheckUsedNode(VOID *pPool, LOS_MEM_DYN_NODE *pstNode)
     }
 
     pstNextNode = OS_MEM_NEXT_NODE(pstNode);
-    if (!osMemIsNodeValid(pstNextNode, pstStartNode, pstEndNode, (UINT8 *)pPool, pucEndPool))
+    if (!osMemIsNodeValid(pstNextNode, pstStartNode, pstEndNode, (uint8_t *)pPool, pucEndPool))
     {
         return LOS_NOK;
     }
@@ -343,7 +343,7 @@ INLINE UINT32 osMemCheckUsedNode(VOID *pPool, LOS_MEM_DYN_NODE *pstNode)
 
     if (pstNode != pstStartNode)
     {
-        if (!osMemIsNodeValid(pstNode->pstPreNode, pstStartNode, pstEndNode, (UINT8 *)pPool, pucEndPool))
+        if (!osMemIsNodeValid(pstNode->pstPreNode, pstStartNode, pstEndNode, (uint8_t *)pPool, pucEndPool))
         {
             return LOS_NOK;
         }
@@ -366,7 +366,7 @@ INLINE UINT32 osMemCheckUsedNode(VOID *pPool, LOS_MEM_DYN_NODE *pstNode)
  Output      : None
  Return      : None
 *****************************************************************************/
-INLINE VOID osMemSetMagicNumAndTaskid(LOS_MEM_DYN_NODE *pstNode)
+void osMemSetMagicNumAndTaskid(LOS_MEM_DYN_NODE *pstNode)
 {
     OS_MEM_SET_MAGIC(pstNode->stFreeNodeInfo.pstPrev);
 
@@ -392,10 +392,10 @@ INLINE VOID osMemSetMagicNumAndTaskid(LOS_MEM_DYN_NODE *pstNode)
  Output      : None
  Return      : Pointer to allocated memory
 *****************************************************************************/
-INLINE VOID *osMemAllocWithCheck(VOID *pPool, UINT32  uwSize)
+void *osMemAllocWithCheck(void *pPool, uint32_t  uwSize)
 {
     LOS_MEM_DYN_NODE *pstAllocNode = (LOS_MEM_DYN_NODE *)NULL;
-    UINT32 uwAllocSize;
+    uint32_t uwAllocSize;
 
     uwAllocSize = OS_MEM_ALIGN(uwSize + OS_MEM_NODE_HEAD_SIZE, OS_MEM_ALIGN_SIZE);
     pstAllocNode = osMemFindSuitableFreeBlock(pPool, uwAllocSize);
@@ -426,7 +426,7 @@ INLINE VOID *osMemAllocWithCheck(VOID *pPool, UINT32  uwSize)
  Output      : pstNode -- pointer to the new node after realloc
  Return      : None
 *****************************************************************************/
-INLINE VOID osMemReAllocSmaller(VOID *pPool, UINT32 uwAllocSize, LOS_MEM_DYN_NODE *pstNode, UINT32 uwNodeSize)
+void osMemReAllocSmaller(void *pPool, uint32_t uwAllocSize, LOS_MEM_DYN_NODE *pstNode, uint32_t uwNodeSize)
 {
      if ((uwAllocSize + OS_MEM_NODE_HEAD_SIZE + OS_MEM_ALIGN_SIZE) <= uwNodeSize)
      {
@@ -448,7 +448,7 @@ INLINE VOID osMemReAllocSmaller(VOID *pPool, UINT32 uwAllocSize, LOS_MEM_DYN_NOD
  Output      : pstNode -- pointer to the new node after realloc
  Return      : None
 *****************************************************************************/
-INLINE VOID osMemMergeNodeForReAllocBigger(VOID *pPool, UINT32 uwAllocSize, LOS_MEM_DYN_NODE *pstNode, UINT32 uwNodeSize, LOS_MEM_DYN_NODE *pstNextNode)
+void osMemMergeNodeForReAllocBigger(void *pPool, uint32_t uwAllocSize, LOS_MEM_DYN_NODE *pstNode, uint32_t uwNodeSize, LOS_MEM_DYN_NODE *pstNextNode)
 {
     pstNode->uwSizeAndFlag = uwNodeSize;
     LOS_ListDelete(&(pstNextNode->stFreeNodeInfo));
@@ -470,12 +470,12 @@ INLINE VOID osMemMergeNodeForReAllocBigger(VOID *pPool, UINT32 uwAllocSize, LOS_
  Output      : None
  Return      : LOS_OK - Ok, OS_ERROR - Error
 *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 LOS_MemInit(VOID *pPool, UINT32  uwSize)
+LITE_OS_SEC_TEXT_INIT uint32_t LOS_MemInit(void *pPool, uint32_t  uwSize)
 {
     LOS_MEM_DYN_NODE *pstNewNode = (LOS_MEM_DYN_NODE *)NULL;
     LOS_MEM_DYN_NODE *pstEndNode = (LOS_MEM_DYN_NODE *)NULL;
     LOS_MEM_POOL_INFO *pstPoolInfo = (LOS_MEM_POOL_INFO *)NULL;
-    UINTPTR uvIntSave;
+    uint32_t* uvIntSave;
     LOS_DL_LIST *pstListHead = (LOS_DL_LIST *)NULL;
 
     if ((pPool == NULL) || (uwSize < (OS_MEM_MIN_POOL_SIZE)))
@@ -490,7 +490,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_MemInit(VOID *pPool, UINT32  uwSize)
     pstPoolInfo->uwPoolSize = uwSize;
     LOS_DLnkInitMultiHead(OS_MEM_HEAD_ADDR(pPool));
     pstNewNode = OS_MEM_FIRST_NODE(pPool);
-    pstNewNode->uwSizeAndFlag = ((uwSize - ((UINT32)pstNewNode - (UINT32)pPool)) - OS_MEM_NODE_HEAD_SIZE);
+    pstNewNode->uwSizeAndFlag = ((uwSize - ((uint32_t)pstNewNode - (uint32_t)pPool)) - OS_MEM_NODE_HEAD_SIZE);
     pstNewNode->pstPreNode = (LOS_MEM_DYN_NODE *)NULL;
     pstListHead = OS_MEM_HEAD(pPool, pstNewNode->uwSizeAndFlag);
     if (NULL == pstListHead)
@@ -502,7 +502,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_MemInit(VOID *pPool, UINT32  uwSize)
 
     LOS_ListTailInsert(pstListHead,&(pstNewNode->stFreeNodeInfo));
     pstEndNode = (LOS_MEM_DYN_NODE *)OS_MEM_END_NODE(pPool, uwSize);
-    (VOID)memset(pstEndNode, 0 ,sizeof(*pstEndNode));
+    (void)memset(pstEndNode, 0 ,sizeof(*pstEndNode));
     pstEndNode->pstPreNode = pstNewNode;
     pstEndNode->uwSizeAndFlag = OS_MEM_NODE_HEAD_SIZE;
     OS_MEM_NODE_SET_USED_FLAG(pstEndNode->uwSizeAndFlag);
@@ -520,10 +520,10 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_MemInit(VOID *pPool, UINT32  uwSize)
  Output      : None
  Return      : Pointer to allocated memory node
 *****************************************************************************/
-LITE_OS_SEC_TEXT VOID *LOS_MemAlloc (VOID *pPool, UINT32  uwSize)
+LITE_OS_SEC_TEXT void *LOS_MemAlloc (void *pPool, uint32_t  uwSize)
 {
-    VOID *pPtr = NULL;
-    UINTPTR uvIntSave = LOS_IntLock();
+    void *pPtr = NULL;
+    uint32_t* uvIntSave = LOS_IntLock();
 
     do
     {
@@ -553,13 +553,13 @@ LITE_OS_SEC_TEXT VOID *LOS_MemAlloc (VOID *pPool, UINT32  uwSize)
  Output      : None
  Return      : Pointer to allocated memory node
 *****************************************************************************/
-LITE_OS_SEC_TEXT VOID *LOS_MemAllocAlign(VOID *pPool, UINT32 uwSize, UINT32 uwBoundary)
+LITE_OS_SEC_TEXT void *LOS_MemAllocAlign(void *pPool, uint32_t uwSize, uint32_t uwBoundary)
 {
-    UINT32 uwUseSize = 0;
-    UINT32 uwGapSize = 0;
-    VOID *pPtr = NULL;
-    VOID *pAlignedPtr = NULL;
-    UINTPTR uvIntSave = LOS_IntLock();
+    uint32_t uwUseSize = 0;
+    uint32_t uwGapSize = 0;
+    void *pPtr = NULL;
+    void *pAlignedPtr = NULL;
+    uint32_t* uvIntSave = LOS_IntLock();
 
     do
     {
@@ -577,7 +577,7 @@ LITE_OS_SEC_TEXT VOID *LOS_MemAllocAlign(VOID *pPool, UINT32 uwSize, UINT32 uwBo
 
         pPtr = osMemAllocWithCheck(pPool, uwUseSize);
 
-        pAlignedPtr = (VOID *)OS_MEM_ALIGN(pPtr, uwBoundary);
+        pAlignedPtr = (void *)OS_MEM_ALIGN(pPtr, uwBoundary);
 
         if (pPtr == pAlignedPtr)
         {
@@ -585,9 +585,9 @@ LITE_OS_SEC_TEXT VOID *LOS_MemAllocAlign(VOID *pPool, UINT32 uwSize, UINT32 uwBo
         }
 
         /* store gapSize in address (ptr -4), it will be checked while free */
-        uwGapSize = (UINT32)pAlignedPtr - (UINT32)pPtr;
+        uwGapSize = (uint32_t)pAlignedPtr - (uint32_t)pPtr;
         OS_MEM_NODE_SET_ALIGNED_FLAG(uwGapSize);
-        *((UINT32 *)((UINT32)pAlignedPtr - 4)) = uwGapSize;
+        *((uint32_t *)((uint32_t)pAlignedPtr - 4)) = uwGapSize;
 
         pPtr = pAlignedPtr;
 
@@ -607,11 +607,11 @@ LITE_OS_SEC_TEXT VOID *LOS_MemAllocAlign(VOID *pPool, UINT32 uwSize, UINT32 uwBo
  Output      : None
  Return      : LOS_OK -Ok,  LOS_NOK -failed
 *****************************************************************************/
-LITE_OS_SEC_TEXT UINT32 LOS_MemFree(VOID *pPool, VOID *pMem)
+LITE_OS_SEC_TEXT uint32_t LOS_MemFree(void *pPool, void *pMem)
 {
-    UINT32 uwRet = LOS_NOK;
-    UINT32 uwGapSize = 0;
-    UINTPTR uvIntSave = LOS_IntLock();
+    uint32_t uwRet = LOS_NOK;
+    uint32_t uwGapSize = 0;
+    uint32_t* uvIntSave = LOS_IntLock();
 
     do
     {
@@ -622,14 +622,14 @@ LITE_OS_SEC_TEXT UINT32 LOS_MemFree(VOID *pPool, VOID *pMem)
             break;
         }
 
-        uwGapSize = *((UINT32 *)((UINT32)pMem - 4));
+        uwGapSize = *((uint32_t *)((uint32_t)pMem - 4));
         if (OS_MEM_NODE_GET_ALIGNED_FLAG(uwGapSize))
         {
             uwGapSize = OS_MEM_NODE_GET_ALIGNED_GAPSIZE(uwGapSize);
-            pMem = (VOID *)((UINT32)pMem - uwGapSize);
+            pMem = (void *)((uint32_t)pMem - uwGapSize);
         }
 
-        pstNode = (LOS_MEM_DYN_NODE *)((UINT32)pMem - OS_MEM_NODE_HEAD_SIZE);
+        pstNode = (LOS_MEM_DYN_NODE *)((uint32_t)pMem - OS_MEM_NODE_HEAD_SIZE);
         uwRet = osMemCheckUsedNode(pPool, pstNode);
         if (uwRet == LOS_OK)
         {
@@ -651,42 +651,42 @@ LITE_OS_SEC_TEXT UINT32 LOS_MemFree(VOID *pPool, VOID *pMem)
  Output      : None
  Return      : Pointer to allocated memory
 *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR VOID *LOS_MemRealloc (VOID *pPool,  VOID *pPtr, UINT32 uwSize)
+LITE_OS_SEC_TEXT_MINOR void *LOS_MemRealloc (void *pPool,  void *pPtr, uint32_t uwSize)
 {
-    UINTPTR uvIntSave;
-    UINT32 uwGapSize = 0;
-    VOID *pNewPtr = NULL;
+    uint32_t* uvIntSave;
+    uint32_t uwGapSize = 0;
+    void *pNewPtr = NULL;
 
     uvIntSave = LOS_IntLock();
 
     do
     {
         LOS_MEM_DYN_NODE *pstNode = (LOS_MEM_DYN_NODE *)NULL;
-        UINT32 uwRet;
-        UINT32 uwAllocSize;
-        UINT32 uwNodeSize;
+        uint32_t uwRet;
+        uint32_t uwAllocSize;
+        uint32_t uwNodeSize;
         LOS_MEM_DYN_NODE *pstNextNode = (LOS_MEM_DYN_NODE *)NULL;
 
         if (pPtr == NULL)
         {
-            pNewPtr = LOS_MemAlloc((VOID *)pPool, (UINT32)uwSize);
+            pNewPtr = LOS_MemAlloc((void *)pPool, (uint32_t)uwSize);
             break;
         }
 
         if (uwSize == 0)
         {
-            if (LOS_MemFree((VOID *)pPool, (VOID *)pPtr) != LOS_OK)
+            if (LOS_MemFree((void *)pPool, (void *)pPtr) != LOS_OK)
                  PRINT_ERR("%s, %d\n", __FUNCTION__, __LINE__);
             break;
         }
 
-        uwGapSize = *((UINT32 *)((UINT32)pPtr - 4));
+        uwGapSize = *((uint32_t *)((uint32_t)pPtr - 4));
         if (OS_MEM_NODE_GET_ALIGNED_FLAG(uwGapSize))
         {
             uwGapSize = OS_MEM_NODE_GET_ALIGNED_GAPSIZE(uwGapSize);
-            pPtr = (VOID *)((UINT32)pPtr - uwGapSize);
+            pPtr = (void *)((uint32_t)pPtr - uwGapSize);
         }
-        pstNode = (LOS_MEM_DYN_NODE *)((UINT32)pPtr - OS_MEM_NODE_HEAD_SIZE);
+        pstNode = (LOS_MEM_DYN_NODE *)((uint32_t)pPtr - OS_MEM_NODE_HEAD_SIZE);
         uwRet = osMemCheckUsedNode(pPool, pstNode);
         if (uwRet != LOS_OK)
         {
@@ -714,7 +714,7 @@ LITE_OS_SEC_TEXT_MINOR VOID *LOS_MemRealloc (VOID *pPool,  VOID *pPtr, UINT32 uw
         pNewPtr = osMemAllocWithCheck(pPool, uwSize);
         if (pNewPtr != NULL)
         {
-            (VOID)memcpy(pNewPtr, pPtr, uwNodeSize - OS_MEM_NODE_HEAD_SIZE);
+            (void)memcpy(pNewPtr, pPtr, uwNodeSize - OS_MEM_NODE_HEAD_SIZE);
             osMemFreeNode(pstNode, pPool);
         }
 

@@ -46,30 +46,30 @@ extern "C" {
 #endif /* __cpluscplus */
 
 
-static void Timer1_Callback    (UINT32 arg);   // callback fuction
-static void Timer2_Callback    (UINT32 arg);   // callback fuction
+static void Timer1_Callback    (uint32_t arg);   // callback fuction
+static void Timer2_Callback    (uint32_t arg);   // callback fuction
 
 
-static UINT32 g_timercount1 = 0;
-static UINT32 g_timercount2 = 0;
+static uint32_t g_timercount1 = 0;
+static uint32_t g_timercount2 = 0;
 
 
-static void Timer1_Callback(UINT32 arg)
+static void Timer1_Callback(uint32_t arg)
 {  
     unsigned long tick_last1;
 
     g_timercount1 ++;
-    tick_last1=(UINT32)LOS_TickCountGet();
+    tick_last1=(uint32_t)LOS_TickCountGet();
     dprintf("g_timercount1=%d\n",g_timercount1);
     dprintf("tick_last1=%lu\n",tick_last1);
 }
 
-static void Timer2_Callback(UINT32 arg)
+static void Timer2_Callback(uint32_t arg)
 {
-    UINT32 uwRet = LOS_OK;
+    uint32_t uwRet = LOS_OK;
     unsigned long tick_last2;
 
-    tick_last2=(UINT32)LOS_TickCountGet();
+    tick_last2=(uint32_t)LOS_TickCountGet();
     g_timercount2 ++;
     dprintf("g_timercount2=%d\n",g_timercount2);
     dprintf("tick_last2=%lu\n",tick_last2);
@@ -80,11 +80,11 @@ static void Timer2_Callback(UINT32 arg)
     }
 }
 
-UINT32 Example_swTimer(void)
+uint32_t Example_swTimer(void)
 {
-    UINT16 id1;
-    UINT16 id2;// timer id
-    UINT32 uwRet = LOS_OK;
+    uint16_t id1;
+    uint16_t id2;// timer id
+    uint32_t uwRet = LOS_OK;
   
     uwRet = LOS_SwtmrCreate(1000, LOS_SWTMR_MODE_ONCE,Timer1_Callback,&id1,1);
     if(LOS_OK != uwRet)

@@ -1,36 +1,4 @@
-/*----------------------------------------------------------------------------
- * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice, this list of
- * conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
- * provided with the distribution.
- * 3. Neither the name of the copyright holder nor the names of its contributors may be used
- * to endorse or promote products derived from this software without specific prior written
- * permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *---------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------
- * Notice of Export Control Law
- * ===============================================
- * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
- * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
- * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
- * applicable export control laws and regulations.
- *---------------------------------------------------------------------------*/
+//TODO: Need Rewrite according to the CMSIS Standard
 
  /**@defgroup los_hwi Hardware interrupt
    *@ingroup kernel
@@ -51,44 +19,44 @@ extern "C" {
  * @ingroup los_hwi
  * Define the type of a hardware interrupt number.
  */
-typedef UINT32                                              HWI_HANDLE_T;
+typedef uint32_t                                              HWI_HANDLE_T;
 
 /**
  * @ingroup los_hwi
  * Define the type of a hardware interrupt priority.
  */
-typedef UINT16                                              HWI_PRIOR_T;
+typedef uint16_t                                              HWI_PRIOR_T;
 
 /**
  * @ingroup los_hwi
  * Define the type of hardware interrupt mode configurations.
  */
-typedef UINT16                                              HWI_MODE_T;
+typedef uint16_t                                              HWI_MODE_T;
 
 /**
  * @ingroup los_hwi
  * Define the type of the parameter used for the hardware interrupt creation function. The function of this parameter varies among platforms.
  */
-typedef UINT32                                              HWI_ARG_T;
+typedef uint32_t                                              HWI_ARG_T;
 
 /**
  * @ingroup  los_hwi
  * Define the type of a hardware interrupt handling function.
  */
-typedef VOID (* HWI_PROC_FUNC)(void);
+typedef void (* HWI_PROC_FUNC)(void);
 
 /**
  * @ingroup  los_hwi
  * Define the type of a hardware interrupt vector table function.
  */
-typedef VOID (**HWI_VECTOR_FUNC)(void);
+typedef void (**HWI_VECTOR_FUNC)(void);
 
 
 /**
  * @ingroup los_hwi
  * Count of interrupts.
  */
-extern UINT32  g_vuwIntCount;
+extern uint32_t  g_vuwIntCount;
 
 /**
  * @ingroup los_hwi
@@ -240,7 +208,7 @@ extern UINT32  g_vuwIntCount;
  * @ingroup los_hwi
  * Boot interrupt vector table.
  */
-extern UINT32 _BootVectors[];
+extern uint32_t _BootVectors[];
 
 /**
  * @ingroup los_hwi
@@ -300,7 +268,8 @@ extern UINT32 _BootVectors[];
  * @ingroup los_hwi
  * Vector table offset register.
  */
-#define OS_NVIC_VTOR                0xE000ED08
+ //No VTOR in Cortex M0
+//#define OS_NVIC_VTOR                0xE000ED08
 
 /**
  * @ingroup los_hwi
@@ -313,42 +282,6 @@ extern UINT32 _BootVectors[];
  * System exception priority register.
  */
 #define OS_NVIC_EXCPRI_BASE         0xE000ED18
-
-/**
- * @ingroup los_hwi
- * Interrupt enable register ,uwHwiNum Set 1
- */
-#define nvicSetIRQ(uwHwiNum)   \
-    do { \
-         *(volatile UINT32 *)(OS_NVIC_SETENA_BASE + ((uwHwiNum >> 5) << 2)) = 1 << ((uwHwiNum) & 0x1F);  \
-       } while (0)
-
-/**
- * @ingroup los_hwi
- * Interrupt enable register ,uwHwiNum Clear 0
- */
-#define nvicClrIRQ(uwHwiNum)   \
-    do { \
-         *(volatile UINT32 *)(OS_NVIC_CLRENA_BASE + ((uwHwiNum >> 5) << 2)) = 1 << ((uwHwiNum) & 0x1F);  \
-       } while (0)
-
-/**
- * @ingroup los_hwi
- * Interrupt Priority-Level Registers ,uwHwiNum Set ucPri.
- */
-#define nvicSetIrqPRI(uwHwiNum, ucPri) \
-    do { \
-         *(volatile UINT8 *)(OS_NVIC_PRI_BASE + (uwHwiNum)) = (UINT8)(0x80 | (ucPri));    \
-       } while (0)
-
-/**
- * @ingroup los_hwi
- * System exception priority register ,uwExcNum Set ucPri.
- */
-#define nvicSetExcPRI(uwExcNum, ucPri) \
-    do { \
-         *(volatile UINT8 *)(OS_NVIC_EXCPRI_BASE + ((uwExcNum) - 4)) = (UINT8)(ucPri);    \
-       } while (0)
 
 /**
  * @ingroup los_hwi
@@ -422,7 +355,7 @@ extern HWI_PROC_FUNC m_pstHwiForm[OS_M0_VECTOR_CNT];
  */
 extern HWI_PROC_FUNC m_pstHwiSlaveForm[OS_M0_VECTOR_CNT];
 
-extern VOID Reset_Handler(VOID);
+extern void Reset_Handler(void);
 
 /**
  * @ingroup los_hwi
@@ -464,7 +397,7 @@ extern VOID Reset_Handler(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_HwiCreate( HWI_HANDLE_T  uwHwiNum,
+extern uint32_t LOS_HwiCreate( HWI_HANDLE_T  uwHwiNum,
                            HWI_PRIOR_T   usHwiPrio,
                            HWI_MODE_T    usMode,
                            HWI_PROC_FUNC pfnHandler,
@@ -490,7 +423,7 @@ extern UINT32 LOS_HwiCreate( HWI_HANDLE_T  uwHwiNum,
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID  osInterrupt(VOID);
+extern void  osInterrupt(void);
 
 
 
@@ -512,7 +445,7 @@ extern VOID  osInterrupt(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 osIntNumGet(VOID);
+extern uint32_t osIntNumGet(void);
 
 
 
@@ -534,7 +467,7 @@ extern UINT32 osIntNumGet(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID  osResetVector(VOID);
+extern void  osResetVector(void);
 
 
 
@@ -556,7 +489,7 @@ extern VOID  osResetVector(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID  osHwiDefaultHandler(VOID);
+extern void  osHwiDefaultHandler(void);
 
 
 
@@ -579,7 +512,7 @@ extern VOID  osHwiDefaultHandler(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID  PendSV_Handler(VOID);
+extern void  PendSV_Handler(void);
 
  /**
  *@ingroup los_hwi
@@ -602,7 +535,7 @@ extern VOID  PendSV_Handler(VOID);
  *@see LOS_IntRestore
  *@since Huawei LiteOS V100R001C00
  */
-extern UINTPTR LOS_IntUnLock(VOID);
+extern uint32_t* LOS_IntUnLock(void);
 
 
 
@@ -627,7 +560,7 @@ extern UINTPTR LOS_IntUnLock(VOID);
  *@see LOS_IntRestore
  *@since Huawei LiteOS V100R001C00
  */
-extern UINTPTR LOS_IntLock(VOID);
+extern uint32_t* LOS_IntLock(void);
 
 
 
@@ -652,7 +585,7 @@ extern UINTPTR LOS_IntLock(VOID);
  *@see LOS_IntLock
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_IntRestore(UINTPTR uvIntSave);
+extern void LOS_IntRestore(uint32_t* uvIntSave);
 
 
 
@@ -680,7 +613,7 @@ extern VOID LOS_IntRestore(UINTPTR uvIntSave);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_HwiDelete(HWI_HANDLE_T uwHwiNum);
+extern uint32_t LOS_HwiDelete(HWI_HANDLE_T uwHwiNum);
 
 /**
  *@ingroup los_hwi
@@ -697,13 +630,13 @@ extern UINT32 LOS_HwiDelete(HWI_HANDLE_T uwHwiNum);
  *
  *@param None.
  *
- *@retval UINT32 irq number.
+ *@retval uint32_t irq number.
  *@par Dependency:
  *<ul><li>los_hwi.h: the header file that contains the API declaration.</li></ul>
  *@see None
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_IntNumGet(VOID);
+extern uint32_t LOS_IntNumGet(void);
 
 /**
  *@ingroup los_hwi
@@ -726,7 +659,7 @@ extern UINT32 LOS_IntNumGet(VOID);
  *@see None
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID osDisableIRQ(VOID);
+extern void osDisableIRQ(void);
 
 #ifdef __cplusplus
 #if __cplusplus

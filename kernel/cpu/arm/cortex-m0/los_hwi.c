@@ -49,10 +49,8 @@ extern void LosAdapIrqDisable(unsigned int irqnum);
 extern void LosAdapIntInit(void);
 extern void SysTick_Handler(void);
 /*lint -restore*/
-UINT32  g_vuwIntCount = 0;
-#ifdef LOS_LOCATION_VECTOR_IAR
-#pragma  location = ".vector"
-#endif
+uint32_t  g_vuwIntCount = 0;
+
 LITE_OS_SEC_VEC HWI_PROC_FUNC m_pstHwiForm[OS_M0_VECTOR_CNT] =
 {
   0,                    // [0] Top of Stack
@@ -81,9 +79,9 @@ HWI_PROC_FUNC m_pstHwiSlaveForm[OS_M0_VECTOR_CNT] = {0};
  Output      : None
  Return      : Interrupt Indexes number
  *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR UINT32 osIntNumGet(VOID)
+LITE_OS_SEC_TEXT_MINOR uint32_t osIntNumGet(void)
 {
-    UINT32 uwIntNum;
+    uint32_t uwIntNum;
 
     uwIntNum = LOS_IntNumGet();
     return uwIntNum;
@@ -96,9 +94,9 @@ LITE_OS_SEC_TEXT_MINOR UINT32 osIntNumGet(VOID)
  Output      : None
  Return      : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR VOID  osHwiDefaultHandler(VOID)
+LITE_OS_SEC_TEXT_MINOR void  osHwiDefaultHandler(void)
 {
-    UINT32 irq_num = osIntNumGet();
+    uint32_t irq_num = osIntNumGet();
     while(1);
 }
 
@@ -109,10 +107,10 @@ LITE_OS_SEC_TEXT_MINOR VOID  osHwiDefaultHandler(VOID)
  Output      : None
  Return      : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT VOID  osInterrupt(VOID)
+LITE_OS_SEC_TEXT void  osInterrupt(void)
 {
-    UINT32 uwHwiIndex;
-    UINT32 uwIntSave;
+    uint32_t uwHwiIndex;
+    uint32_t* uwIntSave;
 
     uwIntSave = LOS_IntLock();
     g_vuwIntCount++;
@@ -139,7 +137,7 @@ LITE_OS_SEC_TEXT VOID  osInterrupt(VOID)
  *****************************************************************************/
 LITE_OS_SEC_TEXT_INIT unsigned int osGetVectorAddr(void)
 {
-    return (UINT32)m_pstHwiForm;
+    return (uint32_t)m_pstHwiForm;
 }
 
 /*****************************************************************************
@@ -149,9 +147,9 @@ LITE_OS_SEC_TEXT_INIT unsigned int osGetVectorAddr(void)
  Output      : None
  Return      : OS_SUCCESS
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT VOID osHwiInit()
+LITE_OS_SEC_TEXT_INIT void osHwiInit()
 {
-    UINT32 uwIndex;
+    uint32_t uwIndex;
     for(uwIndex = OS_M0_SYS_VECTOR_CNT; uwIndex < OS_M0_VECTOR_CNT; uwIndex++)
     {
         m_pstHwiForm[uwIndex] = osHwiDefaultHandler;
@@ -171,13 +169,13 @@ LITE_OS_SEC_TEXT_INIT VOID osHwiInit()
  Output      : None
  Return      : OS_SUCCESS on success or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 LOS_HwiCreate( HWI_HANDLE_T  uwHwiNum,
+LITE_OS_SEC_TEXT_INIT uint32_t LOS_HwiCreate( HWI_HANDLE_T  uwHwiNum,
                                       HWI_PRIOR_T   usHwiPrio,
                                       HWI_MODE_T    usMode,
                                       HWI_PROC_FUNC pfnHandler,
                                       HWI_ARG_T     uwArg )
 {
-    UINTPTR uvIntSave;
+    uint32_t* uvIntSave;
 
     if (NULL == pfnHandler)
     {
@@ -215,9 +213,9 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_HwiCreate( HWI_HANDLE_T  uwHwiNum,
  Output      : None
  Return      : LOS_OK on success or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 LOS_HwiDelete(HWI_HANDLE_T uwHwiNum)
+LITE_OS_SEC_TEXT_INIT uint32_t LOS_HwiDelete(HWI_HANDLE_T uwHwiNum)
 {
-    UINT32 uwIntSave;
+    uint32_t* uwIntSave;
 
     if (uwHwiNum >= OS_M0_IRQ_VECTOR_CNT)
     {

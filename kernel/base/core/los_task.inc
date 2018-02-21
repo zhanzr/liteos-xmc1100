@@ -75,8 +75,8 @@ extern "C" {
 typedef struct tagTskSortLinkAttr
 {
     LOS_DL_LIST     *pstSortLink;
-    UINT16          usCursor;
-    UINT16          usUnUsed;
+    uint16_t          usCursor;
+    uint16_t          usUnUsed;
 } TSK_SORTLINK_ATTRIBUTE_S;
 
 /**
@@ -86,12 +86,12 @@ typedef struct tagTskSortLinkAttr
  */
 typedef struct tagStackInfo
 {
-    UINT32 uwTop;                                  /**<Task stack top                  */
-    UINT32 uwBottom;                               /**<Task stack bottom                  */
-    UINT32 uwSP;                                   /**<Task stack pointer                */
-    UINT32 uwCurrUsed;                             /**<Current task stack usage      */
-    UINT32 uwPeakUsed;                             /**<Task stack usage peak            */
-    BOOL   bOvf;                                   /**<Flag that indicates whether a task stack overflow occurs        */
+    uint32_t uwTop;                                  /**<Task stack top                  */
+    uint32_t uwBottom;                               /**<Task stack bottom                  */
+    uint32_t uwSP;                                   /**<Task stack pointer                */
+    uint32_t uwCurrUsed;                             /**<Current task stack usage      */
+    uint32_t uwPeakUsed;                             /**<Task stack usage peak            */
+    bool   bOvf;                                   /**<Flag that indicates whether a task stack overflow occurs        */
 } STACK_INFO_S;
 
 

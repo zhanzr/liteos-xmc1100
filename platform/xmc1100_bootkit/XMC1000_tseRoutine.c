@@ -1,24 +1,11 @@
 /******************************************************************************
 File:			XMC1000_tseRoutine.c
-
-	===========================================================================
-	Copyright (C) 2012 � Infineon Technologies AG (IFX).
-	All rights reserved.
-	This document contains proprietary information belonging to IFX here.
-	Passing on and copying of this document, and communication of its
-	contents is not permitted without prior written authorisation.
-	===========================================================================
-
 ******************************************************************************/
+#include <stdint.h>
+#include <stdbool.h>
+
+#include <xmc_scu.h>
 #include "XMC1000_TSE.h"
-
-// fast square root algorithm taken from 
-// Otto Peter: Prozessor zieht Wurzel, c't 1990, Heft 1, page 300-306
-#define N_BITS 32
-#define MAX_BIT ((N_BITS + 1) / 2 - 1)
-
-#define TRUE 1
-#define FALSE 0
 
 uint32_t *tse_k1_ptr;
 uint32_t *tse_k3_ptr;
@@ -27,6 +14,16 @@ uint16_t *tse_min_ptr;
 uint16_t *tse_max_ptr;
 int8_t *tse_corrdata_ptr;
 
+void DTS_Initialize(void)
+{
+	/* Enable DTS */
+	XMC_SCU_StartTempMeasurement();
+}
+
+// fast square root algorithm taken from 
+// Otto Peter: Prozessor zieht Wurzel, c't 1990, Heft 1, page 300-306
+#define N_BITS 32
+#define MAX_BIT ((N_BITS + 1) / 2 - 1)
 /**************************************************************************//**
 Purpose:        Implementation of fast square root algorithm after Otto Peter's
                 (Otto Peter: Prozessor zieht Wurzel, c't 1990, Heft 1, page 300-306)
@@ -61,7 +58,7 @@ Purpose:        Implementation of CalcTemperature function
    
 @requirements   None   
 @param          None          
-@return         uint32_t
+@return         int32_t
 
 Detailed description: The function is used to convert the ANATSEMON values to Kelvin. 
 
@@ -152,12 +149,10 @@ uint32_t XMC1000_CalcTSEVAR(uint32_t temperature)
     int32_t h0, h1, h2;
     int32_t ik1, ik3, ik2;
 
-    uint32_t searchStatus;
+    bool searchStatus = false;
     uint16_t i;
     
     int8_t corrdata;
-
-    searchStatus = FALSE;
 
     tse_corrdata_ptr = (int8_t*)0x10000F34;
 
@@ -168,13 +163,13 @@ uint32_t XMC1000_CalcTSEVAR(uint32_t temperature)
     	if(temperature == (MIN_TEMP_KELVIN + i + corrdata)) //TSE_CorrData[i]
         {        
             temperature = MIN_TEMP_KELVIN + i;
-            searchStatus = TRUE;
+            searchStatus = true;
             break;
         }
     	tse_corrdata_ptr++;
     }
 
-    if(searchStatus == FALSE)
+    if(false == searchStatus)
     {
         return 0;
     }

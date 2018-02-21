@@ -385,7 +385,7 @@ extern "C" {
  * Define the type of the task switching hook function.
  *
  */
-typedef VOID (*TSKSWITCHHOOK)(VOID);
+typedef void (*TSKSWITCHHOOK)(void);
 
 /**
  * @ingroup los_task
@@ -402,10 +402,10 @@ extern TSKSWITCHHOOK g_pfnUsrTskSwitchHook;
 * This API is used to define the type of a task entrance function and call it after a task is created and triggered.
 * @attention None.
 *
-* @param  uwParam1 [IN] Type #UINT32 The first parameter passed to the task handling function.
-* @param  uwParam2 [IN] Type #UINT32 The second parameter passed to the task handling function.
-* @param  uwParam3 [IN] Type #UINT32 The third parameter passed to the task handling function.
-* @param  uwParam4 [IN] Type #UINT32 The fourth parameter passed to the task handling function.
+* @param  uwParam1 [IN] Type #uint32_t The first parameter passed to the task handling function.
+* @param  uwParam2 [IN] Type #uint32_t The second parameter passed to the task handling function.
+* @param  uwParam3 [IN] Type #uint32_t The third parameter passed to the task handling function.
+* @param  uwParam4 [IN] Type #uint32_t The fourth parameter passed to the task handling function.
 *
 * @retval None.
 * @par Dependency:
@@ -413,10 +413,10 @@ extern TSKSWITCHHOOK g_pfnUsrTskSwitchHook;
 * @see
 * @since Huawei LiteOS V100R001C00
 */
-typedef VOID *(*TSK_ENTRY_FUNC)(UINT32 uwParam1,
-                        UINT32 uwParam2,
-                        UINT32 uwParam3,
-                        UINT32 uwParam4);
+typedef void *(*TSK_ENTRY_FUNC)(uint32_t uwParam1,
+                        uint32_t uwParam2,
+                        uint32_t uwParam3,
+                        uint32_t uwParam4);
 
 /**
  * @ingroup los_task
@@ -427,11 +427,11 @@ typedef VOID *(*TSK_ENTRY_FUNC)(UINT32 uwParam1,
 typedef struct tagTskInitParam
 {
    TSK_ENTRY_FUNC       pfnTaskEntry;               /**< Task entrance function               */
-   UINT16               usTaskPrio;                 /**< Task priority                 */
-   UINT32               auwArgs[4];                 /**< Task parameters, of which the maximum number is four          */
-   UINT32               uwStackSize;                /**< Task stack size               */
-   CHAR                 *pcName;                    /**< Task name                     */
-   UINT32               uwResved;                   /**< Reserved. It is automatically deleted if set to LOS_TASK_STATUS_DETACHED. It is unable to be deleted if set to 0.*/
+   uint16_t               usTaskPrio;                 /**< Task priority                 */
+   uint32_t               auwArgs[4];                 /**< Task parameters, of which the maximum number is four          */
+   uint32_t               uwStackSize;                /**< Task stack size               */
+   char                 *pcName;                    /**< Task name                     */
+   uint32_t               uwResved;                   /**< Reserved. It is automatically deleted if set to LOS_TASK_STATUS_DETACHED. It is unable to be deleted if set to 0.*/
 } TSK_INIT_PARAM_S;
 
 /**
@@ -448,21 +448,21 @@ typedef struct tagTskInitParam
  */
 typedef struct tagTskInfo
 {
-    CHAR                acName[LOS_TASK_NAMELEN];   /**< Task entrance function               */
-    UINT32              uwTaskID;                   /**< Task ID                     */
-    UINT16              usTaskStatus;               /**< Task status                   */
-    UINT16              usTaskPrio;                 /**< Task priority                 */
-    VOID                *pTaskSem;                  /**< Semaphore pointer             */
-    VOID                *pTaskMux;                  /**< Mutex pointer             */
+    char                acName[LOS_TASK_NAMELEN];   /**< Task entrance function               */
+    uint32_t              uwTaskID;                   /**< Task ID                     */
+    uint16_t              usTaskStatus;               /**< Task status                   */
+    uint16_t              usTaskPrio;                 /**< Task priority                 */
+    void                *pTaskSem;                  /**< Semaphore pointer             */
+    void                *pTaskMux;                  /**< Mutex pointer             */
     EVENT_CB_S          uwEvent;                    /**< Event                   */
-    UINT32              uwEventMask;                /**< Event mask               */
-    UINT32              uwStackSize;                /**< Task stack size                 */
-    UINT32              uwTopOfStack;               /**< Task stack top                   */
-    UINT32              uwBottomOfStack;            /**< Task stack bottom                   */
-    UINT32              uwSP;                       /**< Task SP pointer                 */
-    UINT32              uwCurrUsed;                 /**< Current task stack usage         */
-    UINT32              uwPeakUsed;                 /**< Task stack usage peak             */
-    BOOL                bOvf;                       /**< Flag that indicates whether a task stack overflow occurs         */
+    uint32_t              uwEventMask;                /**< Event mask               */
+    uint32_t              uwStackSize;                /**< Task stack size                 */
+    uint32_t              uwTopOfStack;               /**< Task stack top                   */
+    uint32_t              uwBottomOfStack;            /**< Task stack bottom                   */
+    uint32_t              uwSP;                       /**< Task SP pointer                 */
+    uint32_t              uwCurrUsed;                 /**< Current task stack usage         */
+    uint32_t              uwPeakUsed;                 /**< Task stack usage peak             */
+    bool                bOvf;                       /**< Flag that indicates whether a task stack overflow occurs         */
 } TSK_INFO_S;
 
 /**
@@ -483,7 +483,7 @@ typedef struct tagTskInfo
  * <li>The pointer to the task executing function cannot be null.</li>
  * </ul>
  *
- * @param  puwTaskID   [OUT] Type #UINT32 * Task ID.
+ * @param  puwTaskID   [OUT] Type #uint32_t * Task ID.
  * @param  pstInitParam [IN] Type  #TSK_INIT_PARAM_S * Parameter for task creation.
  *
  * @retval #OS_ERROR                                 -1:        The task fails to be created.
@@ -494,7 +494,7 @@ typedef struct tagTskInfo
  * @see LOS_TaskDelete
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_TaskCreateOnly(UINT32 *puwTaskID, TSK_INIT_PARAM_S *pstInitParam);
+extern uint32_t LOS_TaskCreateOnly(uint32_t *puwTaskID, TSK_INIT_PARAM_S *pstInitParam);
 
 /**
  * @ingroup  los_task
@@ -515,7 +515,7 @@ extern UINT32 LOS_TaskCreateOnly(UINT32 *puwTaskID, TSK_INIT_PARAM_S *pstInitPar
  * <li>The pointer to the task executing function cannot be null.</li>
  * </ul>
  *
- * @param  puwTaskID   [OUT] Type #UINT32 * Task ID.
+ * @param  puwTaskID   [OUT] Type #uint32_t * Task ID.
  * @param  pstInitParam [IN] Type  #TSK_INIT_PARAM_S * Parameter for task creation.
  *
  * @retval #LOS_ERRNO_TSK_ID_INVALID             0x02000207:invalid Task ID
@@ -534,7 +534,7 @@ extern UINT32 LOS_TaskCreateOnly(UINT32 *puwTaskID, TSK_INIT_PARAM_S *pstInitPar
  * @see LOS_TaskDelete
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_TaskCreate(UINT32 *puwTaskID, TSK_INIT_PARAM_S *pstInitParam);
+extern uint32_t LOS_TaskCreate(uint32_t *puwTaskID, TSK_INIT_PARAM_S *pstInitParam);
 
 /**
  * @ingroup  los_task
@@ -548,7 +548,7 @@ extern UINT32 LOS_TaskCreate(UINT32 *puwTaskID, TSK_INIT_PARAM_S *pstInitParam);
  * <li>If the task is delayed or blocked, resume the task without adding it to the queue of ready tasks.</li>
  * </ul>
  *
- * @param  uwTaskID [IN] Type #UINT32 Task ID.
+ * @param  uwTaskID [IN] Type #uint32_t Task ID.
  *
  * @retval #LOS_ERRNO_TSK_ID_INVALID          0x02000207:invalid Task ID
  * @retval #LOS_ERRNO_TSK_NOT_CREATED      0x0200020a:The task is not created.
@@ -559,7 +559,7 @@ extern UINT32 LOS_TaskCreate(UINT32 *puwTaskID, TSK_INIT_PARAM_S *pstInitParam);
  * @see LOS_TaskSuspend
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_TaskResume(UINT32 uwTaskID);
+extern uint32_t LOS_TaskResume(uint32_t uwTaskID);
 
 /**
  * @ingroup  los_task
@@ -574,7 +574,7 @@ extern UINT32 LOS_TaskResume(UINT32 uwTaskID);
  * <li>The idle task cannot be suspended.</li>
  * </ul>
  *
- * @param  uwTaskID [IN] Type #UINT32 Task ID.
+ * @param  uwTaskID [IN] Type #uint32_t Task ID.
  *
  * @retval #LOS_ERRNO_TSK_OPERATE_IDLE     0x02000214:Check the task ID and do not operate on the idle task.
  * @retval #LOS_ERRNO_TSK_ID_INVALID         0x02000207:invalid Task ID
@@ -587,7 +587,7 @@ extern UINT32 LOS_TaskResume(UINT32 uwTaskID);
  * @see LOS_TaskResume
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_TaskSuspend(UINT32 uwTaskID);
+extern uint32_t LOS_TaskSuspend(uint32_t uwTaskID);
 
 /**
  * @ingroup  los_task
@@ -601,7 +601,7 @@ extern UINT32 LOS_TaskSuspend(UINT32 uwTaskID);
  * <li>None.</li>
  * </ul>
  *
- * @param  uwTaskID [IN] Type #UINT32 Task ID.
+ * @param  uwTaskID [IN] Type #uint32_t Task ID.
  *
  * @retval #LOS_ERRNO_TSK_OPERATE_IDLE     0x02000214:Check the task ID and do not operate on the idle task.
  * @retval #LOS_ERRNO_TSK_ID_INVALID         0x02000207:invalid Task ID
@@ -614,7 +614,7 @@ extern UINT32 LOS_TaskSuspend(UINT32 uwTaskID);
  * @see LOS_TaskCreate
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_TaskDelete(UINT32 uwTaskID);
+extern uint32_t LOS_TaskDelete(uint32_t uwTaskID);
 
 /**
  * @ingroup  los_task
@@ -630,7 +630,7 @@ extern UINT32 LOS_TaskDelete(UINT32 uwTaskID);
  * If no ready task with the priority of the current task is available, the task scheduling will not occur, and the current task continues to be executed.</li>
  * </ul>
  *
- * @param  uwTick [IN] Type #UINT32 Number of Ticks for which the task is delayed.
+ * @param  uwTick [IN] Type #uint32_t Number of Ticks for which the task is delayed.
  *
  * @retval #LOS_ERRNO_TSK_DELAY_IN_INT                         0x0300020d:The task delay occurs during an interrupt.
  * @retval #LOS_ERRNO_TSK_DELAY_IN_LOCK                       0x0200020e:The task delay occurs when the task is locked.
@@ -642,7 +642,7 @@ extern UINT32 LOS_TaskDelete(UINT32 uwTaskID);
  * @see
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_TaskDelay(UINT32 uwTick);
+extern uint32_t LOS_TaskDelay(uint32_t uwTick);
 
 /**
  * @ingroup  los_task
@@ -665,7 +665,7 @@ extern UINT32 LOS_TaskDelay(UINT32 uwTick);
  * @see LOS_TaskUnlock
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_TaskLock(VOID);
+extern void LOS_TaskLock(void);
 
 /**
  * @ingroup  los_task
@@ -687,7 +687,7 @@ extern VOID LOS_TaskLock(VOID);
  * @see LOS_TaskLock
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_TaskUnlock(VOID);
+extern void LOS_TaskUnlock(void);
 
 /**
  * @ingroup  los_task
@@ -704,7 +704,7 @@ extern VOID LOS_TaskUnlock(VOID);
  * <li>Using the interface in the interrupt is not allowed.</li>
  * </ul>
  *
- * @param  uwTaskID [IN] Type #UINT32 Task ID.
+ * @param  uwTaskID [IN] Type #uint32_t Task ID.
  * @param  usTaskPrio [IN] Type #TSK_PRIOR_T Task priority.
  *
  * @retval #LOS_ERRNO_TSK_PRIOR_ERROR     0x02000203: Incorrect task priority.Re-configure the task priority
@@ -717,7 +717,7 @@ extern VOID LOS_TaskUnlock(VOID);
  * @see LOS_TaskPriGet
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_TaskPriSet(UINT32 uwTaskID, UINT16 usTaskPrio);
+extern uint32_t LOS_TaskPriSet(uint32_t uwTaskID, uint16_t usTaskPrio);
 
 /**
  * @ingroup  los_task
@@ -745,7 +745,7 @@ extern UINT32 LOS_TaskPriSet(UINT32 uwTaskID, UINT16 usTaskPrio);
  * @see LOS_TaskPriSet
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_CurTaskPriSet(UINT16 usTaskPrio);
+extern uint32_t LOS_CurTaskPriSet(uint16_t usTaskPrio);
 
 /**
  * @ingroup  los_task
@@ -769,7 +769,7 @@ extern UINT32 LOS_CurTaskPriSet(UINT16 usTaskPrio);
  * @see
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_TaskYield(VOID);
+extern uint32_t LOS_TaskYield(void);
 
 /**
  * @ingroup  los_task
@@ -780,7 +780,7 @@ extern UINT32 LOS_TaskYield(VOID);
  *
  * @attention None.
  *
- * @param  uwTaskID [IN] Type #UINT32 Task ID.
+ * @param  uwTaskID [IN] Type #uint32_t Task ID.
  *
  * @retval #OS_INVALID The task priority fails to be obtained.
  * @retval # The task priority is successfully returned.
@@ -789,7 +789,7 @@ extern UINT32 LOS_TaskYield(VOID);
  * @see LOS_TaskPriSet
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT16 LOS_TaskPriGet(UINT32 uwTaskID);
+extern uint16_t LOS_TaskPriGet(uint32_t uwTaskID);
 
 /**
  * @ingroup  los_task
@@ -808,7 +808,7 @@ extern UINT16 LOS_TaskPriGet(UINT32 uwTaskID);
  * @see
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_CurTaskIDGet(VOID);
+extern uint32_t LOS_CurTaskIDGet(void);
 
 #ifdef __cplusplus
 #if __cplusplus

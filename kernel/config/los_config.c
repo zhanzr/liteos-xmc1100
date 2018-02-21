@@ -43,26 +43,20 @@
 extern "C" {
 #endif /* __cpluscplus */
 #endif /* __cpluscplus */
-#ifdef LOS_PACK_ALIGN_8_IAR
-#pragma data_alignment=8
-#endif
-#ifdef LOS_PACK_ALIGN_8_KEIL
+
 #pragma pack(8)
-#endif
-#ifdef LOS_PACK_ALIGN_8_GCC
-__attribute__ ((aligned (8)))
-#endif
-UINT8 *m_aucSysMem0;
-UINT32 g_sys_mem_addr_end = 0;
-extern UINT8 g_ucMemStart[];
-extern UINT32 osTickInit(UINT32 uwSystemClock, UINT32 uwTickPerSecond);
-extern UINT32   g_uwTskMaxNum;
+
+uint8_t *m_aucSysMem0;
+uint32_t g_sys_mem_addr_end = 0;
+extern uint8_t g_ucMemStart[];
+extern uint32_t osTickInit(uint32_t uwSystemClock, uint32_t uwTickPerSecond);
+extern uint32_t   g_uwTskMaxNum;
 
 extern const unsigned char g_use_ram_vect;
 	
 void osEnableFPU(void)
 {
-    *(volatile UINT32 *)0xE000ED88 |= ((3UL << (10*2))|(3UL << (11*2)));
+    *(volatile uint32_t *)0xE000ED88 |= ((3UL << (10*2))|(3UL << (11*2)));
     //SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));
 }
 /*****************************************************************************
@@ -72,10 +66,10 @@ void osEnableFPU(void)
  Output      : None
  Return      : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT VOID osRegister(VOID)
+LITE_OS_SEC_TEXT_INIT void osRegister(void)
 {
     g_uwTskMaxNum = LOSCFG_BASE_CORE_TSK_LIMIT + 1; /* Reserved 1 for IDLE */
-    g_sys_mem_addr_end = (UINT32)g_ucMemStart + OS_SYS_MEM_SIZE;
+    g_sys_mem_addr_end = (uint32_t)g_ucMemStart + OS_SYS_MEM_SIZE;
     return;
 }
 
@@ -86,9 +80,9 @@ LITE_OS_SEC_TEXT_INIT VOID osRegister(VOID)
  Output      : None
  Return      : LOS_OK
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 LOS_EnableTick(void)
+LITE_OS_SEC_TEXT_INIT uint32_t LOS_EnableTick(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
 
     uwRet = osTickStart();
 
@@ -106,9 +100,9 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_EnableTick(void)
  Output      : None
  Return      : LOS_OK
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 LOS_Start(void)
+LITE_OS_SEC_TEXT_INIT uint32_t LOS_Start(void)
 {
-    UINT32 uwRet = LOS_OK;
+    uint32_t uwRet = LOS_OK;
 
     LOS_StartToRun();
 
@@ -124,7 +118,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_Start(void)
  *****************************************************************************/
 LITE_OS_SEC_TEXT_INIT int osMain(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
 
     osRegister();
 
@@ -207,7 +201,7 @@ LITE_OS_SEC_TEXT_INIT int osMain(void)
 
 LITE_OS_SEC_TEXT_INIT int LOS_KernelInit(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
     uwRet = osMain();
     if (uwRet != LOS_OK) {
         return LOS_NOK;
@@ -216,7 +210,7 @@ LITE_OS_SEC_TEXT_INIT int LOS_KernelInit(void)
 }
 
 
-void osBackTrace(VOID){}
+void osBackTrace(void){}
 
 #ifdef __cplusplus
 #if __cplusplus

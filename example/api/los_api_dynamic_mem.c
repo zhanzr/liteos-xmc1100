@@ -46,10 +46,10 @@ extern "C" {
 #endif /* __cpluscplus */
 
 
-UINT32 Example_Dyn_Mem(VOID)
+uint32_t Example_Dyn_Mem(void)
 {
-    UINT32 *p_num = NULL;
-    UINT32 uwRet;
+    uint32_t *p_num = NULL;
+    uint32_t uwRet;
     uwRet = LOS_MemInit(m_aucSysMem0, OS_SYS_MEM_SIZE);
     if (LOS_OK == uwRet)
     {
@@ -61,7 +61,7 @@ UINT32 Example_Dyn_Mem(VOID)
         return LOS_NOK;
     }
     /*分配内存*/
-    p_num = (UINT32*)LOS_MemAlloc(m_aucSysMem0, 4);
+    p_num = (uint32_t*)LOS_MemAlloc(m_aucSysMem0, 4);
     if (NULL == p_num)
     {
         dprintf("mem alloc failed!\n");

@@ -4,11 +4,9 @@
 #include "los_config.h"
 
 #include "los_bsp_led.h"
-//#include "los_bsp_key.h"
 #include "los_bsp_uart.h"
 #include "los_inspect_entry.h"
 #include "los_demo_entry.h"
-#include "los_bsp_adapter.h"
 
 #ifdef LOS_XMC1100
 	#include <stdint.h>
@@ -24,31 +22,13 @@
 	
 	#include "lcd2004.h"
 	#include "XMC1000_TSE.h"
+	#include "rtc.h"
 #endif
 
 #ifdef LOS_CMBACKTRACE_COMPILE
 #define HARDWARE_VERSION               "V1.0.0"
 #define SOFTWARE_VERSION               "V0.1.0"
 #endif
-
-__IO uint32_t g_Ticks;
-
-XMC_RTC_CONFIG_t rtc_config =
-{
-  .time.seconds = 5U,
-  .prescaler = 0x7fffU
-};     
-
-XMC_RTC_TIME_t init_rtc_time = 
-{
-	.year = 2018,
-	.month = XMC_RTC_MONTH_FEBRUARY,
-	.daysofweek = XMC_RTC_WEEKDAY_TUESDAY,
-	.days = 20,
-	.hours = 15,
-	.minutes = 32,
-	.seconds = 59	
-};
 
 int stdout_putchar (int ch)
 {
@@ -57,8 +37,8 @@ int stdout_putchar (int ch)
 	return ch;
 }
 
-static UINT32 g_uwboadTaskID;
-static LITE_OS_SEC_TEXT VOID LOS_BoardExampleTskfunc(VOID)
+static uint32_t g_uwboadTaskID;
+static LITE_OS_SEC_TEXT void LOS_BoardExampleTskfunc(void)
 {
 	__IO XMC_RTC_TIME_t now_rtc_time;
 	int32_t old_temp_C;
@@ -99,10 +79,10 @@ static LITE_OS_SEC_TEXT VOID LOS_BoardExampleTskfunc(VOID)
 
 void LOS_BoardExampleEntry(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
     TSK_INIT_PARAM_S stTaskInitParam;
 
-    (VOID)memset((void *)(&stTaskInitParam), 0, sizeof(TSK_INIT_PARAM_S));
+    (void)memset((void *)(&stTaskInitParam), 0, sizeof(TSK_INIT_PARAM_S));
     stTaskInitParam.pfnTaskEntry = (TSK_ENTRY_FUNC)LOS_BoardExampleTskfunc;
     stTaskInitParam.uwStackSize = LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE;
     stTaskInitParam.pcName = "BoardDemo";
@@ -126,27 +106,20 @@ Return      : None
 LITE_OS_SEC_TEXT_INIT
 int main(void)
 {
-  UINT32 uwRet;
+  uint32_t uwRet;
 
-	LOS_EvbSetup();
+	LOS_EvbUartInit();
+	LED_Initialize();
 	
-	/* Enable DTS */
-	XMC_SCU_StartTempMeasurement();
+	DTS_Initialize();
+	
 	LCD_Initialize();
 	
   printf ("\nXMC1100 %s @%u Hz\n",
 	VER,
 	SystemCoreClock);
 	
-	//RTC
-  XMC_RTC_Init(&rtc_config);
-	
-	XMC_RTC_SetTime(&init_rtc_time);
-  XMC_RTC_EnableEvent(XMC_RTC_EVENT_PERIODIC_MINUTES);
-  XMC_SCU_INTERRUPT_EnableEvent(XMC_RTC_EVENT_PERIODIC_MINUTES);
-  NVIC_SetPriority(SCU_1_IRQn, 3);
-  NVIC_EnableIRQ(SCU_1_IRQn);
-  XMC_RTC_Start();
+	RTC_Initialize();
 		
 #ifdef LOS_CMBACKTRACE_COMPILE
     cm_backtrace_init("LOS_CmBacktrace", HARDWARE_VERSION, SOFTWARE_VERSION);

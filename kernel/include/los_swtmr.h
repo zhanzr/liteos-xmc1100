@@ -246,7 +246,7 @@ enum enSwTmrType
 * @see None.
 * @since Huawei LiteOS V100R001C00
 */
-typedef VOID (*SWTMR_PROC_FUNC)(UINT32 uwPar);
+typedef void (*SWTMR_PROC_FUNC)(uint32_t uwPar);
 
 /**
  * @ingroup los_swtmr
@@ -255,14 +255,14 @@ typedef VOID (*SWTMR_PROC_FUNC)(UINT32 uwPar);
 typedef struct tagSwTmrCtrl
 {
     struct tagSwTmrCtrl *pstNext;       /**< Pointer to the next software timer                      */
-    UINT8               ucState;        /**< Software timer state                                    */
-    UINT8               ucMode;         /**< Software timer mode                                     */
-    UINT8               ucOverrun;      /**< Times that a software timer repeats timing              */
-    UINT16              usTimerID;      /**< Software timer ID                   */
-    UINT32              uwCount;        /**< Times that a software timer works               */
-    UINT32              uwInterval;     /**< Timeout interval of a periodic software timer         */
-    UINT32              uwExpiry;       /**< Timeout interval of an one-off software timer         */
-    UINT32              uwArg;          /**< Parameter passed in when the callback function that handles software timer timeout is called */
+    uint8_t               ucState;        /**< Software timer state                                    */
+    uint8_t               ucMode;         /**< Software timer mode                                     */
+    uint8_t               ucOverrun;      /**< Times that a software timer repeats timing              */
+    uint16_t              usTimerID;      /**< Software timer ID                   */
+    uint32_t              uwCount;        /**< Times that a software timer works               */
+    uint32_t              uwInterval;     /**< Timeout interval of a periodic software timer         */
+    uint32_t              uwExpiry;       /**< Timeout interval of an one-off software timer         */
+    uint32_t              uwArg;          /**< Parameter passed in when the callback function that handles software timer timeout is called */
     SWTMR_PROC_FUNC     pfnHandler;     /**< Callback function that handles software timer timeout   */
 } SWTMR_CTRL_S;
 
@@ -289,7 +289,7 @@ typedef struct tagSwTmrCtrl
  *@see LOS_SwtmrStop
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_SwtmrStart(UINT16 usSwTmrID);
+extern uint32_t LOS_SwtmrStart(uint16_t usSwTmrID);
 
 /**
  *@ingroup los_swtmr
@@ -314,7 +314,7 @@ extern UINT32 LOS_SwtmrStart(UINT16 usSwTmrID);
  *@see LOS_SwtmrStart
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_SwtmrStop(UINT16 usSwTmrID);
+extern uint32_t LOS_SwtmrStop(uint16_t usSwTmrID);
 
 /**
  *@ingroup los_swtmr
@@ -344,7 +344,7 @@ extern UINT32 LOS_SwtmrStop(UINT16 usSwTmrID);
  *@see LOS_SwtmrDelete
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_SwtmrCreate(UINT32 uwInterval, UINT8 ucMode, SWTMR_PROC_FUNC pfnHandler, UINT16 *pusSwTmrID, UINT32 uwArg);
+extern uint32_t LOS_SwtmrCreate(uint32_t uwInterval, uint8_t ucMode, SWTMR_PROC_FUNC pfnHandler, uint16_t *pusSwTmrID, uint32_t uwArg);
 
 /**
  *@ingroup los_swtmr
@@ -368,7 +368,7 @@ extern UINT32 LOS_SwtmrCreate(UINT32 uwInterval, UINT8 ucMode, SWTMR_PROC_FUNC p
  *@see LOS_SwtmrCreate
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_SwtmrDelete(UINT16 usSwTmrID);
+extern uint32_t LOS_SwtmrDelete(uint16_t usSwTmrID);
 
 
 #ifdef __cplusplus

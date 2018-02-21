@@ -77,9 +77,9 @@ extern "C" {
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-INLINE UINT64 osCycle2MS(UINT64 udwCycle)
+inline uint64_t osCycle2MS(uint64_t udwCycle)
 {
-    return (UINT64)((udwCycle / (OS_SYS_CLOCK / OS_SYS_MS_PER_SECOND)));
+    return (uint64_t)((udwCycle / (OS_SYS_CLOCK / OS_SYS_MS_PER_SECOND)));
 }
 
 /**
@@ -101,10 +101,10 @@ INLINE UINT64 osCycle2MS(UINT64 udwCycle)
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-INLINE UINT64 osCycle2US(UINT64 udwCycle)
+inline uint64_t osCycle2US(uint64_t udwCycle)
 {
-    UINT64 udwTmp = OS_SYS_CLOCK / OS_SYS_US_PER_SECOND;
-    return (UINT64)(udwCycle / udwTmp);
+    uint64_t udwTmp = OS_SYS_CLOCK / OS_SYS_US_PER_SECOND;
+    return (uint64_t)(udwCycle / udwTmp);
 }
 
 /**
@@ -129,7 +129,7 @@ INLINE UINT64 osCycle2US(UINT64 udwCycle)
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 osCpuTick2MS(CPU_TICK *pstCpuTick, UINT32 *puwMsHi, UINT32 *puwMsLo);
+extern uint32_t osCpuTick2MS(CPU_TICK *pstCpuTick, uint32_t *puwMsHi, uint32_t *puwMsLo);
 
 /**
  *@ingroup los_sys
@@ -153,7 +153,7 @@ extern UINT32 osCpuTick2MS(CPU_TICK *pstCpuTick, UINT32 *puwMsHi, UINT32 *puwMsL
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 osCpuTick2US(CPU_TICK *pstCpuTick, UINT32 *puwUsHi, UINT32 *puwUsLo);
+extern uint32_t osCpuTick2US(CPU_TICK *pstCpuTick, uint32_t *puwUsHi, uint32_t *puwUsLo);
 
 
 #ifdef __cplusplus

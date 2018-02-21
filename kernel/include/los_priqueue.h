@@ -70,7 +70,7 @@ extern "C" {
  *@see LOS_PriqueueDequeue.
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_PriqueueEnqueue(LOS_DL_LIST *ptrPQItem, UINT32 uwPri);
+extern void LOS_PriqueueEnqueue(LOS_DL_LIST *ptrPQItem, uint32_t uwPri);
 
 /**
  *@ingroup los_priqueue
@@ -90,7 +90,7 @@ extern VOID LOS_PriqueueEnqueue(LOS_DL_LIST *ptrPQItem, UINT32 uwPri);
  *@see LOS_PriqueueEnqueue.
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_PriqueueDequeue(LOS_DL_LIST *ptrPQItem);
+extern void LOS_PriqueueDequeue(LOS_DL_LIST *ptrPQItem);
 
 /**
  *@ingroup los_priqueue
@@ -111,7 +111,7 @@ extern VOID LOS_PriqueueDequeue(LOS_DL_LIST *ptrPQItem);
  *@see none.
  *@since Huawei LiteOS V100R001C00
  */
-extern LOS_DL_LIST *LOS_PriqueueTop(VOID);
+extern LOS_DL_LIST *LOS_PriqueueTop(void);
 
 /**
  *@ingroup los_priqueue
@@ -131,7 +131,7 @@ extern LOS_DL_LIST *LOS_PriqueueTop(VOID);
  *@see none.
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_PriqueueSize(UINT32 uwPri);
+extern uint32_t LOS_PriqueueSize(uint32_t uwPri);
 
 /**
  *@ingroup los_priqueue
@@ -150,7 +150,7 @@ extern UINT32 LOS_PriqueueSize(UINT32 uwPri);
  *@see none.
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_PriqueueTotalSize(VOID);
+extern uint32_t LOS_PriqueueTotalSize(void);
 
 
 #ifdef __cplusplus

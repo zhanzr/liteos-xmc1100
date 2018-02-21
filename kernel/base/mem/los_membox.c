@@ -39,31 +39,31 @@
 #include "string.h"
 #endif
 
-#define OS_MEMBOX_NEXT(addr, uwBlkSize) (LOS_MEMBOX_NODE *)((UINT8 *)(addr) + (uwBlkSize))
+#define OS_MEMBOX_NEXT(addr, uwBlkSize) (LOS_MEMBOX_NODE *)((uint8_t *)(addr) + (uwBlkSize))
 
 #ifdef LOS_MEMBOX_CHECK
 #define OS_MEMBOX_MAGIC 0xa55a5aa5
-#define OS_MEMBOX_SET_MAGIC(addr) *((UINT32 *)(addr)) = OS_MEMBOX_MAGIC
-#define OS_MEMBOX_CHECK_MAGIC(addr) ((*((UINT32 *)(addr)) == OS_MEMBOX_MAGIC) ? LOS_OK : LOS_NOK)
+#define OS_MEMBOX_SET_MAGIC(addr) *((uint32_t *)(addr)) = OS_MEMBOX_MAGIC
+#define OS_MEMBOX_CHECK_MAGIC(addr) ((*((uint32_t *)(addr)) == OS_MEMBOX_MAGIC) ? LOS_OK : LOS_NOK)
 #else
 #define OS_MEMBOX_SET_MAGIC(addr)
 #define OS_MEMBOX_CHECK_MAGIC(addr) LOS_OK
 #endif
 
-#define OS_MEMBOX_USER_ADDR(addr) ((VOID *)((UINT8 *)(addr) + LOS_MEMBOX_MAGIC_SIZE))
-#define OS_MEMBOX_NODE_ADDR(addr) ((LOS_MEMBOX_NODE *)((UINT8 *)(addr) - LOS_MEMBOX_MAGIC_SIZE))
+#define OS_MEMBOX_USER_ADDR(addr) ((void *)((uint8_t *)(addr) + LOS_MEMBOX_MAGIC_SIZE))
+#define OS_MEMBOX_NODE_ADDR(addr) ((LOS_MEMBOX_NODE *)((uint8_t *)(addr) - LOS_MEMBOX_MAGIC_SIZE))
 
 
-INLINE UINT32 osCheckBoxMem(const LOS_MEMBOX_INFO *pstBoxInfo, const VOID *pNode)
+inline uint32_t osCheckBoxMem(const LOS_MEMBOX_INFO *pstBoxInfo, const void *pNode)
 {
-    UINT32 uwOffSet;
+    uint32_t uwOffSet;
 
     if (pstBoxInfo->uwBlkSize == 0)
     {
         return LOS_NOK;
     }
 
-    uwOffSet = ((UINT32)pNode - (UINT32)(pstBoxInfo + 1));
+    uwOffSet = ((uint32_t)pNode - (uint32_t)(pstBoxInfo + 1));
     if ((uwOffSet % pstBoxInfo->uwBlkSize) != 0)
     {
         return LOS_NOK;
@@ -77,12 +77,12 @@ INLINE UINT32 osCheckBoxMem(const LOS_MEMBOX_INFO *pstBoxInfo, const VOID *pNode
     return OS_MEMBOX_CHECK_MAGIC(pNode);
 }
 
-LITE_OS_SEC_TEXT_INIT UINT32 LOS_MemboxInit(VOID *pPool, UINT32 uwBoxSize, UINT32 uwBlkSize)
+LITE_OS_SEC_TEXT_INIT uint32_t LOS_MemboxInit(void *pPool, uint32_t uwBoxSize, uint32_t uwBlkSize)
  {
     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pPool;
     LOS_MEMBOX_NODE *pstNode = (LOS_MEMBOX_NODE *)NULL;
-    UINT32 i;
-    UINTPTR uvIntSave;
+    uint32_t i;
+    uint32_t* uvIntSave;
 
     if (pPool == NULL)
     {
@@ -126,12 +126,12 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_MemboxInit(VOID *pPool, UINT32 uwBoxSize, UINT3
     return LOS_OK;
 }
 
-LITE_OS_SEC_TEXT VOID *LOS_MemboxAlloc(VOID *pPool)
+LITE_OS_SEC_TEXT void *LOS_MemboxAlloc(void *pPool)
 {
     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pPool;
     LOS_MEMBOX_NODE *pstNode = (LOS_MEMBOX_NODE *)NULL;
     LOS_MEMBOX_NODE *pstRet = (LOS_MEMBOX_NODE *)NULL;
-    UINTPTR uvIntSave;
+    uint32_t* uvIntSave;
 
     if (pPool == NULL)
     {
@@ -152,11 +152,11 @@ LITE_OS_SEC_TEXT VOID *LOS_MemboxAlloc(VOID *pPool)
     return pstRet == NULL ?  NULL : OS_MEMBOX_USER_ADDR(pstRet);
 }
 
-LITE_OS_SEC_TEXT UINT32 LOS_MemboxFree(VOID *pPool, VOID *pBox)
+LITE_OS_SEC_TEXT uint32_t LOS_MemboxFree(void *pPool, void *pBox)
 {
     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pPool;
-    UINT32 uwRet = LOS_NOK;
-    UINTPTR uvIntSave;
+    uint32_t uwRet = LOS_NOK;
+    uint32_t* uvIntSave;
 
     if (pPool == NULL || pBox == NULL)
     {
@@ -184,7 +184,7 @@ LITE_OS_SEC_TEXT UINT32 LOS_MemboxFree(VOID *pPool, VOID *pBox)
 
 }
 
-LITE_OS_SEC_TEXT_MINOR VOID LOS_MemboxClr(VOID *pPool, VOID *pBox)
+LITE_OS_SEC_TEXT_MINOR void LOS_MemboxClr(void *pPool, void *pBox)
 {
     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pPool;
 
@@ -193,5 +193,5 @@ LITE_OS_SEC_TEXT_MINOR VOID LOS_MemboxClr(VOID *pPool, VOID *pBox)
         return;
     }
 
-    (VOID)memset(pBox, 0, pstBoxInfo->uwBlkSize - LOS_MEMBOX_MAGIC_SIZE);
+    (void)memset(pBox, 0, pstBoxInfo->uwBlkSize - LOS_MEMBOX_MAGIC_SIZE);
 }

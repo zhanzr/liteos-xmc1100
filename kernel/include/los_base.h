@@ -54,9 +54,6 @@ extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
-
-#define SIZE(a)             (a)
-
 #define LOS_ASSERT_COND(expression)
 
 /**
@@ -86,67 +83,67 @@ extern "C" {
 
 /**
  * @ingroup los_base
- * Read a UINT8 value from ucAddr and stroed in ucValue.
+ * Read a uint8_t value from ucAddr and stroed in ucValue.
  */
-#define READ_UINT8(ucValue, ucAddr)                   ((ucValue) = *((volatile UINT8 *)(ucAddr)))
+#define READ_UINT8(ucValue, ucAddr)                   ((ucValue) = *((volatile uint8_t *)(ucAddr)))
 /**
  * @ingroup los_base
- * Read a UINT16 value from usAddr and stroed in usAddr.
+ * Read a uint16_t value from usAddr and stroed in usAddr.
  */
-#define READ_UINT16(usValue, usAddr)                  ((usValue) = *((volatile UINT16 *)(usAddr)))
+#define READ_UINT16(usValue, usAddr)                  ((usValue) = *((volatile uint16_t *)(usAddr)))
 /**
  * @ingroup los_base
- * Read a UINT32 value from uwAddr and stroed in uwValue.
+ * Read a uint32_t value from uwAddr and stroed in uwValue.
  */
-#define READ_UINT32(uwValue, uwAddr)                  ((uwValue) = *((volatile UINT32 *)(uwAddr)))
+#define READ_UINT32(uwValue, uwAddr)                  ((uwValue) = *((volatile uint32_t *)(uwAddr)))
 /**
  * @ingroup los_base
- * Read a UINT64 value from ullAddr and stroed in ullValue.
+ * Read a uint64_t value from ullAddr and stroed in ullValue.
  */
-#define READ_UINT64(ullValue, ullAddr)                ((ullValue) = *((volatile UINT64 *)(ullAddr)))
+#define READ_UINT64(ullValue, ullAddr)                ((ullValue) = *((volatile uint64_t *)(ullAddr)))
 
 
 /**
  * @ingroup los_base
- * Get a UINT8 value from ucAddr.
+ * Get a uint8_t value from ucAddr.
  */
-#define GET_UINT8(ucAddr)                            (*((volatile UINT8 *)(ucAddr)))
+#define GET_UINT8(ucAddr)                            (*((volatile uint8_t *)(ucAddr)))
 /**
  * @ingroup los_base
- * Get a UINT16 value from usAddr.
+ * Get a uint16_t value from usAddr.
  */
-#define GET_UINT16(usAddr)                           (*((volatile UINT16 *)(usAddr)))
+#define GET_UINT16(usAddr)                           (*((volatile uint16_t *)(usAddr)))
 /**
  * @ingroup los_base
- * Get a UINT32 value from uwAddr.
+ * Get a uint32_t value from uwAddr.
  */
-#define GET_UINT32(uwAddr)                           (*((volatile UINT32 *)(uwAddr)))
+#define GET_UINT32(uwAddr)                           (*((volatile uint32_t *)(uwAddr)))
 /**
  * @ingroup los_base
- * Get a UINT64 value from ullAddr.
+ * Get a uint64_t value from ullAddr.
  */
-#define GET_UINT64(ullAddr)                          (*((volatile UINT64 *)(ullAddr)))
+#define GET_UINT64(ullAddr)                          (*((volatile uint64_t *)(ullAddr)))
 
 /**
  * @ingroup los_base
- * Write a UINT8 ucValue to ucAddr.
+ * Write a uint8_t ucValue to ucAddr.
  */
-#define WRITE_UINT8(ucValue, ucAddr)                 (*((volatile UINT8 *)(ucAddr)) = (ucValue))
+#define WRITE_UINT8(ucValue, ucAddr)                 (*((volatile uint8_t *)(ucAddr)) = (ucValue))
 /**
  * @ingroup los_base
- * Write a UINT16 usValue to usAddr.
+ * Write a uint16_t usValue to usAddr.
  */
-#define WRITE_UINT16(usValue, usAddr)                (*((volatile UINT16 *)(usAddr)) = (usValue))
+#define WRITE_UINT16(usValue, usAddr)                (*((volatile uint16_t *)(usAddr)) = (usValue))
 /**
  * @ingroup los_base
- * Write a UINT32 uwValue to uwAddr.
+ * Write a uint32_t uwValue to uwAddr.
  */
-#define WRITE_UINT32(uwValue, uwAddr)                (*((volatile UINT32 *)(uwAddr)) = (uwValue))
+#define WRITE_UINT32(uwValue, uwAddr)                (*((volatile uint32_t *)(uwAddr)) = (uwValue))
 /**
  * @ingroup los_base
- * Write a UINT64 ullAddr to ullAddr.
+ * Write a uint64_t ullAddr to ullAddr.
  */
-#define WRITE_UINT64(ullValue, ullAddr)              (*((volatile UINT64 *)(ullAddr)) = (ullValue))
+#define WRITE_UINT64(ullValue, ullAddr)              (*((volatile uint64_t *)(ullAddr)) = (ullValue))
 
 #if PRINT_LEVEL < LOS_ERR_LEVEL
 #define LOS_ASSERT(judge)
@@ -183,7 +180,7 @@ extern "C" {
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_Align(UINT32 uwAddr, UINT32 uwBoundary);
+extern uint32_t LOS_Align(uint32_t uwAddr, uint32_t uwBoundary);
 
 /**
  *@ingroup los_base
@@ -200,7 +197,7 @@ extern UINT32 LOS_Align(UINT32 uwAddr, UINT32 uwBoundary);
  * </ul>
 
  *
- *@param uwMsecs [IN] Type #UINT32 Number of MS for which the task is delayed.
+ *@param uwMsecs [IN] Type #uint32_t Number of MS for which the task is delayed.
  *
  *@retval None.
  *@par Dependency:
@@ -208,13 +205,13 @@ extern UINT32 LOS_Align(UINT32 uwAddr, UINT32 uwBoundary);
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_Msleep(UINT32 uwMsecs);
+extern void LOS_Msleep(uint32_t uwMsecs);
 
 /**
  * @ingroup los_base
  * Dynamic memory pool address, of which the size is defined by OS_SYS_MEM_SIZE in los_config.h.
  */
-extern UINT8 *m_aucSysMem0;
+extern uint8_t *m_aucSysMem0;
 
 #ifdef __cplusplus
 #if __cplusplus

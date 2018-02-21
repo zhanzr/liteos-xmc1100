@@ -44,8 +44,8 @@ extern "C" {
 #endif /* __cplusplus */
 
 
-extern UINT32 osEventReadOnce(PEVENT_CB_S pstEventCB, UINT32 uwEventMask, UINT32 uwMode, UINT32 uwTimeOut);
-extern UINT32 osEventWriteOnce(PEVENT_CB_S pstEventCB, UINT32 uwEvents);
+extern uint32_t osEventReadOnce(PEVENT_CB_S pstEventCB, uint32_t uwEventMask, uint32_t uwMode, uint32_t uwTimeOut);
+extern uint32_t osEventWriteOnce(PEVENT_CB_S pstEventCB, uint32_t uwEvents);
 
 
 #ifdef __cplusplus

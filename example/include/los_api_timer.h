@@ -49,7 +49,7 @@ extern "C" {
 #include "los_demo_debug.h"
 
 
-extern UINT32 Example_swTimer (void);
+extern uint32_t Example_swTimer (void);
 
 
 

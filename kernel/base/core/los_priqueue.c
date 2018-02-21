@@ -41,10 +41,10 @@
 
 LITE_OS_SEC_BSS LOS_DL_LIST *g_pstLosPriorityQueueList;
 
-VOID osPriqueueInit(VOID)
+void osPriqueueInit(void)
 {
-    UINT32 uwPri = 0;
-    UINT32 uwSize = 0;
+    uint32_t uwPri = 0;
+    uint32_t uwSize = 0;
 
     uwSize = LOS_PRIORITY_QUEUE_PRIORITYNUM * sizeof(LOS_DL_LIST);
     g_pstLosPriorityQueueList = (LOS_DL_LIST *)LOS_MemAlloc(m_aucSysMem0, uwSize);
@@ -59,19 +59,19 @@ VOID osPriqueueInit(VOID)
     }
 }
 
-VOID LOS_PriqueueEnqueue(LOS_DL_LIST *ptrPQItem, UINT32 uwPri)
+void LOS_PriqueueEnqueue(LOS_DL_LIST *ptrPQItem, uint32_t uwPri)
 {
     LOS_ListTailInsert(&g_pstLosPriorityQueueList[uwPri], ptrPQItem);
 }
 
-VOID LOS_PriqueueDequeue(LOS_DL_LIST *ptrPQItem)
+void LOS_PriqueueDequeue(LOS_DL_LIST *ptrPQItem)
 {
     LOS_ListDelete(ptrPQItem);
 }
 
-LOS_DL_LIST *LOS_PriqueueTop(VOID)
+LOS_DL_LIST *LOS_PriqueueTop(void)
 {
-    UINT32 uwPri = 0;
+    uint32_t uwPri = 0;
 
     for (uwPri = 0; uwPri < LOS_PRIORITY_QUEUE_PRIORITYNUM; ++uwPri)
     {
@@ -84,9 +84,9 @@ LOS_DL_LIST *LOS_PriqueueTop(VOID)
     return (LOS_DL_LIST *)NULL;
 }
 
-UINT32 LOS_PriqueueSize(UINT32 uwPri)
+uint32_t LOS_PriqueueSize(uint32_t uwPri)
 {
-    UINT32      uwItemCnt = 0;
+    uint32_t      uwItemCnt = 0;
     LOS_DL_LIST *pstCurPQNode = (LOS_DL_LIST *)NULL;
 
     LOS_DL_LIST_FOR_EACH(pstCurPQNode, &g_pstLosPriorityQueueList[uwPri])
@@ -97,10 +97,10 @@ UINT32 LOS_PriqueueSize(UINT32 uwPri)
     return uwItemCnt;
 }
 
-UINT32 LOS_PriqueueTotalSize(VOID)
+uint32_t LOS_PriqueueTotalSize(void)
 {
-    UINT32 uwPri = 0;
-    UINT32 uwTotalSize = 0;
+    uint32_t uwPri = 0;
+    uint32_t uwTotalSize = 0;
 
     for (uwPri = 0; uwPri < LOS_PRIORITY_QUEUE_PRIORITYNUM; ++uwPri)
     {

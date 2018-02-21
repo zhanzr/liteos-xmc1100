@@ -52,9 +52,9 @@ extern "C" {
 #endif /* __cpluscplus */
 
 
-UINT32 Example_list(VOID)
+uint32_t Example_list(void)
 {
-    UINT32 uwRet = LOS_OK;
+    uint32_t uwRet = LOS_OK;
     
     /*初始化，判断是否为空*/
     dprintf("initial......\n");

@@ -44,9 +44,9 @@ extern "C" {
 #endif /* __cplusplus */
 
 
-extern VOID osTaskMemUsedInc(UINT32 uwUsedSize);
-extern VOID osTaskMemUsedDec(UINT32 uwUsedSize);
-extern UINT32 osTaskMemUsage(UINT32 uwTaskId);
+extern void osTaskMemUsedInc(uint32_t uwUsedSize);
+extern void osTaskMemUsedDec(uint32_t uwUsedSize);
+extern uint32_t osTaskMemUsage(uint32_t uwTaskId);
 
 
 #ifdef __cplusplus

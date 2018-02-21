@@ -49,9 +49,9 @@ extern "C" {
 #include "los_demo_debug.h"
 
 
-extern VOID Example_TransformTime(VOID);
+extern void Example_TransformTime(void);
 
-extern UINT32 Example_GetTick(VOID);
+extern uint32_t Example_GetTick(void);
 
 
 

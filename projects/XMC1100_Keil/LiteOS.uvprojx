@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>LiteOS</TargetName>
+      <TargetName>TinyOS</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
@@ -333,7 +333,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>RAM_SIZE_LEVEL_0,CORE_M0,LOS_XMC1100</Define>
+              <Define>RAM_SIZE_LEVEL_1,CORE_M0,LOS_XMC1100</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\platform\xmc1100_bootkit;..\..\example\include;..\..\kernel\base\core;..\..\kernel\base\fs;..\..\kernel\base\include;..\..\kernel\base\ipc;..\..\kernel\base\mem;..\..\kernel\base\misc;..\..\kernel\cpu\arm\cortex-m0;..\..\kernel\cmsis;..\..\kernel\config;..\..\kernel\include;..\..\kernel\link\keil;..\..\platform\xmc1100_bootkit;..\..\user</IncludePath>
             </VariousControls>
@@ -366,7 +366,7 @@
             <TextAddressRange>0x10001000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile></ScatterFile>
+            <ScatterFile>.\Objects\LiteOS.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
             <Misc></Misc>
@@ -515,11 +515,6 @@
               <FilePath>..\..\platform\xmc1100_bootkit\los_bsp_led.c</FilePath>
             </File>
             <File>
-              <FileName>los_bsp_uart.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\platform\xmc1100_bootkit\los_bsp_uart.h</FilePath>
-            </File>
-            <File>
               <FileName>los_bsp_adapter.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\platform\xmc1100_bootkit\los_bsp_adapter.c</FilePath>
@@ -543,6 +538,11 @@
               <FileName>xmc1100_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\platform\xmc1100_bootkit\xmc1100_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\platform\xmc1100_bootkit\rtc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -610,11 +610,6 @@
               <FilePath>..\..\example\api\los_api_timer.c</FilePath>
             </File>
             <File>
-              <FileName>los_api_xmodem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\example\api\los_api_xmodem.c</FilePath>
-            </File>
-            <File>
               <FileName>los_cmsis_main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\example\api\los_cmsis_main.c</FilePath>
@@ -648,6 +643,16 @@
           <GroupName>libraries</GroupName>
         </Group>
         <Group>
+          <GroupName>doc</GroupName>
+          <Files>
+            <File>
+              <FileName>README.md</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\README.md</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::CMSIS</GroupName>
         </Group>
         <Group>
@@ -666,79 +671,79 @@
       <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.0.2" condition="ARMv6_7_8-M Device">
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.2.0"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="RTE_Device" Cvendor="Infineon" Cversion="1.1.0" condition="XMC1 CMSIS">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="Startup" Cvendor="Infineon" Cversion="2.0.0" condition="XMC1 CMSIS">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="XMClib" Csub="CCU4" Cvendor="Infineon" Cversion="2.1.16" condition="XMC1 CMSIS SCU">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="XMClib" Csub="FLASH" Cvendor="Infineon" Cversion="2.1.16" condition="XMC1 CMSIS">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="XMClib" Csub="GPIO" Cvendor="Infineon" Cversion="2.1.16" condition="XMC1 CMSIS">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="XMClib" Csub="I2C" Cvendor="Infineon" Cversion="2.1.16" condition="XMC1 CMSIS SCU">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="XMClib" Csub="PRNG" Cvendor="Infineon" Cversion="2.1.16" condition="XMC1 CMSIS SCU">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="XMClib" Csub="RTC" Cvendor="Infineon" Cversion="2.1.16" condition="XMC1 CMSIS SCU">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="XMClib" Csub="SCU" Cvendor="Infineon" Cversion="2.1.16" condition="XMC1 CMSIS">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="XMClib" Csub="UART" Cvendor="Infineon" Cversion="2.1.16" condition="XMC1 CMSIS SCU">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cclass="Device" Cgroup="XMClib" Csub="WDT" Cvendor="Infineon" Cversion="2.1.16" condition="XMC1 CMSIS">
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
       <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="User" Cvendor="Keil" Cversion="1.2.1" condition="ARMCC Cortex-M">
         <package name="ARM_Compiler" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.3.3"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </component>
     </components>
@@ -748,7 +753,7 @@
         <component Cclass="Device" Cgroup="RTE_Device" Cvendor="Infineon" Cversion="1.1.0" condition="XMC1 CMSIS"/>
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </file>
       <file attr="config" category="source" condition="XMC11xx ARM" name="Device\XMC1100_series\Source\ARM\startup_XMC1100.s" version="1.4.0">
@@ -756,7 +761,7 @@
         <component Cclass="Device" Cgroup="Startup" Cvendor="Infineon" Cversion="2.0.0" condition="XMC1 CMSIS"/>
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </file>
       <file attr="config" category="source" condition="XMC11xx" name="Device\XMC1100_series\Source\system_XMC1100.c" version="1.9.0">
@@ -764,7 +769,7 @@
         <component Cclass="Device" Cgroup="Startup" Cvendor="Infineon" Cversion="2.0.0" condition="XMC1 CMSIS"/>
         <package license="License/CMSIS_END_USER_LICENSE_AGREEMENT.txt" name="XMC1000_DFP" schemaVersion="1.2" supportContact="http://www.infineon.com/cms/en/corporate/company/contact/support/index.html" url="http://dave.infineon.com/Libraries/CMSIS_PACK/" vendor="Infineon" version="2.7.1"/>
         <targetInfos>
-          <targetInfo name="LiteOS"/>
+          <targetInfo name="TinyOS"/>
         </targetInfos>
       </file>
     </files>

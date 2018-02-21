@@ -48,7 +48,7 @@ extern "C" {
 
 #include "los_demo_debug.h"
 
-extern UINT32 Example_TskCaseEntry(VOID);
+extern uint32_t Example_TskCaseEntry(void);
 
 
 

@@ -50,9 +50,9 @@ extern "C" {
  */
 typedef struct
 {
-    UINT8           usSemStat;          /**< Semaphore state*/
-    UINT16          uwSemCount;         /**< Number of available semaphores*/
-    UINT32          usSemID;            /**< Semaphore control structure ID*/
+    uint8_t           usSemStat;          /**< Semaphore state*/
+    uint16_t          uwSemCount;         /**< Number of available semaphores*/
+    uint32_t          usSemID;            /**< Semaphore control structure ID*/
     LOS_DL_LIST     stSemList;          /**< Queue of tasks that are waiting on a semaphore*/
 } SEM_CB_S;
 

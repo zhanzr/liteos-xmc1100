@@ -51,18 +51,18 @@ extern "C" {
 #endif /* __cpluscplus */
 
 
-static UINT32 g_uwQueue;
+static uint32_t g_uwQueue;
 
-static CHAR abuf[] = "test is message x";
+static char abuf[] = "test is message x";
 
 /*任务1发送数据*/
-static void *send_Entry(UINT32 uwParam1,
-                UINT32 uwParam2,
-                UINT32 uwParam3,
-                UINT32 uwParam4)
+static void *send_Entry(uint32_t uwParam1,
+                uint32_t uwParam2,
+                uint32_t uwParam3,
+                uint32_t uwParam4)
 {
-    UINT32 i = 0,uwRet = 0;
-    UINT32 uwlen = sizeof(abuf);
+    uint32_t i = 0,uwRet = 0;
+    uint32_t uwlen = sizeof(abuf);
 
     while (i < API_MSG_NUM)
     {
@@ -82,14 +82,14 @@ static void *send_Entry(UINT32 uwParam1,
 }
 
 /*任务2接收数据*/
-static void *recv_Entry(UINT32 uwParam1,
-                UINT32 uwParam2,
-                UINT32 uwParam3,
-                UINT32 uwParam4)
+static void *recv_Entry(uint32_t uwParam1,
+                uint32_t uwParam2,
+                uint32_t uwParam3,
+                uint32_t uwParam4)
 {
-    UINT32 uwReadbuf;
-    UINT32 uwRet = LOS_OK;
-    UINT32 uwMsgCount = 0;
+    uint32_t uwReadbuf;
+    uint32_t uwRet = LOS_OK;
+    uint32_t uwMsgCount = 0;
 
     while (1)
     {
@@ -137,10 +137,10 @@ static void *recv_Entry(UINT32 uwParam1,
     return NULL;
 }
 
-UINT32 Example_MsgQueue(void)
+uint32_t Example_MsgQueue(void)
 {
-    UINT32 uwRet = 0;
-    UINT32 uwTask1, uwTask2;
+    uint32_t uwRet = 0;
+    uint32_t uwTask1, uwTask2;
     TSK_INIT_PARAM_S stInitParam1;
 
     /*创建任务1*/

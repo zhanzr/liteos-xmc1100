@@ -70,8 +70,8 @@ typedef struct tagMEMBOX_NODE
  */
 typedef struct
 {
-   UINT32           uwBlkSize;                  /**<Block size*/
-   UINT32           uwBlkNum;                   /**<Block number*/
+   uint32_t           uwBlkSize;                  /**<Block size*/
+   uint32_t           uwBlkNum;                   /**<Block number*/
    LOS_MEMBOX_NODE  stFreeList;                 /**<Free list*/
 } LOS_MEMBOX_INFO;
 
@@ -87,7 +87,7 @@ typedef LOS_MEMBOX_INFO OS_MEMBOX_S;
  * @ingroup los_membox
  * Memory pool alignment
  */
-#define LOS_MEMBOX_ALLIGNED(memAddr)           (((UINT32)(memAddr) + 3) & 0xfffffffc)
+#define LOS_MEMBOX_ALLIGNED(memAddr)           (((uint32_t)(memAddr) + 3) & 0xfffffffc)
 
 /**
  * @ingroup los_membox
@@ -121,7 +121,7 @@ typedef LOS_MEMBOX_INFO OS_MEMBOX_S;
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_MemboxInit(VOID *pPool, UINT32 uwBoxSize, UINT32 uwBlkSize);
+extern uint32_t LOS_MemboxInit(void *pPool, uint32_t uwBoxSize, uint32_t uwBlkSize);
 
 /**
  *@ingroup los_membox
@@ -147,7 +147,7 @@ extern UINT32 LOS_MemboxInit(VOID *pPool, UINT32 uwBoxSize, UINT32 uwBlkSize);
  *@see LOS_MemboxFree
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID *LOS_MemboxAlloc(VOID *pPool);
+extern void *LOS_MemboxAlloc(void *pPool);
 
 /**
  *@ingroup los_membox
@@ -174,7 +174,7 @@ extern VOID *LOS_MemboxAlloc(VOID *pPool);
  *@see LOS_MemboxAlloc
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_MemboxFree(VOID *pPool, VOID *pBox);
+extern uint32_t LOS_MemboxFree(void *pPool, void *pBox);
 
 /**
  *@ingroup los_membox
@@ -200,7 +200,7 @@ extern UINT32 LOS_MemboxFree(VOID *pPool, VOID *pBox);
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_MemboxClr(VOID *pPool, VOID *pBox);
+extern void LOS_MemboxClr(void *pPool, void *pBox);
 
 
 #ifdef __cplusplus

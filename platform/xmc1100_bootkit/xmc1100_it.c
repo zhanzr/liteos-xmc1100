@@ -5,21 +5,6 @@
 
 #include <stdio.h>
 
-extern __IO uint32_t g_Ticks;
-
-//void SVC_Handler(void)
-//{
-//	XMC_UART_CH_Transmit(XMC_UART0_CH1, 'S');
-//	XMC_UART_CH_Transmit(XMC_UART0_CH1, '\n');
-//}
-
-//void PendSV_Handler(void)
-//{
-//	printf(__FUNCTION__);
-//	while(1)
-//	{;}
-//}
-
 void HardFault_Handler(void)
 {
 	XMC_UART_CH_Transmit(XMC_UART0_CH1, 'H');

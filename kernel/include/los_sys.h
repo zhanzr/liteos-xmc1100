@@ -105,13 +105,13 @@ extern "C" {
  */
 typedef struct tagSysTime
 {
-    UINT16  uwYear;    /**< value 1970 ~ 2038 or 1970 ~ 2100 */
-    UINT8   ucMonth;   /**< value 1 - 12 */
-    UINT8   ucDay;     /**< value 1 - 31 */
-    UINT8   ucHour;    /**< value 0 - 23 */
-    UINT8   ucMinute;  /**< value 0 - 59 */
-    UINT8   ucSecond;  /**< value 0 - 59 */
-    UINT8   ucWeek;    /**< value 0 - 6  */
+    uint16_t  uwYear;    /**< value 1970 ~ 2038 or 1970 ~ 2100 */
+    uint8_t   ucMonth;   /**< value 1 - 12 */
+    uint8_t   ucDay;     /**< value 1 - 31 */
+    uint8_t   ucHour;    /**< value 0 - 23 */
+    uint8_t   ucMinute;  /**< value 0 - 59 */
+    uint8_t   ucSecond;  /**< value 0 - 59 */
+    uint8_t   ucWeek;    /**< value 0 - 6  */
 } SYS_TIME_S;
 
 /**
@@ -133,7 +133,7 @@ typedef struct tagSysTime
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT64 LOS_TickCountGet (VOID);
+extern uint64_t LOS_TickCountGet (void);
 
 /**
  *@ingroup los_sys
@@ -154,7 +154,7 @@ extern UINT64 LOS_TickCountGet (VOID);
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_CyclePerTickGet(VOID);
+extern uint32_t LOS_CyclePerTickGet(void);
 
 /**
  *@ingroup los_sys
@@ -175,7 +175,7 @@ extern UINT32 LOS_CyclePerTickGet(VOID);
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_Tick2MS(UINT32 uwTick);
+extern uint32_t LOS_Tick2MS(uint32_t uwTick);
 
 /**
  *@ingroup los_sys
@@ -196,7 +196,7 @@ extern UINT32 LOS_Tick2MS(UINT32 uwTick);
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_MS2Tick(UINT32 uwMillisec);
+extern uint32_t LOS_MS2Tick(uint32_t uwMillisec);
 
 /**
  *@ingroup los_sys
@@ -217,7 +217,7 @@ extern UINT32 LOS_MS2Tick(UINT32 uwMillisec);
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_Reboot(VOID);
+extern void LOS_Reboot(void);
 #ifdef __cplusplus
 #if __cplusplus
 }

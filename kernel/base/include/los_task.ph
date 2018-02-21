@@ -273,26 +273,26 @@ extern "C" {
  */
 typedef struct tagTaskCB
 {
-    VOID                        *pStackPointer;             /**< Task stack pointer                 */
-    UINT16                      usTaskStatus;
-    UINT16                      usPriority;
-    UINT32                      uwStackSize;                /**< Task stack size                 */
-    UINT32                      uwTopOfStack;               /**< Task stack top               */
-    UINT32                      uwTaskID;                   /**< Task ID                     */
+    void                        *pStackPointer;             /**< Task stack pointer                 */
+    uint16_t                      usTaskStatus;
+    uint16_t                      usPriority;
+    uint32_t                      uwStackSize;                /**< Task stack size                 */
+    uint32_t                      uwTopOfStack;               /**< Task stack top               */
+    uint32_t                      uwTaskID;                   /**< Task ID                     */
     TSK_ENTRY_FUNC              pfnTaskEntry;               /**< Task entrance function               */
-    VOID                        *pTaskSem;                  /**< Task-held semaphore           */
-    VOID                        *pThreadJoin;               /**< pthread adaption            */
-    VOID                        *pThreadJoinRetval;         /**< pthread adaption            */
-    VOID                        *pTaskMux;                  /**< Task-held mutex           */
-    UINT32                      auwArgs[4];                 /**< Parameter, of which the maximum number is 4          */
-    CHAR                        *pcTaskName;                /**< Task name                     */
+    void                        *pTaskSem;                  /**< Task-held semaphore           */
+    void                        *pThreadJoin;               /**< pthread adaption            */
+    void                        *pThreadJoinRetval;         /**< pthread adaption            */
+    void                        *pTaskMux;                  /**< Task-held mutex           */
+    uint32_t                      auwArgs[4];                 /**< Parameter, of which the maximum number is 4          */
+    char                        *pcTaskName;                /**< Task name                     */
     LOS_DL_LIST                 stPendList;
     LOS_DL_LIST                 stTimerList;
-    UINT32                      uwIdxRollNum;
+    uint32_t                      uwIdxRollNum;
     EVENT_CB_S                  uwEvent;
-    UINT32                      uwEventMask;                /**< Event mask               */
-    UINT32                      uwEventMode;                /**< Event mode               */
-    VOID                        *puwMsg;                    /**< Memory allocated to queues          */
+    uint32_t                      uwEventMask;                /**< Event mask               */
+    uint32_t                      uwEventMode;                /**< Event mode               */
+    void                        *puwMsg;                    /**< Memory allocated to queues          */
 } LOS_TASK_CB;
 
 typedef struct stLosTask
@@ -308,28 +308,28 @@ extern ST_LOS_TASK          g_stLosTask;
  * Task lock flag.
  *
  */
-extern UINT16               g_usLosTaskLock;
+extern uint16_t               g_usLosTaskLock;
 
 /**
  * @ingroup los_task
  * Maximum number of tasks.
  *
  */
-extern UINT32               g_uwTskMaxNum;
+extern uint32_t               g_uwTskMaxNum;
 
 /**
  * @ingroup los_task
  * Idle task ID.
  *
  */
-extern UINT32               g_uwIdleTaskID;
+extern uint32_t               g_uwIdleTaskID;
 
 /**
  * @ingroup los_task
  * Software timer task ID.
  *
  */
-extern UINT32               g_uwSwtmrTaskID;
+extern uint32_t               g_uwSwtmrTaskID;
 
 /**
  * @ingroup los_task
@@ -366,15 +366,15 @@ extern LOS_DL_LIST          g_stTskRecyleList;
 typedef struct tagTaskTimeSlice
 {
     LOS_TASK_CB             *pstTask;                       /**< Current running task   */
-    UINT16                  usTime;                         /**< Expiration time point           */
-    UINT16                  usTout;                         /**< Expiration duration             */
+    uint16_t                  usTime;                         /**< Expiration time point           */
+    uint16_t                  usTout;                         /**< Expiration duration             */
 } OS_TASK_ROBIN_S;
 
-extern VOID osTaskSchedule(VOID);
-extern VOID osTaskScan(VOID);
-extern VOID osIdleTask(VOID);
-extern UINT32 osIdleTaskCreate(VOID);
-extern UINT32 osTaskInit(VOID);
+extern void osTaskSchedule(void);
+extern void osTaskScan(void);
+extern void osIdleTask(void);
+extern uint32_t osIdleTaskCreate(void);
+extern uint32_t osTaskInit(void);
 
 /**
  * @ingroup  los_task
@@ -390,7 +390,7 @@ extern UINT32 osTaskInit(VOID);
  * </ul>
  *
  * @param  pstTaskCB [IN] Type #LOS_TASK_CB * pointer to task control block structure.
- * @param  usPriority  [IN] Type #UINT16 the priority of task.
+ * @param  usPriority  [IN] Type #uint16_t the priority of task.
  *
  * @retval  None.
  * @par Dependency:
@@ -398,7 +398,7 @@ extern UINT32 osTaskInit(VOID);
  * @see
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID osTaskPriModify(LOS_TASK_CB *pstTaskCB, UINT16 usPriority);
+extern void osTaskPriModify(LOS_TASK_CB *pstTaskCB, uint16_t usPriority);
 
 /**
  * @ingroup  los_task
@@ -413,7 +413,7 @@ extern VOID osTaskPriModify(LOS_TASK_CB *pstTaskCB, UINT16 usPriority);
  * </ul>
  *
  * @param  pstTaskCB [IN] Type #LOS_TASK_CB * pointer to task control block structure.
- * @param  uwTimeout  [IN] Type #UINT32 wait time, ticks.
+ * @param  uwTimeout  [IN] Type #uint32_t wait time, ticks.
  *
  * @retval  None.
  * @par Dependency:
@@ -421,7 +421,7 @@ extern VOID osTaskPriModify(LOS_TASK_CB *pstTaskCB, UINT16 usPriority);
  * @see osTimerListDelete
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID osTaskAdd2TimerList(LOS_TASK_CB *pstTaskCB, UINT32 uwTimeout);
+extern void osTaskAdd2TimerList(LOS_TASK_CB *pstTaskCB, uint32_t uwTimeout);
 
 /**
  * @ingroup  los_task
@@ -443,8 +443,8 @@ extern VOID osTaskAdd2TimerList(LOS_TASK_CB *pstTaskCB, UINT32 uwTimeout);
  * @see osTaskAdd2TimerList
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID osTimerListDelete(LOS_TASK_CB *pstTaskCB);
-extern VOID osTaskEntry(UINT32 uwTaskID);
+extern void osTimerListDelete(LOS_TASK_CB *pstTaskCB);
+extern void osTaskEntry(uint32_t uwTaskID);
 
 
 #ifdef __cplusplus

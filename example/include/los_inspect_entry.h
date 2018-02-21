@@ -67,16 +67,16 @@ typedef enum {
 typedef struct os_Inspect_def {
     enInspectID   InspectID;
     enInspectStu    Status;
-    UINT32    (*Inspectfunc) (void);
+    uint32_t    (*Inspectfunc) (void);
     char    name[6];
 } osInspect_Def;
 
 
 extern void LOS_Inspect_Entry(void);
 
-extern UINT32 LOS_InspectByID(enInspectID InspectID);
+extern uint32_t LOS_InspectByID(enInspectID InspectID);
 
-extern UINT32 LOS_InspectStatusSetByID(enInspectID InspectID,enInspectStu InspectStu);
+extern uint32_t LOS_InspectStatusSetByID(enInspectID InspectID,enInspectStu InspectStu);
 
 #endif //_LOS_INSPECT_ENTRY_H
 

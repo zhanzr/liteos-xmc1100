@@ -61,7 +61,7 @@ LITE_OS_SEC_BSS      QUEUE_CB_S       *g_pstAllQueue;
  Output      : None
  Return      : LOS_OK on success or error code on failure
 **************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 osQueueInit()
+LITE_OS_SEC_TEXT_INIT uint32_t osQueueInit()
 {
 
     if (0 == LOSCFG_BASE_IPC_QUEUE_LIMIT)   /*lint !e506*/
@@ -89,12 +89,12 @@ LITE_OS_SEC_TEXT_INIT UINT32 osQueueInit()
  Output      : ppstQueueCBOut
  Return      : LOS_OK on success or error code on failure
 **************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 osQueueCreate(UINT16 usLen,
-                                      UINT32 *puwQueueID,
-                                      UINT16 usMaxMsgSize,
+LITE_OS_SEC_TEXT_INIT uint32_t osQueueCreate(uint16_t usLen,
+                                      uint32_t *puwQueueID,
+                                      uint16_t usMaxMsgSize,
                                       QUEUE_CB_S **ppstQueueCBOut)
 {
-    UINT32      uwIndex;
+    uint32_t      uwIndex;
     QUEUE_CB_S    *pstQueueCB;
 
     /* get a unused queue */
@@ -113,8 +113,8 @@ LITE_OS_SEC_TEXT_INIT UINT32 osQueueCreate(UINT16 usLen,
         return LOS_ERRNO_QUEUE_CB_UNAVAILABLE;
     }
 
-    (VOID)memset(pstQueueCB, 0, sizeof(QUEUE_CB_S));
-    pstQueueCB->pucQueue = (UINT8 *)LOS_MemAlloc(m_aucSysMem0, usLen * usMaxMsgSize);
+    (void)memset(pstQueueCB, 0, sizeof(QUEUE_CB_S));
+    pstQueueCB->pucQueue = (uint8_t *)LOS_MemAlloc(m_aucSysMem0, usLen * usMaxMsgSize);
     if (NULL == pstQueueCB->pucQueue)
     {
         return LOS_ERRNO_QUEUE_CREATE_NO_MEMORY;
@@ -136,7 +136,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 osQueueCreate(UINT16 usLen,
  Output      : pstRunTsk
  Return      : none
 **************************************************************************/
-LITE_OS_SEC_TEXT static VOID osQueuePend(LOS_TASK_CB *pstRunTsk, LOS_DL_LIST *pstPendList, UINT32  uwTimeOut)
+LITE_OS_SEC_TEXT static void osQueuePend(LOS_TASK_CB *pstRunTsk, LOS_DL_LIST *pstPendList, uint32_t  uwTimeOut)
 {
     LOS_DL_LIST *pstPendObj = (LOS_DL_LIST *)NULL;
     LOS_TASK_CB *pstTskCB = (LOS_TASK_CB *)NULL;
@@ -177,7 +177,7 @@ LITE_OS_SEC_TEXT static VOID osQueuePend(LOS_TASK_CB *pstRunTsk, LOS_DL_LIST *ps
  Output      : pstPendList
  Return      : none
 **************************************************************************/
-LITE_OS_SEC_TEXT static VOID osQueueWakeUp(LOS_DL_LIST *pstPendList)
+LITE_OS_SEC_TEXT static void osQueueWakeUp(LOS_DL_LIST *pstPendList)
 {
     LOS_TASK_CB    *pstResumedTask;
 
@@ -209,18 +209,18 @@ LITE_OS_SEC_TEXT static VOID osQueueWakeUp(LOS_DL_LIST *pstPendList)
  Output      : puwQueueID   --- Queue ID
  Return      : LOS_OK on success or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 LOS_QueueCreate(CHAR *pcQueueName,
-                                          UINT16 usLen,
-                                          UINT32 *puwQueueID,
-                                          UINT32 uwFlags,
-                                          UINT16 usMaxMsgSize )
+LITE_OS_SEC_TEXT_INIT uint32_t LOS_QueueCreate(char *pcQueueName,
+                                          uint16_t usLen,
+                                          uint32_t *puwQueueID,
+                                          uint32_t uwFlags,
+                                          uint16_t usMaxMsgSize )
 {
     QUEUE_CB_S    *pstQueueCB;
-    UINTPTR     uvIntSave;
-    UINT32      uwRet;
+    uint32_t*     uvIntSave;
+    uint32_t      uwRet;
 
-    (VOID)pcQueueName;
-    (VOID)uwFlags;
+    (void)pcQueueName;
+    (void)uwFlags;
 
     if (NULL == puwQueueID)
     {
@@ -238,7 +238,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_QueueCreate(CHAR *pcQueueName,
     }
 
     uvIntSave = LOS_IntLock();
-    uwRet = osQueueCreate(usLen, puwQueueID, (usMaxMsgSize + sizeof(UINT32)), &pstQueueCB);
+    uwRet = osQueueCreate(usLen, puwQueueID, (usMaxMsgSize + sizeof(uint32_t)), &pstQueueCB);
     if(LOS_OK != uwRet)
     {
         LOS_IntRestore(uvIntSave);
@@ -263,17 +263,17 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_QueueCreate(CHAR *pcQueueName,
  Output      : pBufferAddr
  Return      : LOS_OK on success or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT UINT32 LOS_QueueRead(UINT32  uwQueueID,
-                    VOID *  pBufferAddr,
-                    UINT32  uwBufferSize,
-                    UINT32  uwTimeOut)
+LITE_OS_SEC_TEXT uint32_t LOS_QueueRead(uint32_t  uwQueueID,
+                    void *  pBufferAddr,
+                    uint32_t  uwBufferSize,
+                    uint32_t  uwTimeOut)
 {
     QUEUE_CB_S    *pstQueueCB;
-    UINT8       *pucQueueNode;
+    uint8_t       *pucQueueNode;
     LOS_TASK_CB  *pstRunTsk;
-    UINTPTR     uvIntSave;
-    UINT32      uwRet = LOS_OK;
-    UINT32 uwInnerID = uwQueueID - 1;
+    uint32_t*     uvIntSave;
+    uint32_t      uwRet = LOS_OK;
+    uint32_t uwInnerID = uwQueueID - 1;
 
     if ( uwInnerID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
     {
@@ -337,7 +337,7 @@ LITE_OS_SEC_TEXT UINT32 LOS_QueueRead(UINT32  uwQueueID,
     }
 
     pucQueueNode = &(pstQueueCB->pucQueue[((pstQueueCB->usQueueHead) * (pstQueueCB->usQueueSize))]);
-   *(UINT32*)pBufferAddr = *(UINT32*)(pucQueueNode);
+   *(uint32_t*)pBufferAddr = *(uint32_t*)(pucQueueNode);
     if (++pstQueueCB->usQueueHead == pstQueueCB->usQueueLen)
     {
         pstQueueCB->usQueueHead = 0;
@@ -371,17 +371,17 @@ QUEUE_END:
  Output      : None
  Return      : LOS_OK on success or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT UINT32 LOS_QueueWrite( UINT32 uwQueueID,
-                                     VOID * pBufferAddr,
-                                     UINT32 uwBufferSize,
-                                     UINT32 uwTimeOut )
+LITE_OS_SEC_TEXT uint32_t LOS_QueueWrite( uint32_t uwQueueID,
+                                     void * pBufferAddr,
+                                     uint32_t uwBufferSize,
+                                     uint32_t uwTimeOut )
 {
     QUEUE_CB_S *pstQueueCB;
-    UINT8    *pucQueueNode;
+    uint8_t    *pucQueueNode;
     LOS_TASK_CB *pstRunTsk;
-    UINTPTR  uvIntSave;
-    UINT32  uwRet = LOS_OK;
-    UINT32 uwInnerID = uwQueueID - 1;
+    uint32_t*  uvIntSave;
+    uint32_t  uwRet = LOS_OK;
+    uint32_t uwInnerID = uwQueueID - 1;
 
     if(uwInnerID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
     {
@@ -450,7 +450,7 @@ LITE_OS_SEC_TEXT UINT32 LOS_QueueWrite( UINT32 uwQueueID,
     }
 
     pucQueueNode = &(pstQueueCB->pucQueue[((pstQueueCB->usQueueTail) * (pstQueueCB->usQueueSize))]);
-    *((UINT32 *)pucQueueNode) = (UINT32)pBufferAddr;
+    *((uint32_t *)pucQueueNode) = (uint32_t)pBufferAddr;
 
     if(++pstQueueCB->usQueueTail == pstQueueCB->usQueueLen)
     {
@@ -482,13 +482,13 @@ QUEUE_END:
  Output      :
  Return      : pointer if success otherwise NULL
  *****************************************************************************/
-LITE_OS_SEC_TEXT VOID *osQueueMailAlloc(UINT32  uwQueueID, VOID* pMailPool, UINT32 uwTimeOut)
+LITE_OS_SEC_TEXT void *osQueueMailAlloc(uint32_t  uwQueueID, void* pMailPool, uint32_t uwTimeOut)
 {
-    VOID *pMem = (VOID *)NULL;
-    UINTPTR uvIntSave;
+    void *pMem = (void *)NULL;
+    uint32_t* uvIntSave;
     QUEUE_CB_S *pstQueueCB = (QUEUE_CB_S *)NULL;
     LOS_TASK_CB *pstRunTsk = (LOS_TASK_CB *)NULL;
-    UINT32 uwInnerID = uwQueueID - 1;
+    uint32_t uwInnerID = uwQueueID - 1;
 
     if (uwInnerID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
     {
@@ -553,13 +553,13 @@ END:
  Output      :
  Return      : LOS_OK on success or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT UINT32 osQueueMailFree(UINT32  uwQueueID, VOID* pMailPool, VOID* pMailMem)
+LITE_OS_SEC_TEXT uint32_t osQueueMailFree(uint32_t  uwQueueID, void* pMailPool, void* pMailMem)
 {
-    VOID *pMem = (VOID *)NULL;
-    UINTPTR uvIntSave;
+    void *pMem = (void *)NULL;
+    uint32_t* uvIntSave;
     QUEUE_CB_S *pstQueueCB = (QUEUE_CB_S *)NULL;
     LOS_TASK_CB *pstResumedTask = (LOS_TASK_CB *)NULL;
-    UINT32 uwInnerID = uwQueueID - 1;
+    uint32_t uwInnerID = uwQueueID - 1;
 
     if (uwInnerID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
     {
@@ -608,12 +608,12 @@ LITE_OS_SEC_TEXT UINT32 osQueueMailFree(UINT32  uwQueueID, VOID* pMailPool, VOID
  Output      :
  Return      : LOS_OK on success or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT UINT32 LOS_QueueDelete(UINT32 uwQueueID)
+LITE_OS_SEC_TEXT_INIT uint32_t LOS_QueueDelete(uint32_t uwQueueID)
 {
     QUEUE_CB_S *pstQueueCB;
-    UINTPTR  uvIntSave;
-    UINT32 uwRet;
-    UINT32 uwInnerID = uwQueueID - 1;
+    uint32_t*  uvIntSave;
+    uint32_t uwRet;
+    uint32_t uwInnerID = uwQueueID - 1;
 
     if (uwInnerID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
     {
@@ -647,7 +647,7 @@ LITE_OS_SEC_TEXT_INIT UINT32 LOS_QueueDelete(UINT32 uwQueueID)
         GOTO_QUEUE_END(LOS_ERRNO_QUEUE_IN_TSKWRITE);
     }
 
-    uwRet = LOS_MemFree(m_aucSysMem0, (VOID *)(pstQueueCB->pucQueue));
+    uwRet = LOS_MemFree(m_aucSysMem0, (void *)(pstQueueCB->pucQueue));
     if (LOS_OK != uwRet)
     {
         GOTO_QUEUE_END(uwRet);

@@ -43,12 +43,12 @@ extern "C" {
 #endif /* __cpluscplus */
 #endif /* __cpluscplus */
 
-static UINT32 pBoxMem[144];
-UINT32 Example_StaticMem(VOID) 
+static uint32_t pBoxMem[144];
+uint32_t Example_StaticMem(void) 
 {
-    UINT32 *p_num = NULL;
-    UINT32 uwBlkSize = 3, uwBoxSize = 48;
-    UINT32 uwRet;
+    uint32_t *p_num = NULL;
+    uint32_t uwBlkSize = 3, uwBoxSize = 48;
+    uint32_t uwRet;
     
     uwRet = LOS_MemboxInit( &pBoxMem[0], uwBoxSize, uwBlkSize);
     if(uwRet != LOS_OK)
@@ -62,7 +62,7 @@ UINT32 Example_StaticMem(VOID)
     }
     
     /*申请内存块*/
-    p_num = (UINT32*)LOS_MemboxAlloc(pBoxMem);
+    p_num = (uint32_t*)LOS_MemboxAlloc(pBoxMem);
     if (NULL == p_num) 
     {
         dprintf("Mem box alloc failed!\n");

@@ -71,23 +71,23 @@ extern "C" {
  */
 typedef struct tagTskContext
 {
-    UINT32 uwR4;
-    UINT32 uwR5;
-    UINT32 uwR6;
-    UINT32 uwR7;
-    UINT32 uwR8;
-    UINT32 uwR9;
-    UINT32 uwR10;
-    UINT32 uwR11;
-    UINT32 uwPriMask;
-    UINT32 uwR0;
-    UINT32 uwR1;
-    UINT32 uwR2;
-    UINT32 uwR3;
-    UINT32 uwR12;
-    UINT32 uwLR;
-    UINT32 uwPC;
-    UINT32 uwxPSR;
+    uint32_t uwR4;
+    uint32_t uwR5;
+    uint32_t uwR6;
+    uint32_t uwR7;
+    uint32_t uwR8;
+    uint32_t uwR9;
+    uint32_t uwR10;
+    uint32_t uwR11;
+    uint32_t uwPriMask;
+    uint32_t uwR0;
+    uint32_t uwR1;
+    uint32_t uwR2;
+    uint32_t uwR3;
+    uint32_t uwR12;
+    uint32_t uwLR;
+    uint32_t uwPC;
+    uint32_t uwxPSR;
 } TSK_CONTEXT_S;
 
 
@@ -102,9 +102,9 @@ typedef struct tagTskContext
  * @attention:
  * <ul><li>None.</li></ul>
  *
- * @param  uwTaskID     [IN] Type#UINT32: TaskID.
- * @param  uwStackSize  [IN] Type#UINT32: Total size of the stack.
- * @param  pTopStack    [IN] Type#VOID *: Top of task's stack.
+ * @param  uwTaskID     [IN] Type#uint32_t: TaskID.
+ * @param  uwStackSize  [IN] Type#uint32_t: Total size of the stack.
+ * @param  pTopStack    [IN] Type#void *: Top of task's stack.
  *
  * @retval: pstContext Type#TSK_CONTEXT_S *.
  * @par Dependency:
@@ -112,7 +112,7 @@ typedef struct tagTskContext
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID * osTskStackInit(UINT32 uwTaskID, UINT32 uwStackSize, VOID *pTopStack);
+extern void * osTskStackInit(uint32_t uwTaskID, uint32_t uwStackSize, void *pTopStack);
 
 
 
@@ -134,7 +134,7 @@ extern VOID * osTskStackInit(UINT32 uwTaskID, UINT32 uwStackSize, VOID *pTopStac
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID osSchedule(VOID);
+extern void osSchedule(void);
 
 
 /**
@@ -155,7 +155,7 @@ extern VOID osSchedule(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_Schedule(VOID);
+extern void LOS_Schedule(void);
 
 #ifdef __cplusplus
 #if __cplusplus

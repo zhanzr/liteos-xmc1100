@@ -1,36 +1,5 @@
-/*----------------------------------------------------------------------------
- * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice, this list of
- * conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
- * provided with the distribution.
- * 3. Neither the name of the copyright holder nor the names of its contributors may be used
- * to endorse or promote products derived from this software without specific prior written
- * permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *---------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------
- * Notice of Export Control Law
- * ===============================================
- * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
- * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
- * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
- * applicable export control laws and regulations.
- *---------------------------------------------------------------------------*/
+//TODO:Need Rewrite
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {
@@ -56,69 +25,9 @@ extern "C" {
 #include "los_task.h"
 #include "los_bsp_uart.h"
 
-static UINT32 g_uwDemoTaskID;
-
-#ifndef NUTINY_M2351
-
-#ifndef LOS_GCC_COMPILE
-struct __FILE 
-{
-    int handle; /* Add whatever needed */ 
-}; 
-
-typedef struct __FILE FILE;
-
-FILE __stdout;
-FILE __stdin; 
-
-
-int fputc(int ch, FILE *f)
-{
-    LOS_EvbUartWriteByte((char)ch);
-
-    return (ch);
-}
-
-
-#endif
-#endif
-#ifdef LOS_GCC_COMPILE
-int LOS_EvbItmWriteStr(const char * p_char)
-{
-    int i;
-    int len = strlen(p_char);
-    for(i=0;i<len;i++)
-    {
-        if (DEMCR & TRCENA)
-        {
-            while (ITM_Port32(0) == 0);
-            ITM_Port8(0) = p_char[i];
-        }
-    }
-    return len;
-}
-
-static char str[256];
-extern void LOS_EvbUartWriteStr(const char *str);
-int gcc_printf(const char *format,...)
-{
-    va_list arg;
-    //char str[128];
-    va_start(arg, format);
-    vsprintf(str,format,arg);
-    #ifdef LOS_ITM_MODE
-    LOS_EvbItmWriteStr(str);
-    #endif
-    #ifdef LOS_UART_MODE
-    LOS_EvbUartWriteStr(str);
-    #endif
-    va_end(arg);
-    return 0;
-}
-#endif  
+static uint32_t g_uwDemoTaskID;
     
-    
-static LITE_OS_SEC_TEXT VOID LOS_Demo_Tskfunc(VOID)
+static LITE_OS_SEC_TEXT void LOS_Demo_Tskfunc(void)
 {
 #ifdef LOS_KERNEL_TEST_ALL
 #else /* LOS_KERNEL_TEST_ALL */
@@ -167,10 +76,10 @@ static LITE_OS_SEC_TEXT VOID LOS_Demo_Tskfunc(VOID)
 
 void LOS_Demo_Entry(void)
 {
-    UINT32 uwRet;
+    uint32_t uwRet;
     TSK_INIT_PARAM_S stTaskInitParam;
 
-    (VOID)memset((void *)(&stTaskInitParam), 0, sizeof(TSK_INIT_PARAM_S));
+    (void)memset((void *)(&stTaskInitParam), 0, sizeof(TSK_INIT_PARAM_S));
     stTaskInitParam.pfnTaskEntry = (TSK_ENTRY_FUNC)LOS_Demo_Tskfunc;
     stTaskInitParam.uwStackSize = LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE;
     stTaskInitParam.pcName = "ApiDemo";

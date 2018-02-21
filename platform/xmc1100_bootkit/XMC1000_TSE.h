@@ -10,5 +10,7 @@
 #define MAX_TEMP_KELVIN      (398)
 #define ZERO_TEMP_KELVIN     (273)
 
+void DTS_Initialize(void);
+
 int32_t XMC1000_CalcTemperature(void);
 uint32_t XMC1000_CalcTSEVAR(uint32_t temperature);

@@ -60,20 +60,20 @@ typedef struct
     LOS_DL_LIST stListHead[OS_MULTI_DLNK_NUM];
 } LOS_MULTIPLE_DLNK_HEAD;
 
-INLINE LOS_DL_LIST *LOS_DLnkNextMultiHead(VOID *pHeadAddr, LOS_DL_LIST *pstListHead)
+inline LOS_DL_LIST *LOS_DLnkNextMultiHead(void *pHeadAddr, LOS_DL_LIST *pstListHead)
 {
     LOS_MULTIPLE_DLNK_HEAD *head = (LOS_MULTIPLE_DLNK_HEAD *)pHeadAddr;
 
     return (&(head->stListHead[OS_MULTI_DLNK_NUM - 1]) == pstListHead) ? NULL : (pstListHead + 1);
 }
 
-INLINE LOS_DL_LIST *LOS_DLnkFirstMultiHead(VOID *pHeadAddr)
+inline LOS_DL_LIST *LOS_DLnkFirstMultiHead(void *pHeadAddr)
 {
     return (LOS_DL_LIST *)pHeadAddr;
 }
 
-extern VOID LOS_DLnkInitMultiHead(VOID *pHeadAddr);
-extern LOS_DL_LIST *LOS_DLnkMultiHead(VOID *pHeadAddr, UINT32 uwSize);
+extern void LOS_DLnkInitMultiHead(void *pHeadAddr);
+extern LOS_DL_LIST *LOS_DLnkMultiHead(void *pHeadAddr, uint32_t uwSize);
 
 
 #ifdef __cplusplus

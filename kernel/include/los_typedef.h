@@ -41,106 +41,14 @@
 
 #include "los_builddef.h"
 
-#ifdef LOS_GCC_COMPILE
-#include <sys/_stdint.h>
-#endif
+#include <stdint.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
-
-
-#define INLINE                                              static inline
-
-#ifndef LOS_TYPE_DEF
-#define LOS_TYPE_DEF
-
-/* type definitions */
-typedef unsigned char                                       UINT8;
-typedef unsigned short                                      UINT16;
-
-#ifdef LOS_GCC_COMPILE
-typedef uint32_t                                            UINT32;
-typedef int32_t                                             INT32;
-#else
-typedef unsigned int                                        UINT32;
-typedef signed int                                          INT32;
-#endif
-
-typedef signed char                                         INT8;
-typedef signed short                                        INT16;
-typedef float                                               FLOAT;
-typedef double                                              DOUBLE;
-typedef char                                                CHAR;
-
-typedef unsigned int                                        BOOL;
-typedef unsigned long long                                  UINT64;
-typedef signed long long                                    INT64;
-typedef unsigned int                                        UINTPTR;
-typedef signed int                                          INTPTR;
-
-#if 0
-typedef INT32                                               ssize_t;
-typedef UINT32                                              size_t;
-
-#ifndef uint8_t
-typedef unsigned char   uint8_t;
-#endif
-#ifndef int8_t
-typedef signed char int8_t;
-#endif
-#ifndef uint16_t
-typedef unsigned short  uint16_t;
-#endif
-#ifndef int16_t
-typedef signed short    int16_t;
-#endif
-#ifndef uint32_t
-typedef unsigned int    uint32_t;
-#endif
-#ifndef int32_t
-typedef signed int  int32_t;
-#endif
-#ifndef int64_t
-typedef long long  int64_t;
-#endif
-#ifndef uint64_t
-typedef unsigned long long  uint64_t;
-#endif
-#endif
-
-#define VOID                                                void
-#endif  /*end of #ifndef LOS_TYPE_DEF*/
-
-#ifndef FALSE
-#define FALSE                                               ((BOOL)0)
-#endif
-
-#ifndef TRUE
-#define TRUE                                                ((BOOL)1)
-#endif
-
-#ifndef __cplusplus
-
-#ifndef false
-#define false                                               FALSE
-#endif
-
-#ifndef true
-#define true                                                TRUE
-#endif
-
-#ifndef bool
-#define bool                                                BOOL
-#endif
-
-#endif /* __cplusplus */
-
-#ifndef NULL
-#define NULL                                                ((VOID *)0)
-#endif
 
 #ifdef YES
 #undef YES
@@ -152,9 +60,9 @@ typedef unsigned long long  uint64_t;
 #endif
 #define NO                                                  (0)
 
-#define OS_NULL_BYTE                                        ((UINT8)0xFF)
-#define OS_NULL_SHORT                                       ((UINT16)0xFFFF)
-#define OS_NULL_INT                                         ((UINT32)0xFFFFFFFF)
+#define OS_NULL_BYTE                                        ((uint8_t)0xFF)
+#define OS_NULL_SHORT                                       ((uint16_t)0xFFFF)
+#define OS_NULL_INT                                         ((uint32_t)0xFFFFFFFF)
 
 #ifndef LOS_OK
 #define LOS_OK                                              (0)
@@ -165,8 +73,8 @@ typedef unsigned long long  uint64_t;
 #endif
 
 #define OS_FAIL                                             (1)
-#define OS_ERROR                                            (UINT32)(-1)
-#define OS_INVALID                                          (UINT32)(-1)
+#define OS_ERROR                                            (uint32_t)(-1)
+#define OS_INVALID                                          (uint32_t)(-1)
 
 #define asm                                                 __asm
 #ifdef typeof

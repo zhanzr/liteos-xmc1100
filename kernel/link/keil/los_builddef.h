@@ -79,7 +79,7 @@ extern "C" {
  * Allow inline sections
  */
 #ifndef LITE_OS_SEC_ALW_INLINE
-#define LITE_OS_SEC_ALW_INLINE      //__attribute__((always_inline))
+#define LITE_OS_SEC_ALW_INLINE      __attribute__((always_inline))
 #endif
 
 /**

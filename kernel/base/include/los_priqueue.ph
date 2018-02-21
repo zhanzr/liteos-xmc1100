@@ -62,7 +62,7 @@ extern "C" {
  *@see none.
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID osPriqueueInit(VOID);
+extern void osPriqueueInit(void);
 
 
 #ifdef __cplusplus

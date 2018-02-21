@@ -50,8 +50,8 @@ extern "C" {
  */
 typedef struct tagCpuTick
 {
-    UINT32 uwCntHi;         /**< Upper 32 bits of the tick value*/
-    UINT32 uwCntLo;         /**< Lower 32 bits of the tick value*/
+    uint32_t uwCntHi;         /**< Upper 32 bits of the tick value*/
+    uint32_t uwCntLo;         /**< Lower 32 bits of the tick value*/
 } CPU_TICK;
 
 #define OS_GOTO_ERREND() \

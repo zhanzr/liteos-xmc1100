@@ -67,7 +67,7 @@ extern "C" {
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID osTimesliceInit(VOID);
+extern void osTimesliceInit(void);
 
 /**
  *@ingroup los_timeslice
@@ -90,7 +90,7 @@ extern VOID osTimesliceInit(VOID);
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID osTimesliceCheck(VOID);
+extern void osTimesliceCheck(void);
 
 
 #ifdef __cplusplus

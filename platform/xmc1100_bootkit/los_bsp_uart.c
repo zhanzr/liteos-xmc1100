@@ -1,3 +1,6 @@
+//TODO: Need Rewrite according to the CMSIS Standard
+//The kernel should not impose any naming rule on the user part code.
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,21 +8,11 @@
 #include <assert.h>
 
 #include <XMC1100.h>
-#include <xmc_scu.h>
-#include <xmc_rtc.h>
 #include <xmc_uart.h>
 #include <xmc_gpio.h>
-#include <xmc_flash.h>
 
 #include "los_bsp_uart.h"
 
-/*****************************************************************************
- Function    : LOS_EvbUartInit
- Description : enable the device on the dev baord
- Input       : None
- Output      : None
- Return      : None
- *****************************************************************************/
 void LOS_EvbUartInit(void)
 {
 	#define UART_RX P1_3
@@ -48,48 +41,4 @@ void LOS_EvbUartInit(void)
   /* Configure pins */
 	XMC_GPIO_Init(UART_TX, &uart_tx);
   XMC_GPIO_Init(UART_RX, &uart_rx);
-}
-
-/*****************************************************************************
- Function    : LOS_EvbUartWriteByte
- Description : Uart write byte
- Input       : char c
- Output      : None
- Return      : None
- *****************************************************************************/
-void LOS_EvbUartWriteByte(char c)
-{
-		XMC_UART_CH_Transmit(XMC_UART0_CH1, (uint8_t)c);
-
-    return;
-}
-
-/*****************************************************************************
- Function    : LOS_EvbUartReadByte
- Description : Uart read byte
- Input       : None
- Output      : char* c
- Return      : None
- *****************************************************************************/
-void LOS_EvbUartReadByte(char* c)
-{
-    *c = XMC_UART_CH_GetReceivedData(XMC_UART0_CH1);
-
-    return;
-}
-
-/*****************************************************************************
- Function    : LOS_EvbUartWriteStr
- Description : Uart write string
- Input       : const char* str
- Output      : None
- Return      : None
- *****************************************************************************/
-void LOS_EvbUartWriteStr(const char* str)
-{
-    while (*str)
-    {
-        LOS_EvbUartWriteByte(* str++);
-    }
-    return;
 }

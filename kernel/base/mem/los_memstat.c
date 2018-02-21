@@ -39,14 +39,14 @@
 #include "los_config.h"
 
 typedef struct {
-    UINT32 uwMemUsed;
+    uint32_t uwMemUsed;
 } TSK_MEM_USED_INFO;
 
 LITE_OS_SEC_BSS_MINOR TSK_MEM_USED_INFO g_TskMemUsedInfo[LOSCFG_BASE_CORE_TSK_LIMIT + 1];
 
-LITE_OS_SEC_TEXT_MINOR VOID osTaskMemUsedInc(UINT32 uwUsedSize)
+LITE_OS_SEC_TEXT_MINOR void osTaskMemUsedInc(uint32_t uwUsedSize)
 {
-    UINT32 taskId;
+    uint32_t taskId;
 
     if (NULL == g_stLosTask.pstRunTask)
     {
@@ -58,7 +58,7 @@ LITE_OS_SEC_TEXT_MINOR VOID osTaskMemUsedInc(UINT32 uwUsedSize)
         return;
     }
 
-    taskId = (UINT32) g_stLosTask.pstRunTask->uwTaskID;
+    taskId = (uint32_t) g_stLosTask.pstRunTask->uwTaskID;
 
     if (taskId > LOSCFG_BASE_CORE_TSK_LIMIT)
     {
@@ -68,11 +68,11 @@ LITE_OS_SEC_TEXT_MINOR VOID osTaskMemUsedInc(UINT32 uwUsedSize)
     g_TskMemUsedInfo[taskId].uwMemUsed += uwUsedSize;
 }
 
-LITE_OS_SEC_TEXT_MINOR VOID osTaskMemUsedDec(UINT32 uwUsedSize)
+LITE_OS_SEC_TEXT_MINOR void osTaskMemUsedDec(uint32_t uwUsedSize)
 {
-    UINT32 taskId;
+    uint32_t taskId;
 
-    taskId = (UINT32) g_stLosTask.pstRunTask->uwTaskID;
+    taskId = (uint32_t) g_stLosTask.pstRunTask->uwTaskID;
 
     if (taskId > LOSCFG_BASE_CORE_TSK_LIMIT)
     {
@@ -87,12 +87,12 @@ LITE_OS_SEC_TEXT_MINOR VOID osTaskMemUsedDec(UINT32 uwUsedSize)
     g_TskMemUsedInfo[taskId].uwMemUsed -= uwUsedSize;
 }
 
-LITE_OS_SEC_TEXT_MINOR UINT32 osTaskMemUsage(UINT32 uwTaskId)
+LITE_OS_SEC_TEXT_MINOR uint32_t osTaskMemUsage(uint32_t uwTaskId)
 {
-    if ((UINT32)uwTaskId > LOSCFG_BASE_CORE_TSK_LIMIT)
+    if ((uint32_t)uwTaskId > LOSCFG_BASE_CORE_TSK_LIMIT)
     {
         return LOS_NOK;
     }
 
-    return g_TskMemUsedInfo[(UINT32)uwTaskId].uwMemUsed;
+    return g_TskMemUsedInfo[(uint32_t)uwTaskId].uwMemUsed;
 }

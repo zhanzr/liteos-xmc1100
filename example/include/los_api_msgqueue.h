@@ -55,7 +55,7 @@ typedef void* (* RECV_ENTRY)(void *arg);
 
 #define API_MSG_NUM 5
 
-extern UINT32 Example_MsgQueue(void);
+extern uint32_t Example_MsgQueue(void);
 
 
 

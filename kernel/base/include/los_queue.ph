@@ -50,15 +50,15 @@ extern "C" {
   */
 typedef struct tagQueueCB
 {
-    UINT8       *pucQueue;              /**< Pointer to a queue handle */
-    UINT16      usQueueState;           /**< Queue state */
-    UINT16      usQueueLen;             /**< Queue length */
-    UINT16      usQueueSize;            /**< Node size     */
-    UINT16      usQueueHead;            /**< Node head       */
-    UINT16      usQueueTail;            /**< Node tail       */
-    UINT16      usWritableCnt;          /**< Count of writable resources   */
-    UINT16      usReadableCnt;          /**< Count of readable resources   */
-    UINT16      usReserved;             /**< Reserved         */
+    uint8_t       *pucQueue;              /**< Pointer to a queue handle */
+    uint16_t      usQueueState;           /**< Queue state */
+    uint16_t      usQueueLen;             /**< Queue length */
+    uint16_t      usQueueSize;            /**< Node size     */
+    uint16_t      usQueueHead;            /**< Node head       */
+    uint16_t      usQueueTail;            /**< Node tail       */
+    uint16_t      usWritableCnt;          /**< Count of writable resources   */
+    uint16_t      usReadableCnt;          /**< Count of readable resources   */
+    uint16_t      usReserved;             /**< Reserved         */
     LOS_DL_LIST stWriteList;            /**< Pointer to the linked list to be written   */
     LOS_DL_LIST stReadList;             /**< Pointer to the linked list to be read   */
     LOS_DL_LIST stMemList;              /**< Pointer to the memory linked list */
@@ -132,7 +132,7 @@ extern QUEUE_CB_S *g_pstAllQueue;
  *@see osQueueMailFree
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID *osQueueMailAlloc(UINT32 uwQueueID, VOID *pMailPool, UINT32 uwTimeOut);
+extern void *osQueueMailAlloc(uint32_t uwQueueID, void *pMailPool, uint32_t uwTimeOut);
 
 /**
  *@ingroup los_queue
@@ -158,7 +158,7 @@ extern VOID *osQueueMailAlloc(UINT32 uwQueueID, VOID *pMailPool, UINT32 uwTimeOu
  *@see osQueueMailAlloc
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 osQueueMailFree(UINT32 uwQueueID, VOID *pMailPool, VOID *pMailMem);
+extern uint32_t osQueueMailFree(uint32_t uwQueueID, void *pMailPool, void *pMailMem);
 
 
 #ifdef __cplusplus

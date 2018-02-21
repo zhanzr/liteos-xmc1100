@@ -55,7 +55,7 @@ extern "C" {
 #define OS_MEM_REDUCE_USED(arg)
 #endif
 
-#define OS_MEM_ALIGN(p, alignSize)    (((unsigned int)(p) + alignSize -1) &(~ (alignSize -1)))
+#define OS_MEM_ALIGN(p, alignSize)    (((uint32_t)(p) + alignSize -1) &(~ (alignSize -1)))
 #define OS_MEM_NODE_HEAD_SIZE sizeof(LOS_MEM_DYN_NODE)
 #define OS_MEM_MIN_POOL_SIZE (OS_DLNK_HEAD_SIZE + 2 * OS_MEM_NODE_HEAD_SIZE + sizeof(LOS_MEM_POOL_INFO))
 #define OS_MEM_ALIGN_SIZE 4
@@ -68,16 +68,16 @@ extern "C" {
 #define OS_MEM_NODE_GET_USED_FLAG(uwSizeAndFlag) ((uwSizeAndFlag) & OS_MEM_NODE_USED_FLAG)
 #define OS_MEM_NODE_SET_USED_FLAG(uwSizeAndFlag) (uwSizeAndFlag = ((uwSizeAndFlag) | OS_MEM_NODE_USED_FLAG))
 #define OS_MEM_NODE_GET_SIZE(uwSizeAndFlag) ((uwSizeAndFlag) & (~OS_MEM_NODE_USED_FLAG))
-#define OS_MEM_IS_NODE_NEXT_EXIST(pstNode, pstPoolInfo) (((UINT32)(pstNode) + (pstNode)->uwSizeAndFlag) < ((UINT32)(pstPoolInfo) + (pstPoolInfo)->uwPoolSize))
+#define OS_MEM_IS_NODE_NEXT_EXIST(pstNode, pstPoolInfo) (((uint32_t)(pstNode) + (pstNode)->uwSizeAndFlag) < ((uint32_t)(pstPoolInfo) + (pstPoolInfo)->uwPoolSize))
 #define OS_MEM_HEAD(pPool, uwSize) OS_DLnkHead(OS_MEM_HEAD_ADDR(pPool), uwSize)
-#define OS_MEM_HEAD_ADDR(pPool) ((VOID *)((UINT32)(pPool) + sizeof(LOS_MEM_POOL_INFO)))
-#define OS_MEM_NEXT_NODE(pstNode) ((LOS_MEM_DYN_NODE *)((UINT8 *)(pstNode) + OS_MEM_NODE_GET_SIZE((pstNode)->uwSizeAndFlag)))
-#define OS_MEM_FIRST_NODE(pPool) ((LOS_MEM_DYN_NODE *) ((UINT8 *)OS_MEM_HEAD_ADDR(pPool) + OS_DLNK_HEAD_SIZE))
-#define OS_MEM_END_NODE(pPool, uwSize) ((LOS_MEM_DYN_NODE *)(((UINT8 *)(pPool) + (uwSize)) - OS_MEM_NODE_HEAD_SIZE))
-#define OS_MEM_MIDDLE_ADDR_OPEN_END(startAddr, middleAddr, endAddr) (((UINT8 *)(startAddr) <= ((UINT8 *)(middleAddr))) && (((UINT8 *)(middleAddr)) < ((UINT8 *)(endAddr))))
-#define OS_MEM_MIDDLE_ADDR(startAddr, middleAddr, endAddr) (((UINT8 *)(startAddr) <= ((UINT8 *)(middleAddr))) && (((UINT8 *)(middleAddr)) <= ((UINT8 *)(endAddr))))
-#define OS_MEM_SET_MAGIC(value) (value) = (LOS_DL_LIST *)((UINT32)(&(value)) ^ 0xffffffff)
-#define OS_MEM_MAGIC_VALID(value) ((((UINT32)(value)) ^ ((UINT32)(&(value)))) == 0xffffffff)
+#define OS_MEM_HEAD_ADDR(pPool) ((void *)((uint32_t)(pPool) + sizeof(LOS_MEM_POOL_INFO)))
+#define OS_MEM_NEXT_NODE(pstNode) ((LOS_MEM_DYN_NODE *)((uint8_t *)(pstNode) + OS_MEM_NODE_GET_SIZE((pstNode)->uwSizeAndFlag)))
+#define OS_MEM_FIRST_NODE(pPool) ((LOS_MEM_DYN_NODE *) ((uint8_t *)OS_MEM_HEAD_ADDR(pPool) + OS_DLNK_HEAD_SIZE))
+#define OS_MEM_END_NODE(pPool, uwSize) ((LOS_MEM_DYN_NODE *)(((uint8_t *)(pPool) + (uwSize)) - OS_MEM_NODE_HEAD_SIZE))
+#define OS_MEM_MIDDLE_ADDR_OPEN_END(startAddr, middleAddr, endAddr) (((uint8_t *)(startAddr) <= ((uint8_t *)(middleAddr))) && (((uint8_t *)(middleAddr)) < ((uint8_t *)(endAddr))))
+#define OS_MEM_MIDDLE_ADDR(startAddr, middleAddr, endAddr) (((uint8_t *)(startAddr) <= ((uint8_t *)(middleAddr))) && (((uint8_t *)(middleAddr)) <= ((uint8_t *)(endAddr))))
+#define OS_MEM_SET_MAGIC(value) (value) = (LOS_DL_LIST *)((uint32_t)(&(value)) ^ 0xffffffff)
+#define OS_MEM_MAGIC_VALID(value) ((((uint32_t)(value)) ^ ((uint32_t)(&(value)))) == 0xffffffff)
 
 
 #ifdef __cplusplus

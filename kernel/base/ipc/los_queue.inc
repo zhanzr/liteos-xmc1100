@@ -44,7 +44,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 
-extern UINT32 osQueueCreate(UINT16 usLen, UINT32 *puwQueueID, UINT16 usMaxMsgSize, QUEUE_CB_S **ppstQueueCBOut);
+extern uint32_t osQueueCreate(uint16_t usLen, uint32_t *puwQueueID, uint16_t usMaxMsgSize, QUEUE_CB_S **ppstQueueCBOut);
 
 
 #ifdef __cplusplus

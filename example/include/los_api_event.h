@@ -49,9 +49,9 @@ extern "C" {
 
 #include "los_demo_debug.h"
 
-VOID Example_Event(VOID);
+void Example_Event(void);
 
-extern UINT32 Example_SndRcvEvent(VOID);
+extern uint32_t Example_SndRcvEvent(void);
 
 
 

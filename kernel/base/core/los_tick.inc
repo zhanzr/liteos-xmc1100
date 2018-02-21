@@ -35,6 +35,6 @@
 #ifndef _LOS_TICK_INC
 #define _LOS_TICK_INC
 
-#include "los_tick.ph"
+#include "los_tick.h"
 
 #endif /* _LOS_TICK_INC */

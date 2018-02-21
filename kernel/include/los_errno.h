@@ -91,59 +91,59 @@ enum LOS_MOUDLE_ID
   * @ingroup los_errno
   * OS error code flag.
   */
-#define LOS_ERRNO_OS_ID                                     ((UINT32)0x00 << 16)
+#define LOS_ERRNO_OS_ID                                     ((uint32_t)0x00 << 16)
 
 /**
   * @ingroup los_errno
   * Define the error level as informative.
   */
-#define LOS_ERRTYPE_NORMAL                                  ((UINT32)0x00 << 24)
+#define LOS_ERRTYPE_NORMAL                                  ((uint32_t)0x00 << 24)
 
 /**
   * @ingroup los_errno
   * Define the error level as warning.
   */
-#define LOS_ERRTYPE_WARN                                    ((UINT32)0x01 << 24)
+#define LOS_ERRTYPE_WARN                                    ((uint32_t)0x01 << 24)
 
 /**
   * @ingroup los_errno
   * Define the error level as critical.
   */
-#define LOS_ERRTYPE_ERROR                                   ((UINT32)0x02 << 24)
+#define LOS_ERRTYPE_ERROR                                   ((uint32_t)0x02 << 24)
 
 /**
   * @ingroup los_errno
   * Define the error level as fatal.
   */
-#define LOS_ERRTYPE_FATAL                                   ((UINT32)0x03 << 24)
+#define LOS_ERRTYPE_FATAL                                   ((uint32_t)0x03 << 24)
 
 /**
   * @ingroup los_errno
   * Define fatal OS errors.
   */
 #define LOS_ERRNO_OS_FATAL(MID, ERRNO)   \
-            (LOS_ERRTYPE_FATAL | LOS_ERRNO_OS_ID | ((UINT32)(MID) << 8) |  (ERRNO))
+            (LOS_ERRTYPE_FATAL | LOS_ERRNO_OS_ID | ((uint32_t)(MID) << 8) |  (ERRNO))
 
 /**
   * @ingroup los_errno
   * Define critical OS errors.
   */
 #define LOS_ERRNO_OS_ERROR(MID, ERRNO)  \
-            (LOS_ERRTYPE_ERROR | LOS_ERRNO_OS_ID | ((UINT32)(MID) << 8) | (ERRNO))
+            (LOS_ERRTYPE_ERROR | LOS_ERRNO_OS_ID | ((uint32_t)(MID) << 8) | (ERRNO))
 
 /**
   * @ingroup los_errno
   * Define warning OS errors.
   */
 #define LOS_ERRNO_OS_WARN(MID, ERRNO)  \
-            (LOS_ERRTYPE_WARN | LOS_ERRNO_OS_ID | ((UINT32)(MID) << 8) | (ERRNO))
+            (LOS_ERRTYPE_WARN | LOS_ERRNO_OS_ID | ((uint32_t)(MID) << 8) | (ERRNO))
 
 /**
   * @ingroup los_errno
   * Define informative OS errors.
   */
 #define LOS_ERRNO_OS_NORMAL(MID, ERRNO)  \
-            (LOS_ERRTYPE_NORMAL | LOS_ERRNO_OS_ID | ((UINT32)(MID) << 8) | (ERRNO))
+            (LOS_ERRTYPE_NORMAL | LOS_ERRNO_OS_ID | ((uint32_t)(MID) << 8) | (ERRNO))
 
 
 #ifdef __cplusplus

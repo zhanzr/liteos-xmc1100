@@ -53,8 +53,8 @@ extern "C" {
  */
 typedef struct
 {
-    VOID *pPoolAddr;                        /**<Starting address of a memory pool  */
-    UINT32 uwPoolSize;                      /**<Memory pool size    */
+    void *pPoolAddr;                        /**<Starting address of a memory pool  */
+    uint32_t uwPoolSize;                      /**<Memory pool size    */
 } LOS_MEM_POOL_INFO;
 
 /**
@@ -65,7 +65,7 @@ typedef struct tagLOS_MEM_DYN_NODE
 {
     LOS_DL_LIST stFreeNodeInfo;             /**<Free memory node  */
     struct tagLOS_MEM_DYN_NODE *pstPreNode;    /**<Pointer to the previous memory node*/
-    UINT32 uwSizeAndFlag;                   /**<Size and flag of the current node (the highest bit represents a flag, and the rest bits specify the size)*/
+    uint32_t uwSizeAndFlag;                   /**<Size and flag of the current node (the highest bit represents a flag, and the rest bits specify the size)*/
 }LOS_MEM_DYN_NODE;
 
 /**
@@ -93,7 +93,7 @@ typedef struct tagLOS_MEM_DYN_NODE
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_MemInit(VOID *pPool, UINT32 uwSize);
+extern uint32_t LOS_MemInit(void *pPool, uint32_t uwSize);
 
 /**
  *@ingroup los_memory
@@ -118,7 +118,7 @@ extern UINT32 LOS_MemInit(VOID *pPool, UINT32 uwSize);
  *@see LOS_MemAlloc
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID *LOS_MemAlloc(VOID *pPool, UINT32 uwSize);
+extern void *LOS_MemAlloc(void *pPool, uint32_t uwSize);
 
 /**
  *@ingroup los_memory
@@ -141,7 +141,7 @@ extern VOID *LOS_MemAlloc(VOID *pPool, UINT32 uwSize);
  *@see LOS_MemFree
  *@since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_MemFree(VOID *pPool, VOID *pMem);
+extern uint32_t LOS_MemFree(void *pPool, void *pMem);
 
 /**
  *@ingroup los_memory
@@ -167,7 +167,7 @@ extern UINT32 LOS_MemFree(VOID *pPool, VOID *pMem);
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID *LOS_MemRealloc(VOID *pPool, VOID *pPtr, UINT32 uwSize);
+extern void *LOS_MemRealloc(void *pPool, void *pPtr, uint32_t uwSize);
 
 /**
  *@ingroup los_memory
@@ -193,7 +193,7 @@ extern VOID *LOS_MemRealloc(VOID *pPool, VOID *pPtr, UINT32 uwSize);
  *@see None.
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID *LOS_MemAllocAlign(VOID *pPool, UINT32 uwSize, UINT32 uwBoundary);
+extern void *LOS_MemAllocAlign(void *pPool, uint32_t uwSize, uint32_t uwBoundary);
 
 /**
  *@ingroup los_memory

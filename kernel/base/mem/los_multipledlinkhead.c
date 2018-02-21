@@ -38,7 +38,7 @@
 #define BIT_NUM(num) return num;
 #define BIT_NONE BIT_NUM(0xfffffff)
 
-INLINE UINT32 LOS_Log2(UINT32 uwSize)
+uint32_t LOS_Log2(uint32_t uwSize)
 {
     IF_ELSE(0x80000000, \
 			BIT_NONE, \
@@ -76,11 +76,11 @@ INLINE UINT32 LOS_Log2(UINT32 uwSize)
 
 }
 
-LITE_OS_SEC_TEXT_INIT VOID LOS_DLnkInitMultiHead(VOID *pHeadAddr)
+LITE_OS_SEC_TEXT_INIT void LOS_DLnkInitMultiHead(void *pHeadAddr)
 {
     LOS_MULTIPLE_DLNK_HEAD *head = (LOS_MULTIPLE_DLNK_HEAD *)pHeadAddr;
     LOS_DL_LIST *pstListHead = head->stListHead;
-    UINT32 i;
+    uint32_t i;
 
     for (i = 0; i < OS_MULTI_DLNK_NUM; ++i, ++pstListHead)
     {
@@ -88,10 +88,10 @@ LITE_OS_SEC_TEXT_INIT VOID LOS_DLnkInitMultiHead(VOID *pHeadAddr)
     }
 }
 
-LITE_OS_SEC_TEXT_MINOR LOS_DL_LIST *LOS_DLnkMultiHead(VOID *pHeadAddr, UINT32 uwSize)
+LITE_OS_SEC_TEXT_MINOR LOS_DL_LIST *LOS_DLnkMultiHead(void *pHeadAddr, uint32_t uwSize)
 {
     LOS_MULTIPLE_DLNK_HEAD *head = (LOS_MULTIPLE_DLNK_HEAD *)pHeadAddr;
-    UINT32 idx =  LOS_Log2(uwSize);
+    uint32_t idx =  LOS_Log2(uwSize);
 
     if(idx > OS_MAX_MULTI_DLNK_LOG2)
     {
