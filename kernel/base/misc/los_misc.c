@@ -38,7 +38,7 @@
 
 #include "los_hwi.h"
 
-LITE_OS_SEC_TEXT uint32_t LOS_Align(uint32_t uwAddr, uint32_t uwBoundary)
+ uint32_t LOS_Align(uint32_t uwAddr, uint32_t uwBoundary)
 {
     if (uwAddr + uwBoundary - 1 > uwAddr) {
         return (uwAddr + uwBoundary - 1) & ~(uwBoundary - 1);
@@ -47,7 +47,7 @@ LITE_OS_SEC_TEXT uint32_t LOS_Align(uint32_t uwAddr, uint32_t uwBoundary)
     }
 }
 
-LITE_OS_SEC_TEXT_MINOR void LOS_Msleep(uint32_t uwMsecs)
+ void LOS_Msleep(uint32_t uwMsecs)
 {
     uint32_t uwInterval = 0;
 

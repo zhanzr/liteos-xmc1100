@@ -52,7 +52,7 @@ extern "C" {
 
 /*任务PID*/
 static uint32_t g_TestTaskID;
-//static LITE_OS_SEC_BSS  uint32_t  g_uweventTaskID;
+//static   uint32_t  g_uweventTaskID;
 /*事件控制结构体*/
 static EVENT_CB_S  example_event;
 

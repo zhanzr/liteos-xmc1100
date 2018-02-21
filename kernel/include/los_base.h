@@ -39,7 +39,6 @@
 #ifndef _LOS_BASE_H
 #define _LOS_BASE_H
 
-#include "los_builddef.h"
 #include "los_typedef.h"
 #include "los_config.h"
 #include "los_printf.h"
@@ -144,20 +143,6 @@ extern "C" {
  * Write a uint64_t ullAddr to ullAddr.
  */
 #define WRITE_UINT64(ullValue, ullAddr)              (*((volatile uint64_t *)(ullAddr)) = (ullValue))
-
-#if PRINT_LEVEL < LOS_ERR_LEVEL
-#define LOS_ASSERT(judge)
-#else
-#define LOS_ASSERT(judge) \
-    do { \
-        if ((judge) == 0) \
-        { \
-            LOS_IntLock(); \
-            PRINT_ERR("ASSERT ERROR! %s, %d, %s\n", __FILE__, __LINE__, __func__); \
-            while(1); \
-        } \
-    } while(0)
-#endif
 
 /**
  *@ingroup los_base

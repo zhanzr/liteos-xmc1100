@@ -47,20 +47,11 @@ extern "C" {
 
 extern uint8_t *m_aucSysMem0;
 	
-#ifdef LOS_PACK_ALIGN_4_IAR
-#pragma data_alignment=4
-#endif
-#ifdef LOS_PACK_ALIGN_4_KEIL
-#if (__CORTEX_M != 2)
 __align(4)
-#endif
-#endif
-#ifdef LOS_PACK_ALIGN_4_GCC
-__attribute__ ((aligned (4)))
-#endif 
+
 uint8_t g_ucMemStart[OS_SYS_MEM_SIZE];
 
-LITE_OS_SEC_TEXT_INIT uint32_t osMemSystemInit()
+ uint32_t osMemSystemInit()
 {
     uint32_t uwRet;
 
@@ -470,12 +461,13 @@ void osMemMergeNodeForReAllocBigger(void *pPool, uint32_t uwAllocSize, LOS_MEM_D
  Output      : None
  Return      : LOS_OK - Ok, OS_ERROR - Error
 *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT uint32_t LOS_MemInit(void *pPool, uint32_t  uwSize)
+ uint32_t LOS_MemInit(void *pPool, uint32_t  uwSize)
 {
     LOS_MEM_DYN_NODE *pstNewNode = (LOS_MEM_DYN_NODE *)NULL;
     LOS_MEM_DYN_NODE *pstEndNode = (LOS_MEM_DYN_NODE *)NULL;
     LOS_MEM_POOL_INFO *pstPoolInfo = (LOS_MEM_POOL_INFO *)NULL;
-    uint32_t* uvIntSave;
+	
+    uint32_t uwIntSave;
     LOS_DL_LIST *pstListHead = (LOS_DL_LIST *)NULL;
 
     if ((pPool == NULL) || (uwSize < (OS_MEM_MIN_POOL_SIZE)))
@@ -483,7 +475,7 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_MemInit(void *pPool, uint32_t  uwSize)
         return OS_ERROR;
     }
 
-    uvIntSave = LOS_IntLock();
+    uwIntSave = LOS_IntLock();
 
     pstPoolInfo = (LOS_MEM_POOL_INFO *)pPool;
     pstPoolInfo->pPoolAddr = pPool;
@@ -496,7 +488,7 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_MemInit(void *pPool, uint32_t  uwSize)
     if (NULL == pstListHead)
     {
         PRINT_ERR("%s %d\n", __FUNCTION__, __LINE__);
-        LOS_IntRestore(uvIntSave);
+        LOS_IntRestore(uwIntSave);
         return OS_ERROR;
     }
 
@@ -507,7 +499,7 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_MemInit(void *pPool, uint32_t  uwSize)
     pstEndNode->uwSizeAndFlag = OS_MEM_NODE_HEAD_SIZE;
     OS_MEM_NODE_SET_USED_FLAG(pstEndNode->uwSizeAndFlag);
     osMemSetMagicNumAndTaskid(pstEndNode);
-    LOS_IntRestore(uvIntSave);
+    LOS_IntRestore(uwIntSave);
 
     return LOS_OK;
 }
@@ -520,10 +512,10 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_MemInit(void *pPool, uint32_t  uwSize)
  Output      : None
  Return      : Pointer to allocated memory node
 *****************************************************************************/
-LITE_OS_SEC_TEXT void *LOS_MemAlloc (void *pPool, uint32_t  uwSize)
+ void *LOS_MemAlloc (void *pPool, uint32_t  uwSize)
 {
     void *pPtr = NULL;
-    uint32_t* uvIntSave = LOS_IntLock();
+    uint32_t uwIntSave = LOS_IntLock();
 
     do
     {
@@ -540,7 +532,7 @@ LITE_OS_SEC_TEXT void *LOS_MemAlloc (void *pPool, uint32_t  uwSize)
         pPtr = osMemAllocWithCheck(pPool, uwSize);
     } while (0);
 
-    LOS_IntRestore(uvIntSave);
+    LOS_IntRestore(uwIntSave);
     return pPtr;
 }
 
@@ -553,13 +545,13 @@ LITE_OS_SEC_TEXT void *LOS_MemAlloc (void *pPool, uint32_t  uwSize)
  Output      : None
  Return      : Pointer to allocated memory node
 *****************************************************************************/
-LITE_OS_SEC_TEXT void *LOS_MemAllocAlign(void *pPool, uint32_t uwSize, uint32_t uwBoundary)
+ void *LOS_MemAllocAlign(void *pPool, uint32_t uwSize, uint32_t uwBoundary)
 {
     uint32_t uwUseSize = 0;
     uint32_t uwGapSize = 0;
     void *pPtr = NULL;
     void *pAlignedPtr = NULL;
-    uint32_t* uvIntSave = LOS_IntLock();
+    uint32_t uwIntSave = LOS_IntLock();
 
     do
     {
@@ -593,7 +585,7 @@ LITE_OS_SEC_TEXT void *LOS_MemAllocAlign(void *pPool, uint32_t uwSize, uint32_t 
 
     } while (0);
 
-     LOS_IntRestore(uvIntSave);
+     LOS_IntRestore(uwIntSave);
 
     return pPtr;
 }
@@ -607,11 +599,11 @@ LITE_OS_SEC_TEXT void *LOS_MemAllocAlign(void *pPool, uint32_t uwSize, uint32_t 
  Output      : None
  Return      : LOS_OK -Ok,  LOS_NOK -failed
 *****************************************************************************/
-LITE_OS_SEC_TEXT uint32_t LOS_MemFree(void *pPool, void *pMem)
+ uint32_t LOS_MemFree(void *pPool, void *pMem)
 {
     uint32_t uwRet = LOS_NOK;
     uint32_t uwGapSize = 0;
-    uint32_t* uvIntSave = LOS_IntLock();
+    uint32_t uwIntSave = LOS_IntLock();
 
     do
     {
@@ -638,7 +630,7 @@ LITE_OS_SEC_TEXT uint32_t LOS_MemFree(void *pPool, void *pMem)
 
     } while(0);
 
-    LOS_IntRestore(uvIntSave);
+    LOS_IntRestore(uwIntSave);
     return uwRet;
 }
 
@@ -651,13 +643,13 @@ LITE_OS_SEC_TEXT uint32_t LOS_MemFree(void *pPool, void *pMem)
  Output      : None
  Return      : Pointer to allocated memory
 *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR void *LOS_MemRealloc (void *pPool,  void *pPtr, uint32_t uwSize)
+ void *LOS_MemRealloc (void *pPool,  void *pPtr, uint32_t uwSize)
 {
-    uint32_t* uvIntSave;
+    uint32_t uwIntSave;
     uint32_t uwGapSize = 0;
     void *pNewPtr = NULL;
 
-    uvIntSave = LOS_IntLock();
+    uwIntSave = LOS_IntLock();
 
     do
     {
@@ -720,7 +712,7 @@ LITE_OS_SEC_TEXT_MINOR void *LOS_MemRealloc (void *pPool,  void *pPtr, uint32_t 
 
     } while (0);
 
-    LOS_IntRestore(uvIntSave);
+    LOS_IntRestore(uwIntSave);
     return pNewPtr;
 }
 

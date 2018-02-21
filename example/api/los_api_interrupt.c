@@ -59,14 +59,14 @@ static void User_IRQHandler(void)
 
 uint32_t Example_Interrupt(void)
 {
-    uint32_t* uvIntSave;
-    uvIntSave = LOS_IntLock();
+    uint32_t uwIntSave;
+    uwIntSave = LOS_IntLock();
     
     Example_Exti0_Init();
     
     LOS_HwiCreate(6, 0,0,User_IRQHandler,0);//创建中断
     
-    LOS_IntRestore(uvIntSave);
+    LOS_IntRestore(uwIntSave);
     
     return LOS_OK;
 }

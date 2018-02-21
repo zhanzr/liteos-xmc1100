@@ -782,7 +782,7 @@ extern uint32_t LOS_TaskYield(void);
  *
  * @param  uwTaskID [IN] Type #uint32_t Task ID.
  *
- * @retval #OS_INVALID The task priority fails to be obtained.
+ * @retval #OS_ERROR The task priority fails to be obtained.
  * @retval # The task priority is successfully returned.
  * @par Dependency:
  * <ul><li>los_task.h: the header file that contains the API declaration.</li></ul>

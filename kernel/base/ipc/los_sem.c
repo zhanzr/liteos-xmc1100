@@ -50,8 +50,8 @@ extern "C"{
 
 #if (LOSCFG_BASE_IPC_SEM == YES)
 
-LITE_OS_SEC_DATA_INIT LOS_DL_LIST  g_stUnusedSemList;
-LITE_OS_SEC_BSS SEM_CB_S    *g_pstAllSem;
+ LOS_DL_LIST  g_stUnusedSemList;
+ SEM_CB_S    *g_pstAllSem;
 
 /*****************************************************************************
  Function     : osSemInit
@@ -60,7 +60,7 @@ LITE_OS_SEC_BSS SEM_CB_S    *g_pstAllSem;
  Output       : None,
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT uint32_t osSemInit(void)
+ uint32_t osSemInit(void)
 {
     SEM_CB_S    *pstSemNode;
     uint32_t      uwIndex;
@@ -94,9 +94,9 @@ LITE_OS_SEC_TEXT_INIT uint32_t osSemInit(void)
  Output       : puwSemHandle-----Index of semaphore,
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT uint32_t LOS_SemCreate (uint16_t usCount, uint32_t *puwSemHandle)
+ uint32_t LOS_SemCreate (uint16_t usCount, uint32_t *puwSemHandle)
 {
-    uint32_t*      uwIntSave;
+    uint32_t uwIntSave;
     SEM_CB_S    *pstSemCreated;
     LOS_DL_LIST *pstUnusedSem;
 
@@ -136,9 +136,9 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_SemCreate (uint16_t usCount, uint32_t *puwSem
  Output       : None
  Return       : LOS_OK on success or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT uint32_t LOS_SemDelete(uint32_t uwSemHandle)
+ uint32_t LOS_SemDelete(uint32_t uwSemHandle)
 {
-    uint32_t*      uwIntSave;
+    uint32_t uwIntSave;
     SEM_CB_S    *pstSemDeleted;
 
    pstSemDeleted = GET_SEM(uwSemHandle);
@@ -170,9 +170,9 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_SemDelete(uint32_t uwSemHandle)
  Output       : None
  Return       : LOS_OK on success or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT uint32_t LOS_SemPend(uint32_t uwSemHandle, uint32_t uwTimeout)
+ uint32_t LOS_SemPend(uint32_t uwSemHandle, uint32_t uwTimeout)
 {
-    uint32_t*      uwIntSave;
+    uint32_t uwIntSave;
     SEM_CB_S    *pstSemPended;
     uint32_t      uwRetErr;
     LOS_TASK_CB *pstRunTsk;
@@ -257,9 +257,9 @@ error_uniSemPend:
  Output       : None
  Return       : LOS_OK on success or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT uint32_t LOS_SemPost(uint32_t uwSemHandle)
+ uint32_t LOS_SemPost(uint32_t uwSemHandle)
 {
-    uint32_t*      uwIntSave;
+    uint32_t uwIntSave;
     SEM_CB_S    *pstSemPosted = GET_SEM(uwSemHandle);
     LOS_TASK_CB *pstResumedTask;
 

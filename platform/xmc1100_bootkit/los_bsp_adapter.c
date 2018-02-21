@@ -1,20 +1,18 @@
 //TODO: Need Rewrite according to the CMSIS Standard
 //Conditional compiling directive usage should be kept as few as possible
 
-#ifdef LOS_XMC1100
-	#include <stdint.h>
-	#include <stdlib.h>
-	#include <assert.h>
-	#include <stdio.h>
-	#include <string.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <stdio.h>
+#include <string.h>
 
-	#include <XMC1100.h>
-	#include <xmc_scu.h>
-	#include <xmc_rtc.h>
-	#include <xmc_uart.h>
-	#include <xmc_gpio.h>
-	#include <xmc_flash.h>
-#endif
+#include <XMC1100.h>
+#include <xmc_scu.h>
+#include <xmc_rtc.h>
+#include <xmc_uart.h>
+#include <xmc_gpio.h>
+#include <xmc_flash.h>
 
 #include "los_bsp_led.h"
 #include "los_bsp_uart.h"

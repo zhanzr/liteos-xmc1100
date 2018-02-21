@@ -333,7 +333,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>RAM_SIZE_LEVEL_1,CORE_M0,LOS_XMC1100</Define>
+              <Define>RAM_SIZE_LEVEL_1</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\platform\xmc1100_bootkit;..\..\example\include;..\..\kernel\base\core;..\..\kernel\base\fs;..\..\kernel\base\include;..\..\kernel\base\ipc;..\..\kernel\base\mem;..\..\kernel\base\misc;..\..\kernel\cpu\arm\cortex-m0;..\..\kernel\cmsis;..\..\kernel\config;..\..\kernel\include;..\..\kernel\link\keil;..\..\platform\xmc1100_bootkit;..\..\user</IncludePath>
             </VariousControls>
@@ -475,9 +475,9 @@
               <FilePath>..\..\kernel\cpu\arm\cortex-m0\los_hwi.c</FilePath>
             </File>
             <File>
-              <FileName>los_dispatch_keil.s</FileName>
+              <FileName>los_dispatch_cortexm0.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\kernel\cpu\arm\cortex-m0\los_dispatch_keil.s</FilePath>
+              <FilePath>..\..\kernel\cpu\arm\cortex-m0\los_dispatch_cortexm0.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -628,6 +628,13 @@
         </Group>
         <Group>
           <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>note.txt</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\platform\xmc1100_bootkit\note.txt</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>user</GroupName>
@@ -635,7 +642,7 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\user\main.c</FilePath>
+              <FilePath>..\..\platform\xmc1100_bootkit\main.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -44,7 +44,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 #if(LOSCFG_BASE_CORE_TIMESLICE == YES)
-LITE_OS_SEC_BSS OS_TASK_ROBIN_S        g_stTaskTimeSlice;
+ OS_TASK_ROBIN_S        g_stTaskTimeSlice;
 
 /*****************************************************************************
  Function     : osTimesliceInit
@@ -53,7 +53,7 @@ LITE_OS_SEC_BSS OS_TASK_ROBIN_S        g_stTaskTimeSlice;
  Output       : None
  Return       : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT void osTimesliceInit(void)
+ void osTimesliceInit(void)
 {
     g_stTaskTimeSlice.pstTask = (LOS_TASK_CB *)NULL;
     g_stTaskTimeSlice.usTout = LOSCFG_BASE_CORE_TIMESLICE_TIMEOUT;
@@ -66,7 +66,7 @@ LITE_OS_SEC_TEXT_INIT void osTimesliceInit(void)
  Output       : None
  Return       : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT void osTimesliceCheck(void)
+ void osTimesliceCheck(void)
 {
     if (g_stTaskTimeSlice.pstTask != g_stLosTask.pstRunTask)
     {

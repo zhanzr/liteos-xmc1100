@@ -39,8 +39,6 @@
 #ifndef _LOS_TYPEDEF_H
 #define _LOS_TYPEDEF_H
 
-#include "los_builddef.h"
-
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -50,19 +48,9 @@ extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
-#ifdef YES
-#undef YES
-#endif
 #define YES                                                 (1)
 
-#ifdef  NO
-#undef  NO
-#endif
 #define NO                                                  (0)
-
-#define OS_NULL_BYTE                                        ((uint8_t)0xFF)
-#define OS_NULL_SHORT                                       ((uint16_t)0xFFFF)
-#define OS_NULL_INT                                         ((uint32_t)0xFFFFFFFF)
 
 #ifndef LOS_OK
 #define LOS_OK                                              (0)
@@ -74,14 +62,6 @@ extern "C" {
 
 #define OS_FAIL                                             (1)
 #define OS_ERROR                                            (uint32_t)(-1)
-#define OS_INVALID                                          (uint32_t)(-1)
-
-#define asm                                                 __asm
-#ifdef typeof
-#undef typeof
-#endif
-#define typeof                                              __typeof__
-
 
 #ifdef __cplusplus
 #if __cplusplus

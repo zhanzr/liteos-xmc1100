@@ -77,7 +77,7 @@ typedef struct LOS_DL_LIST
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-LITE_OS_SEC_ALW_INLINE inline void LOS_ListInit(LOS_DL_LIST *pstList)
+__attribute__((always_inline)) inline void LOS_ListInit(LOS_DL_LIST *pstList)
 {
     pstList->pstNext = pstList;
     pstList->pstPrev = pstList;
@@ -126,7 +126,7 @@ LITE_OS_SEC_ALW_INLINE inline void LOS_ListInit(LOS_DL_LIST *pstList)
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-LITE_OS_SEC_ALW_INLINE inline void LOS_ListAdd(LOS_DL_LIST *pstList, LOS_DL_LIST *pstNode)
+__attribute__((always_inline)) inline void LOS_ListAdd(LOS_DL_LIST *pstList, LOS_DL_LIST *pstNode)
 {
     pstNode->pstNext = pstList->pstNext;
     pstNode->pstPrev = pstList;
@@ -154,7 +154,7 @@ LITE_OS_SEC_ALW_INLINE inline void LOS_ListAdd(LOS_DL_LIST *pstList, LOS_DL_LIST
  *@see LOS_ListAdd
  *@since Huawei LiteOS V100R001C00
  */
-LITE_OS_SEC_ALW_INLINE inline void LOS_ListTailInsert(LOS_DL_LIST *pstList, LOS_DL_LIST *pstNode)
+__attribute__((always_inline)) inline void LOS_ListTailInsert(LOS_DL_LIST *pstList, LOS_DL_LIST *pstNode)
 {
     LOS_ListAdd(pstList->pstPrev, pstNode);
 }
@@ -180,7 +180,7 @@ LITE_OS_SEC_ALW_INLINE inline void LOS_ListTailInsert(LOS_DL_LIST *pstList, LOS_
  *@see LOS_ListAdd
  *@since Huawei LiteOS V100R001C00
  */
-LITE_OS_SEC_ALW_INLINE inline void LOS_ListDelete(LOS_DL_LIST *pstNode)
+__attribute__((always_inline)) inline void LOS_ListDelete(LOS_DL_LIST *pstNode)
 {
     pstNode->pstNext->pstPrev = pstNode->pstPrev;
     pstNode->pstPrev->pstNext = pstNode->pstNext;
@@ -210,7 +210,7 @@ LITE_OS_SEC_ALW_INLINE inline void LOS_ListDelete(LOS_DL_LIST *pstNode)
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-LITE_OS_SEC_ALW_INLINE inline bool LOS_ListEmpty(LOS_DL_LIST *pstNode)
+__attribute__((always_inline)) inline bool LOS_ListEmpty(LOS_DL_LIST *pstNode)
 {
     return (bool)(pstNode->pstNext == pstNode);
 }
@@ -342,7 +342,7 @@ LITE_OS_SEC_ALW_INLINE inline bool LOS_ListEmpty(LOS_DL_LIST *pstNode)
         &item->member != (list); \
         item = next, item = LOS_DL_LIST_ENTRY(item->member.pstNext, type, member))
 
-LITE_OS_SEC_ALW_INLINE inline void osListDel(LOS_DL_LIST *pstPrevNode, LOS_DL_LIST *pstNextNode)
+__attribute__((always_inline)) inline void osListDel(LOS_DL_LIST *pstPrevNode, LOS_DL_LIST *pstNextNode)
 {
     pstNextNode->pstPrev = pstPrevNode;
     pstPrevNode->pstNext = pstNextNode;
@@ -367,7 +367,7 @@ LITE_OS_SEC_ALW_INLINE inline void osListDel(LOS_DL_LIST *pstPrevNode, LOS_DL_LI
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-LITE_OS_SEC_ALW_INLINE inline void LOS_ListDelInit(LOS_DL_LIST *pstList)
+__attribute__((always_inline)) inline void LOS_ListDelInit(LOS_DL_LIST *pstList)
 {
     osListDel(pstList->pstPrev, pstList->pstNext);
     LOS_ListInit(pstList);

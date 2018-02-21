@@ -42,9 +42,9 @@ typedef struct {
     uint32_t uwMemUsed;
 } TSK_MEM_USED_INFO;
 
-LITE_OS_SEC_BSS_MINOR TSK_MEM_USED_INFO g_TskMemUsedInfo[LOSCFG_BASE_CORE_TSK_LIMIT + 1];
+ TSK_MEM_USED_INFO g_TskMemUsedInfo[LOSCFG_BASE_CORE_TSK_LIMIT + 1];
 
-LITE_OS_SEC_TEXT_MINOR void osTaskMemUsedInc(uint32_t uwUsedSize)
+ void osTaskMemUsedInc(uint32_t uwUsedSize)
 {
     uint32_t taskId;
 
@@ -68,7 +68,7 @@ LITE_OS_SEC_TEXT_MINOR void osTaskMemUsedInc(uint32_t uwUsedSize)
     g_TskMemUsedInfo[taskId].uwMemUsed += uwUsedSize;
 }
 
-LITE_OS_SEC_TEXT_MINOR void osTaskMemUsedDec(uint32_t uwUsedSize)
+ void osTaskMemUsedDec(uint32_t uwUsedSize)
 {
     uint32_t taskId;
 
@@ -87,7 +87,7 @@ LITE_OS_SEC_TEXT_MINOR void osTaskMemUsedDec(uint32_t uwUsedSize)
     g_TskMemUsedInfo[taskId].uwMemUsed -= uwUsedSize;
 }
 
-LITE_OS_SEC_TEXT_MINOR uint32_t osTaskMemUsage(uint32_t uwTaskId)
+ uint32_t osTaskMemUsage(uint32_t uwTaskId)
 {
     if ((uint32_t)uwTaskId > LOSCFG_BASE_CORE_TSK_LIMIT)
     {

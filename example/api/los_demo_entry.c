@@ -27,7 +27,7 @@ extern "C" {
 
 static uint32_t g_uwDemoTaskID;
     
-static LITE_OS_SEC_TEXT void LOS_Demo_Tskfunc(void)
+static  void LOS_Demo_Tskfunc(void)
 {
 #ifdef LOS_KERNEL_TEST_ALL
 #else /* LOS_KERNEL_TEST_ALL */

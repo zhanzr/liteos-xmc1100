@@ -48,8 +48,8 @@ extern "C"{
 
 #if (LOSCFG_BASE_IPC_MUX == YES)
 
-LITE_OS_SEC_BSS MUX_CB_S             *g_pstAllMux;
-LITE_OS_SEC_DATA_INIT LOS_DL_LIST    g_stUnusedMuxList;
+ MUX_CB_S             *g_pstAllMux;
+ LOS_DL_LIST    g_stUnusedMuxList;
 
 
 /*****************************************************************************
@@ -59,7 +59,7 @@ LITE_OS_SEC_DATA_INIT LOS_DL_LIST    g_stUnusedMuxList;
  Output       : None
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT uint32_t osMuxInit(void)
+ uint32_t osMuxInit(void)
 {
     MUX_CB_S *pstMuxNode;
     uint32_t   uwIndex;
@@ -91,9 +91,9 @@ LITE_OS_SEC_TEXT_INIT uint32_t osMuxInit(void)
  Output       : puwMuxHandle ------ Mutex operation handle
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT  uint32_t  LOS_MuxCreate (uint32_t *puwMuxHandle)
+  uint32_t  LOS_MuxCreate (uint32_t *puwMuxHandle)
 {
-    uint32_t*      uwIntSave;
+    uint32_t uwIntSave;
     MUX_CB_S    *pstMuxCreated;
     LOS_DL_LIST *pstUnusedMux;
 
@@ -129,9 +129,9 @@ LITE_OS_SEC_TEXT_INIT  uint32_t  LOS_MuxCreate (uint32_t *puwMuxHandle)
  Output       : None
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT uint32_t LOS_MuxDelete(uint32_t uwMuxHandle)
+ uint32_t LOS_MuxDelete(uint32_t uwMuxHandle)
 {
-    uint32_t*    uwIntSave;
+    uint32_t uwIntSave;
     MUX_CB_S *pstMuxDeleted;
 
    pstMuxDeleted = GET_MUX(uwMuxHandle);
@@ -165,9 +165,9 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_MuxDelete(uint32_t uwMuxHandle)
  Output       : None
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT uint32_t LOS_MuxPend(uint32_t uwMuxHandle, uint32_t uwTimeout)
+ uint32_t LOS_MuxPend(uint32_t uwMuxHandle, uint32_t uwTimeout)
 {
-    uint32_t*     uwIntSave;
+    uint32_t uwIntSave;
     MUX_CB_S  *pstMuxPended;
     uint32_t     uwRetErr;
     LOS_TASK_CB  *pstRunTsk;
@@ -267,9 +267,9 @@ error_uniMuxPend:
  Output       : None
  Return       : LOS_OK on success ,or error code on failure
  *****************************************************************************/
-LITE_OS_SEC_TEXT uint32_t LOS_MuxPost(uint32_t uwMuxHandle)
+ uint32_t LOS_MuxPost(uint32_t uwMuxHandle)
 {
-    uint32_t*      uwIntSave;
+    uint32_t uwIntSave;
     MUX_CB_S    *pstMuxPosted = GET_MUX(uwMuxHandle);
     LOS_TASK_CB *pstResumedTask;
     LOS_TASK_CB *pstRunTsk;

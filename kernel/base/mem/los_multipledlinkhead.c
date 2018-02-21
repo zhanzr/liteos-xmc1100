@@ -76,7 +76,7 @@ uint32_t LOS_Log2(uint32_t uwSize)
 
 }
 
-LITE_OS_SEC_TEXT_INIT void LOS_DLnkInitMultiHead(void *pHeadAddr)
+ void LOS_DLnkInitMultiHead(void *pHeadAddr)
 {
     LOS_MULTIPLE_DLNK_HEAD *head = (LOS_MULTIPLE_DLNK_HEAD *)pHeadAddr;
     LOS_DL_LIST *pstListHead = head->stListHead;
@@ -88,7 +88,7 @@ LITE_OS_SEC_TEXT_INIT void LOS_DLnkInitMultiHead(void *pHeadAddr)
     }
 }
 
-LITE_OS_SEC_TEXT_MINOR LOS_DL_LIST *LOS_DLnkMultiHead(void *pHeadAddr, uint32_t uwSize)
+ LOS_DL_LIST *LOS_DLnkMultiHead(void *pHeadAddr, uint32_t uwSize)
 {
     LOS_MULTIPLE_DLNK_HEAD *head = (LOS_MULTIPLE_DLNK_HEAD *)pHeadAddr;
     uint32_t idx =  LOS_Log2(uwSize);

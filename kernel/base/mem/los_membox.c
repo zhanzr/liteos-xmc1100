@@ -77,12 +77,12 @@ inline uint32_t osCheckBoxMem(const LOS_MEMBOX_INFO *pstBoxInfo, const void *pNo
     return OS_MEMBOX_CHECK_MAGIC(pNode);
 }
 
-LITE_OS_SEC_TEXT_INIT uint32_t LOS_MemboxInit(void *pPool, uint32_t uwBoxSize, uint32_t uwBlkSize)
+ uint32_t LOS_MemboxInit(void *pPool, uint32_t uwBoxSize, uint32_t uwBlkSize)
  {
     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pPool;
     LOS_MEMBOX_NODE *pstNode = (LOS_MEMBOX_NODE *)NULL;
     uint32_t i;
-    uint32_t* uvIntSave;
+    uint32_t uwIntSave;
 
     if (pPool == NULL)
     {
@@ -99,13 +99,13 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_MemboxInit(void *pPool, uint32_t uwBoxSize, u
         return LOS_NOK;
     }
 
-    uvIntSave = LOS_IntLock();
+    uwIntSave = LOS_IntLock();
     pstBoxInfo->uwBlkSize = LOS_MEMBOX_ALLIGNED(uwBlkSize + LOS_MEMBOX_MAGIC_SIZE);
     pstBoxInfo->uwBlkNum = ((uwBoxSize - sizeof(LOS_MEMBOX_INFO)) /pstBoxInfo->uwBlkSize);
 
     if (pstBoxInfo->uwBlkNum == 0)
     {
-        LOS_IntRestore(uvIntSave);
+        LOS_IntRestore(uwIntSave);
         return LOS_NOK;
     }
 
@@ -121,24 +121,24 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_MemboxInit(void *pPool, uint32_t uwBoxSize, u
 
     pstNode->pstNext = (LOS_MEMBOX_NODE *)NULL;
 
-    LOS_IntRestore(uvIntSave);
+    LOS_IntRestore(uwIntSave);
 
     return LOS_OK;
 }
 
-LITE_OS_SEC_TEXT void *LOS_MemboxAlloc(void *pPool)
+ void *LOS_MemboxAlloc(void *pPool)
 {
     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pPool;
     LOS_MEMBOX_NODE *pstNode = (LOS_MEMBOX_NODE *)NULL;
     LOS_MEMBOX_NODE *pstRet = (LOS_MEMBOX_NODE *)NULL;
-    uint32_t* uvIntSave;
+    uint32_t uwIntSave;
 
     if (pPool == NULL)
     {
         return NULL;
     }
 
-    uvIntSave = LOS_IntLock();
+    uwIntSave = LOS_IntLock();
     pstNode = &(pstBoxInfo->stFreeList);
     if (pstNode->pstNext != NULL)
     {
@@ -147,23 +147,23 @@ LITE_OS_SEC_TEXT void *LOS_MemboxAlloc(void *pPool)
         OS_MEMBOX_SET_MAGIC(pstRet);
     }
 
-    LOS_IntRestore(uvIntSave);
+    LOS_IntRestore(uwIntSave);
 
     return pstRet == NULL ?  NULL : OS_MEMBOX_USER_ADDR(pstRet);
 }
 
-LITE_OS_SEC_TEXT uint32_t LOS_MemboxFree(void *pPool, void *pBox)
+ uint32_t LOS_MemboxFree(void *pPool, void *pBox)
 {
     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pPool;
     uint32_t uwRet = LOS_NOK;
-    uint32_t* uvIntSave;
+    uint32_t uwIntSave;
 
     if (pPool == NULL || pBox == NULL)
     {
         return LOS_NOK;
     }
 
-    uvIntSave = LOS_IntLock();
+    uwIntSave = LOS_IntLock();
     do
     {
         LOS_MEMBOX_NODE *pstNode = OS_MEMBOX_NODE_ADDR(pBox);
@@ -178,13 +178,13 @@ LITE_OS_SEC_TEXT uint32_t LOS_MemboxFree(void *pPool, void *pBox)
         uwRet = LOS_OK;
     } while (0);
 
-    LOS_IntRestore(uvIntSave);
+    LOS_IntRestore(uwIntSave);
 
     return uwRet;
 
 }
 
-LITE_OS_SEC_TEXT_MINOR void LOS_MemboxClr(void *pPool, void *pBox)
+ void LOS_MemboxClr(void *pPool, void *pBox)
 {
     LOS_MEMBOX_INFO *pstBoxInfo = (LOS_MEMBOX_INFO *)pPool;
 

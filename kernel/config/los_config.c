@@ -66,7 +66,7 @@ void osEnableFPU(void)
  Output      : None
  Return      : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT void osRegister(void)
+ void osRegister(void)
 {
     g_uwTskMaxNum = LOSCFG_BASE_CORE_TSK_LIMIT + 1; /* Reserved 1 for IDLE */
     g_sys_mem_addr_end = (uint32_t)g_ucMemStart + OS_SYS_MEM_SIZE;
@@ -80,7 +80,7 @@ LITE_OS_SEC_TEXT_INIT void osRegister(void)
  Output      : None
  Return      : LOS_OK
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT uint32_t LOS_EnableTick(void)
+ uint32_t LOS_EnableTick(void)
 {
     uint32_t uwRet;
 
@@ -100,7 +100,7 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_EnableTick(void)
  Output      : None
  Return      : LOS_OK
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT uint32_t LOS_Start(void)
+ uint32_t LOS_Start(void)
 {
     uint32_t uwRet = LOS_OK;
 
@@ -116,7 +116,7 @@ LITE_OS_SEC_TEXT_INIT uint32_t LOS_Start(void)
  Output      : None
  Return      : LOS_OK
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT int osMain(void)
+ int osMain(void)
 {
     uint32_t uwRet;
 
@@ -199,7 +199,7 @@ LITE_OS_SEC_TEXT_INIT int osMain(void)
     return LOS_OK;
 }
 
-LITE_OS_SEC_TEXT_INIT int LOS_KernelInit(void)
+ int LOS_KernelInit(void)
 {
     uint32_t uwRet;
     uwRet = osMain();

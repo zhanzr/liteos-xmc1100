@@ -76,20 +76,20 @@ static inline void D7_L(void)
 		XMC_GPIO_SetOutputLow(XMC_GPIO_PORT0, 8);	
 }
 
-static inline uint32_t ReadD4(void)
-{
-	return XMC_GPIO_GetInput(XMC_GPIO_PORT0, 9);
-}
+//static inline uint32_t ReadD4(void)
+//{
+//	return XMC_GPIO_GetInput(XMC_GPIO_PORT0, 9);
+//}
 
-static inline uint32_t ReadD5(void)
-{
-	return XMC_GPIO_GetInput(XMC_GPIO_PORT1, 1);
-}
+//static inline uint32_t ReadD5(void)
+//{
+//	return XMC_GPIO_GetInput(XMC_GPIO_PORT1, 1);
+//}
 
-static inline uint32_t ReadD6(void)
-{
-	return XMC_GPIO_GetInput(XMC_GPIO_PORT1, 0);
-}
+//static inline uint32_t ReadD6(void)
+//{
+//	return XMC_GPIO_GetInput(XMC_GPIO_PORT1, 0);
+//}
 
 static inline uint32_t ReadD7(void)
 {
@@ -106,7 +106,7 @@ static inline void DB4_Wr(uint8_t dat)
 
 void LCD_WaitAvail(void)
 {
-	uint32_t tmpTimeOut = 8000;
+	uint32_t tmpTimeOut = 12000;
 	
 	DB4_Wr(0xff);
 

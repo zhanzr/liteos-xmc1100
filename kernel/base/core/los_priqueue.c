@@ -39,7 +39,7 @@
 
 #include "los_memory.h"
 
-LITE_OS_SEC_BSS LOS_DL_LIST *g_pstLosPriorityQueueList;
+ LOS_DL_LIST *g_pstLosPriorityQueueList;
 
 void osPriqueueInit(void)
 {

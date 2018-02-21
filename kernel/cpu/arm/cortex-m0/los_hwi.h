@@ -1,10 +1,19 @@
-//TODO: Need Rewrite according to the CMSIS Standard
+//Tiny OS Hardware driver.
+//This file is only for Cortex M0 core, for others cores, use conditional directive to use other drivers.
+//
+//TODO: Modify the code according to the CMSIS and modern ANSI/ISO C Standard
 
+//This IS a part of the kernel.
+//
+//Author: zhanzr<zhanzr@foxmail.com>
+//Date	:	2/21/2018
  /**@defgroup los_hwi Hardware interrupt
    *@ingroup kernel
  */
 #ifndef _LOS_HWI_H
 #define _LOS_HWI_H
+
+#include <cmsis_compiler.h>
 
 #include "los_base.h"
 #include "los_sys.h"
@@ -16,41 +25,10 @@ extern "C" {
 #endif /* __cplusplus */
 
 /**
- * @ingroup los_hwi
- * Define the type of a hardware interrupt number.
- */
-typedef uint32_t                                              HWI_HANDLE_T;
-
-/**
- * @ingroup los_hwi
- * Define the type of a hardware interrupt priority.
- */
-typedef uint16_t                                              HWI_PRIOR_T;
-
-/**
- * @ingroup los_hwi
- * Define the type of hardware interrupt mode configurations.
- */
-typedef uint16_t                                              HWI_MODE_T;
-
-/**
- * @ingroup los_hwi
- * Define the type of the parameter used for the hardware interrupt creation function. The function of this parameter varies among platforms.
- */
-typedef uint32_t                                              HWI_ARG_T;
-
-/**
  * @ingroup  los_hwi
  * Define the type of a hardware interrupt handling function.
  */
 typedef void (* HWI_PROC_FUNC)(void);
-
-/**
- * @ingroup  los_hwi
- * Define the type of a hardware interrupt vector table function.
- */
-typedef void (**HWI_VECTOR_FUNC)(void);
-
 
 /**
  * @ingroup los_hwi
@@ -381,11 +359,11 @@ extern void Reset_Handler(void);
  * <li>Before executing an interrupt on a platform, refer to the chip manual of the platform.</li>
  * </ul>
  *
- * @param  uwHwiNum   [IN] Type#HWI_HANDLE_T: hardware interrupt number. The value range applicable for a Cortex-M4 platform is [0,240].
- * @param  usHwiPrio  [IN] Type#HWI_PRIOR_T: hardware interrupt priority. Ignore this parameter temporarily.
- * @param  usMode     [IN] Type#HWI_MODE_T: hardware interrupt mode. Ignore this parameter temporarily.
+ * @param  uwHwiNum   [IN] Type#uint32_t: hardware interrupt number. The value range applicable for a Cortex-M4 platform is [0,240].
+ * @param  usHwiPrio  [IN] Type#uint16_t: hardware interrupt priority. Ignore this parameter temporarily.
+ * @param  usMode     [IN] Type#uint16_t: hardware interrupt mode. Ignore this parameter temporarily.
  * @param  pfnHandler [IN] Type#HWI_PROC_FUNC: interrupt handler used when a hardware interrupt is triggered.
- * @param  uwArg      [IN] Type#HWI_ARG_T: input parameter of the interrupt handler used when a hardware interrupt is triggered.
+ * @param  uwArg      [IN] Type#uint32_t: input parameter of the interrupt handler used when a hardware interrupt is triggered.
  *
  * @retval #OS_ERRNO_HWI_PROC_FUNC_NULL               0x02000901: Null hardware interrupt handling function.
  * @retval #OS_ERRNO_HWI_NUM_INVALID                     0x02000900: Invalid interrupt number.
@@ -397,11 +375,11 @@ extern void Reset_Handler(void);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern uint32_t LOS_HwiCreate( HWI_HANDLE_T  uwHwiNum,
-                           HWI_PRIOR_T   usHwiPrio,
-                           HWI_MODE_T    usMode,
+extern uint32_t LOS_HwiCreate( uint32_t  uwHwiNum,
+                           uint16_t   usHwiPrio,
+                           uint16_t    usMode,
                            HWI_PROC_FUNC pfnHandler,
-                           HWI_ARG_T     uwArg
+                           uint32_t     uwArg
                            );
 
 
@@ -560,7 +538,7 @@ extern uint32_t* LOS_IntUnLock(void);
  *@see LOS_IntRestore
  *@since Huawei LiteOS V100R001C00
  */
-extern uint32_t* LOS_IntLock(void);
+extern uint32_t LOS_IntLock(void);
 
 
 
@@ -577,7 +555,7 @@ extern uint32_t* LOS_IntLock(void);
  *<li>This API can be called only after all interrupts are disabled, and the input parameter value should be the value returned by calling the all interrupt disabling API.</li>
  *</ul>
  *
- *@param uvIntSave [IN] CPSR value obtained before all interrupts are disabled.
+ *@param uwIntSave [IN] CPSR value obtained before all interrupts are disabled.
  *
  *@retval None.
  *@par Dependency:
@@ -585,7 +563,7 @@ extern uint32_t* LOS_IntLock(void);
  *@see LOS_IntLock
  *@since Huawei LiteOS V100R001C00
  */
-extern void LOS_IntRestore(uint32_t* uvIntSave);
+extern void LOS_IntRestore(uint32_t uwIntSave);
 
 
 
@@ -604,7 +582,7 @@ extern void LOS_IntRestore(uint32_t* uvIntSave);
  * <li>Before executing an interrupt on a platform, refer to the chip manual of the platform.</li>
  * </ul>
  *
- * @param  uwHwiNum   [IN] Type#HWI_HANDLE_T: hardware interrupt number. The value range applicable for a Cortex-M4 platform is [0,240].
+ * @param  uwHwiNum   [IN] Type#uint32_t: hardware interrupt number. The value range applicable for a Cortex-M4 platform is [0,240].
  *
  * @retval #OS_ERRNO_HWI_NUM_INVALID              0x02000900: Invalid interrupt number.
  * @retval #LOS_OK                                  0: The interrupt is successfully delete.
@@ -613,53 +591,7 @@ extern void LOS_IntRestore(uint32_t* uvIntSave);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern uint32_t LOS_HwiDelete(HWI_HANDLE_T uwHwiNum);
-
-/**
- *@ingroup los_hwi
- *@brief Get interrupt number.
- *
- *@par Description:
- *<ul>
- *<li>This API is used to get irq number .</li>
- *</ul>
- *@attention
- *<ul>
- *<li>This API can be called only when an irq come up .</li>
- *</ul>
- *
- *@param None.
- *
- *@retval uint32_t irq number.
- *@par Dependency:
- *<ul><li>los_hwi.h: the header file that contains the API declaration.</li></ul>
- *@see None
- *@since Huawei LiteOS V100R001C00
- */
-extern uint32_t LOS_IntNumGet(void);
-
-/**
- *@ingroup los_hwi
- *@brief diable interrupts.
- *
- *@par Description:
- *<ul>
- *<li>This API is used to disable interrupts .</li>
- *</ul>
- *@attention
- *<ul>
- *<li>This API can be called only in osTaskExit() .</li>
- *</ul>
- *
- *@param None.
- *
- *@retval None.
- *@par Dependency:
- *<ul><li>los_hwi.h: the header file that contains the API declaration.</li></ul>
- *@see None
- *@since Huawei LiteOS V100R001C00
- */
-extern void osDisableIRQ(void);
+extern uint32_t LOS_HwiDelete(uint32_t uwHwiNum);
 
 #ifdef __cplusplus
 #if __cplusplus

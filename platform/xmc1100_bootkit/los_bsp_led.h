@@ -1,12 +1,10 @@
 #ifndef __LOS_BSP_LED_H__
 #define	__LOS_BSP_LED_H__
 
-#ifdef LOS_XMC1100
-	#include <stdint.h>
-	#include <assert.h>
+#include <stdint.h>
+#include <assert.h>
 
-	#include <xmc_gpio.h>
-#endif
+#include <xmc_gpio.h>
 
 void LED_Initialize (void) ;
 void LED_Uninitialize (void) ;

@@ -42,7 +42,7 @@ extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
-LITE_OS_SEC_TEXT_INIT void LOS_Reboot(void)
+ void LOS_Reboot(void)
 {
 #ifdef USE_DUMP_EXPORT
     /*restart the UART and send the dump info to UART  (m_stExcInfo and m_aucTaskArray)*/
@@ -64,7 +64,7 @@ Input      : None
 Output     : None
 Return     : current tick
 *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR uint64_t LOS_TickCountGet (void)
+ uint64_t LOS_TickCountGet (void)
 {
     return g_ullTickCount;
 }
@@ -76,7 +76,7 @@ Input      : None
 Output     : None
 Return     : cycle number corresponding to each tick
 *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR uint32_t LOS_CyclePerTickGet(void)
+ uint32_t LOS_CyclePerTickGet(void)
 {
     return OS_SYS_CLOCK / LOSCFG_BASE_CORE_TICK_PER_SECOND;/*lint !e160*/
 }
@@ -88,7 +88,7 @@ Input      : milliseconds
 Output     : None
 Return     : Tick
 *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR uint32_t LOS_MS2Tick(uint32_t uwMillisec)
+ uint32_t LOS_MS2Tick(uint32_t uwMillisec)
 {
     if (0xFFFFFFFF == uwMillisec)
     {
@@ -105,7 +105,7 @@ Input      : TICK
 Output     : None
 Return     : milliseconds
 *****************************************************************************/
-LITE_OS_SEC_TEXT_MINOR uint32_t LOS_Tick2MS(uint32_t uwTick)
+ uint32_t LOS_Tick2MS(uint32_t uwTick)
 {
     return ((uint64_t)uwTick * OS_SYS_MS_PER_SECOND) / LOSCFG_BASE_CORE_TICK_PER_SECOND;
 }
@@ -118,7 +118,7 @@ Output     : puwUsHi    ---------- High 32 milliseconds
              puwUsLo    ---------- Low 32 milliseconds
 Return     : LOS_OK on success ,or error code on failure
 *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT uint32_t osCpuTick2MS(CPU_TICK *pstCpuTick, uint32_t *puwMsHi, uint32_t *puwMsLo)
+ uint32_t osCpuTick2MS(CPU_TICK *pstCpuTick, uint32_t *puwMsHi, uint32_t *puwMsLo)
 {
     uint64_t udwCpuTick;
     double temp;
@@ -146,7 +146,7 @@ Output     : puwUsHi    ---------- High 32 Microsecond
              puwUsLo    ---------- Low 32 Microsecond
 Return     : LOS_OK on success ,or error code on failure
 *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT uint32_t osCpuTick2US(CPU_TICK *pstCpuTick, uint32_t *puwUsHi, uint32_t *puwUsLo)
+ uint32_t osCpuTick2US(CPU_TICK *pstCpuTick, uint32_t *puwUsHi, uint32_t *puwUsLo)
 {
     uint64_t udwCpuTick;
     double temp;

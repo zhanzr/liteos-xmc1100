@@ -1,0 +1,2 @@
+Note:
+If RTE or similar automatic code generator is used, the startup file could be in other folder. Otherwise, the startup file should be put in this folder.

@@ -1,3 +1,14 @@
+//Tiny OS Demo
+//
+//This IS NOT a part of the kernel.
+//
+//Author: zhanzr<zhanzr@foxmail.com>
+//Date	:	2/21/2018
+
+#include <stdint.h>
+#include <stdlib.h>
+#include <assert.h>
+
 #include "los_sys.h"
 #include "los_tick.h"
 #include "los_task.ph"
@@ -8,27 +19,16 @@
 #include "los_inspect_entry.h"
 #include "los_demo_entry.h"
 
-#ifdef LOS_XMC1100
-	#include <stdint.h>
-	#include <stdlib.h>
-	#include <assert.h>
+#include <XMC1100.h>
+#include <xmc_scu.h>
+#include <xmc_rtc.h>
+#include <xmc_uart.h>
+#include <xmc_gpio.h>
+#include <xmc_flash.h>	
 
-	#include <XMC1100.h>
-	#include <xmc_scu.h>
-	#include <xmc_rtc.h>
-	#include <xmc_uart.h>
-	#include <xmc_gpio.h>
-	#include <xmc_flash.h>
-	
-	#include "lcd2004.h"
-	#include "XMC1000_TSE.h"
-	#include "rtc.h"
-#endif
-
-#ifdef LOS_CMBACKTRACE_COMPILE
-#define HARDWARE_VERSION               "V1.0.0"
-#define SOFTWARE_VERSION               "V0.1.0"
-#endif
+#include "lcd2004.h"
+#include "XMC1000_TSE.h"
+#include "rtc.h"
 
 int stdout_putchar (int ch)
 {
@@ -38,7 +38,7 @@ int stdout_putchar (int ch)
 }
 
 static uint32_t g_uwboadTaskID;
-static LITE_OS_SEC_TEXT void LOS_BoardExampleTskfunc(void)
+static  void LOS_BoardExampleTskfunc(void)
 {
 	__IO XMC_RTC_TIME_t now_rtc_time;
 	int32_t old_temp_C;
@@ -72,8 +72,8 @@ static LITE_OS_SEC_TEXT void LOS_BoardExampleTskfunc(void)
 		LED_Toggle(2);	
 		LED_Toggle(3);	
 		LED_Toggle(4);	
-					__WFI();
 		(void)LOS_TaskDelay(5000);
+		
 	}
 }
 
@@ -103,7 +103,7 @@ Input       : None
 Output      : None
 Return      : None
  *****************************************************************************/
-LITE_OS_SEC_TEXT_INIT
+
 int main(void)
 {
   uint32_t uwRet;
@@ -115,16 +115,13 @@ int main(void)
 	
 	LCD_Initialize();
 	
-  printf ("\nXMC1100 %s @%u Hz\n",
+  printf ("\nXMC1100 Cortex M%u,%s @%u Hz\n",
+	__CORTEX_M,
 	VER,
 	SystemCoreClock);
 	
 	RTC_Initialize();
 		
-#ifdef LOS_CMBACKTRACE_COMPILE
-    cm_backtrace_init("LOS_CmBacktrace", HARDWARE_VERSION, SOFTWARE_VERSION);
-#endif
-
     /*Init LiteOS kernel */
     uwRet = LOS_KernelInit();
     if (uwRet != LOS_OK) {
