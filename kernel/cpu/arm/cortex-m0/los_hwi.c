@@ -107,7 +107,7 @@ HWI_PROC_FUNC m_pstHwiSlaveForm[OS_M0_VECTOR_CNT] = {0};
  Output      : None
  Return      : OS_SUCCESS
  *****************************************************************************/
- unsigned int osGetVectorAddr(void)
+uint32_t osGetVectorAddr(void)
 {
     return (uint32_t)m_pstHwiForm;
 }
@@ -117,7 +117,7 @@ HWI_PROC_FUNC m_pstHwiSlaveForm[OS_M0_VECTOR_CNT] = {0};
  Description : initialization of the hardware interrupt
  Input       : None
  Output      : None
- Return      : OS_SUCCESS
+ Return      : None
  *****************************************************************************/
  void osHwiInit()
 {

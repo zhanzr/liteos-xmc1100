@@ -40,6 +40,8 @@
 #include "los_hw.h"
 #include "los_hwi.h"
 
+#include "los_demo_debug.h"
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C"{
@@ -215,7 +217,7 @@ extern "C"{
     if (g_usLosTaskLock)
     {
         uwRetErr = LOS_ERRNO_MUX_PEND_IN_LOCK;
-        PRINT_ERR("!!!LOS_ERRNO_MUX_PEND_IN_LOCK!!!\n");
+        dprintf("!!!LOS_ERRNO_MUX_PEND_IN_LOCK!!!\n");
         goto errre_uniMuxPend;
     }
 

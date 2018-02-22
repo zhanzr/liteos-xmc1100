@@ -10,13 +10,12 @@
       <TargetName>LiteOS</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060528::V5.06 update 5 (build 528)::ARMCC</pCCUsed>
-      <uAC6>0</uAC6>
+      <pCCUsed>5060422::V5.06 update 4 (build 422)::ARMCC</pCCUsed>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32L053R8Tx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32L0xx_DFP.1.6.1</PackID>
+          <PackID>Keil.STM32L0xx_DFP.2.0.0</PackID>
           <PackURL>http://www.keil.com/pack/</PackURL>
           <Cpu>IROM(0x08000000,0x00010000) IRAM(0x20000000,0x00002000) CPUTYPE("Cortex-M0+") CLOCK(12000000) ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -486,9 +485,9 @@
               <FilePath>..\..\kernel\cpu\arm\cortex-m0plus\los_hwi.c</FilePath>
             </File>
             <File>
-              <FileName>los_dispatch_cortexm0.s</FileName>
+              <FileName>los_dispatch_cortexm0plus.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\kernel\cpu\arm\cortex-m0plus\los_dispatch_cortexm0.s</FilePath>
+              <FilePath>..\..\kernel\cpu\arm\cortex-m0plus\los_dispatch_cortexm0plus.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -604,6 +603,13 @@
         </Group>
         <Group>
           <GroupName>startup</GroupName>
+          <Files>
+            <File>
+              <FileName>startup_stm32l053xx.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\platform\STM32L053_NUCLEO\startup_stm32l053xx.s</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>user</GroupName>
@@ -801,6 +807,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>device</GroupName>
+          <Files>
+            <File>
+              <FileName>system_stm32l0xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\platform\STM32L053_NUCLEO\system_stm32l0xx.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>::Board Support</GroupName>
         </Group>
         <Group>
@@ -808,9 +824,6 @@
         </Group>
         <Group>
           <GroupName>::Compiler</GroupName>
-        </Group>
-        <Group>
-          <GroupName>::Device</GroupName>
         </Group>
       </Groups>
     </Target>
@@ -856,29 +869,19 @@
           <targetInfo name="LiteOS"/>
         </targetInfos>
       </component>
-      <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.6.0" condition="STM32L053 CMSIS">
-        <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.1"/>
-        <targetInfos>
-          <targetInfo name="LiteOS"/>
-        </targetInfos>
-      </component>
     </components>
     <files>
       <file attr="config" category="source" condition="Compiler ARMCC" name="Device\Source\ARM\startup_stm32l053xx.s" version="1.6.0">
-        <instance index="0">RTE\Device\STM32L053R8Tx\startup_stm32l053xx.s</instance>
+        <instance index="0" removed="1">RTE\Device\STM32L053R8Tx\startup_stm32l053xx.s</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.6.0" condition="STM32L053 CMSIS"/>
         <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.1"/>
-        <targetInfos>
-          <targetInfo name="LiteOS"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="source" name="Device\Source\system_stm32l0xx.c" version="1.6.0">
-        <instance index="0">RTE\Device\STM32L053R8Tx\system_stm32l0xx.c</instance>
+        <instance index="0" removed="1">RTE\Device\STM32L053R8Tx\system_stm32l0xx.c</instance>
         <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.6.0" condition="STM32L053 CMSIS"/>
         <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.1"/>
-        <targetInfos>
-          <targetInfo name="LiteOS"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
     </files>
   </RTE>

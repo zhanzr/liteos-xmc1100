@@ -41,12 +41,9 @@
 
 #include "los_typedef.h"
 #include "los_config.h"
-#include "los_printf.h"
 #include "los_list.h"
 #include "los_errno.h"
-#ifdef LOSCFG_LIB_LIBCMINI
-#include "libcmini.h"
-#endif
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {

@@ -38,6 +38,7 @@
 #include "los_api_dynamic_mem.h"
 #include "los_inspect_entry.h"
 
+#include "los_demo_debug.h"
 
 #ifdef __cplusplus
 #if __cplusplus

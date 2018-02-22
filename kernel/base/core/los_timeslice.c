@@ -80,7 +80,7 @@ extern uint64_t g_ullTickCount;
         g_stTaskTimeSlice.pstTask = (LOS_TASK_CB *)NULL;
         if (LOS_TaskYield() != LOS_OK)
         {
-            //PRINT_INFO("%s, %d\n", __FUNCTION__, __LINE__);
+					;//TODO: handle this error
         }
     } /*lint !e548*/
 }

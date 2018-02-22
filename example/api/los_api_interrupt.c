@@ -37,6 +37,7 @@
 #include "los_api_interrupt.h"
 #include "los_inspect_entry.h"
 
+#include "los_demo_debug.h"
 
 #ifdef __cplusplus
 #if __cplusplus

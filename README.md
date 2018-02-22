@@ -10,4 +10,7 @@ Purpose:
 	4.Support other cores.
 	5.Provide Windows/Linux simulator.
 	6.Complete the Middleware interface: FS/Network/USB/Graphic/HMI and so on.
+
+2018-2-22
+	Merge the task switch assembler source code for Cortex M0 and Cortex M0+.
 	

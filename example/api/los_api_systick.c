@@ -31,12 +31,12 @@
  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
  * applicable export control laws and regulations.
  *---------------------------------------------------------------------------*/
-
 #include "los_sys.h"
 #include "los_task.h"
 #include "los_api_systick.h"
 #include "los_inspect_entry.h"
 
+#include "los_demo_debug.h"
 
 #ifdef __cplusplus
 #if __cplusplus

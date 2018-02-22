@@ -42,6 +42,8 @@
 #include "los_hw.h"
 #include "los_hwi.h"
 
+#include "los_demo_debug.h"
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C"{
@@ -203,14 +205,14 @@ extern "C"{
     if (OS_INT_ACTIVE)
     {
         uwRetErr = LOS_ERRNO_SEM_PEND_INTERR;
-        PRINT_ERR("!!!LOS_ERRNO_SEM_PEND_INTERR!!!\n");
+        dprintf("!!!LOS_ERRNO_SEM_PEND_INTERR!!!\n");
         goto errre_uniSemPend;
     }
 
     if (g_usLosTaskLock)
     {
         uwRetErr = LOS_ERRNO_SEM_PEND_IN_LOCK;
-        PRINT_ERR("!!!LOS_ERRNO_SEM_PEND_IN_LOCK!!!\n");
+        dprintf("!!!LOS_ERRNO_SEM_PEND_IN_LOCK!!!\n");
         goto errre_uniSemPend;
     }
 

@@ -38,6 +38,7 @@
 #include "los_swtmr.ph"
 #include "los_task.ph"
 #include "los_timeslice.ph"
+#include "los_demo_debug.h"
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -69,7 +70,7 @@ extern void hal_clock_irqclear(void);
 
     #if (LOSCFG_BASE_CORE_SWTMR == YES)
     if (osSwtmrScan() != LOS_OK){
-        PRINT_ERR("%s, %d\n", __FUNCTION__, __LINE__);
+        dprintf("%s, %d\n", __FUNCTION__, __LINE__);
     }
     #endif
 }

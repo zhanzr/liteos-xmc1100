@@ -31,6 +31,8 @@
  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
  * applicable export control laws and regulations.
  *---------------------------------------------------------------------------*/
+#include <string.h>
+#include <cmsis_compiler.h>
 
 #include "los_task.inc"
 #include "los_base.ph"
@@ -42,9 +44,7 @@
 #include "los_hw.h"
 #include "los_hwi.h"
 
-#include <string.h>
-
-#include <cmsis_compiler.h>
+#include "los_demo_debug.h"
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -442,7 +442,7 @@ TSKSWITCHHOOK g_pfnTskSwitchHook = NULL;
         {
             if (LOS_SemPost((uint32_t)(((SEM_CB_S *)pstTaskCB->pThreadJoin)->usSemID)) != LOS_OK)
             {
-                PRINT_ERR("osTaskEntry LOS_SemPost fail!\n");
+                dprintf("osTaskEntry LOS_SemPost fail!\n");
             }
             pstTaskCB->pThreadJoin = NULL;
         }

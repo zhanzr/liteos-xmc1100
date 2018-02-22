@@ -28,149 +28,138 @@ GLOBAL_CCU4_STATUS_t GLOBAL_CCU4_Init(GLOBAL_CCU4_t* handle)
   return (GLOBAL_CCU4_STATUS_SUCCESS);
 }
 
-__STATIC_INLINE void GLOBAL_CCU4_SyncStartTriggerHigh(uint32_t ccucon_msk)
+const XMC_CCU4_SLICE_COMPARE_CONFIG_t  PWM_CCU4_0_timer_handle =
 {
-  XMC_SCU_SetCcuTriggerHigh(ccucon_msk);
-}
+	.timer_mode            = (uint32_t)XMC_CCU4_SLICE_TIMER_COUNT_MODE_EA,
+	.monoshot              = (uint32_t)XMC_CCU4_SLICE_TIMER_REPEAT_MODE_REPEAT,
+	.shadow_xfer_clear     = 0U,
+	.dither_timer_period   = 0U,
+	.dither_duty_cycle     = 0U,
 
-__STATIC_INLINE void GLOBAL_CCU4_SyncStartTriggerLow(uint32_t ccucon_msk)
+	.prescaler_mode        = (uint32_t)XMC_CCU4_SLICE_PRESCALER_MODE_NORMAL,
+
+	.mcm_enable            = 0U,
+	.prescaler_initval     = 0U,
+	.dither_limit          = 0U,
+	.timer_concatenation   = 0U,
+	.passive_level         = (uint32_t)XMC_CCU4_SLICE_OUTPUT_PASSIVE_LEVEL_LOW, 
+};
+
+
+const XMC_CCU4_SLICE_EVENT_CONFIG_t PWM_CCU4_0_event0_config = 
 {
-  XMC_SCU_SetCcuTriggerLow(ccucon_msk);
-}
+	.mapped_input        = XMC_CCU4_SLICE_INPUT_A,
+	.edge                = XMC_CCU4_SLICE_EVENT_EDGE_SENSITIVITY_NONE,
+	.level               = XMC_CCU4_SLICE_EVENT_LEVEL_SENSITIVITY_ACTIVE_LOW,
+	.duration            = XMC_CCU4_SLICE_EVENT_FILTER_DISABLED,
+};
+
+const XMC_CCU4_SLICE_EVENT_CONFIG_t PWM_CCU4_0_event1_config = 
+{
+	.mapped_input        = XMC_CCU4_SLICE_INPUT_A,
+	.edge                = XMC_CCU4_SLICE_EVENT_EDGE_SENSITIVITY_NONE,
+	.level               = XMC_CCU4_SLICE_EVENT_LEVEL_SENSITIVITY_ACTIVE_LOW,
+	.duration            = XMC_CCU4_SLICE_EVENT_FILTER_DISABLED,
+};
+
+const XMC_CCU4_SLICE_EVENT_CONFIG_t PWM_CCU4_0_event2_config = 
+{
+	.mapped_input        = XMC_CCU4_SLICE_INPUT_A,
+	.edge                = XMC_CCU4_SLICE_EVENT_EDGE_SENSITIVITY_NONE,
+	.level               = XMC_CCU4_SLICE_EVENT_LEVEL_SENSITIVITY_ACTIVE_LOW,
+	.duration            = XMC_CCU4_SLICE_EVENT_FILTER_DISABLED,
+};
 
 
-    const XMC_CCU4_SLICE_COMPARE_CONFIG_t  PWM_CCU4_0_timer_handle =
-    {
-      .timer_mode            = (uint32_t)XMC_CCU4_SLICE_TIMER_COUNT_MODE_EA,
-      .monoshot              = (uint32_t)XMC_CCU4_SLICE_TIMER_REPEAT_MODE_REPEAT,
-      .shadow_xfer_clear     = 0U,
-      .dither_timer_period   = 0U,
-      .dither_duty_cycle     = 0U,
+const XMC_GPIO_CONFIG_t  PWM_CCU4_0_ch1_out0_config    =
+{
+	.mode                = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
+	.input_hysteresis    = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
+	.output_level        = XMC_GPIO_OUTPUT_LEVEL_LOW
+};
 
-      .prescaler_mode        = (uint32_t)XMC_CCU4_SLICE_PRESCALER_MODE_NORMAL,
+const PWM_CCU4_CONFIG_t  PWM_CCU4_0_config_handle =
+{
+	.start_control                       = true,      
+	.period_value                        = 639U,
+	.compare_value                       = 576U,
 
-      .mcm_enable            = 0U,
-      .prescaler_initval     = 0U,
-      .dither_limit          = 0U,
-      .timer_concatenation   = 0U,
-      .passive_level         = (uint32_t)XMC_CCU4_SLICE_OUTPUT_PASSIVE_LEVEL_LOW, 
-    };
+	.int_per_match                       = false,
+	.int_cmp_match_up                    = false,
+	.int_cmp_match_down                  = false,
 
+	.int_one_match_down                  = false,
+	.int_e0                              = false,
+	.int_e1                              = false,
+	.int_e2                              = false,
 
-    const XMC_CCU4_SLICE_EVENT_CONFIG_t PWM_CCU4_0_event0_config = 
-    {
-      .mapped_input        = XMC_CCU4_SLICE_INPUT_A,
-      .edge                = XMC_CCU4_SLICE_EVENT_EDGE_SENSITIVITY_NONE,
-      .level               = XMC_CCU4_SLICE_EVENT_LEVEL_SENSITIVITY_ACTIVE_LOW,
-      .duration            = XMC_CCU4_SLICE_EVENT_FILTER_DISABLED,
-    };
+	.sr_per_match                        = XMC_CCU4_SLICE_SR_ID_0,
+	.sr_cmp_match_up                     = XMC_CCU4_SLICE_SR_ID_0,
+	.sr_cmp_match_down                   = XMC_CCU4_SLICE_SR_ID_0,
 
-    const XMC_CCU4_SLICE_EVENT_CONFIG_t PWM_CCU4_0_event1_config = 
-    {
-      .mapped_input        = XMC_CCU4_SLICE_INPUT_A,
-      .edge                = XMC_CCU4_SLICE_EVENT_EDGE_SENSITIVITY_NONE,
-      .level               = XMC_CCU4_SLICE_EVENT_LEVEL_SENSITIVITY_ACTIVE_LOW,
-      .duration            = XMC_CCU4_SLICE_EVENT_FILTER_DISABLED,
-    };
+	.sr_one_match_down                   = XMC_CCU4_SLICE_SR_ID_0,
+	.sr_e0                               = XMC_CCU4_SLICE_SR_ID_0,
+	.sr_e1                               = XMC_CCU4_SLICE_SR_ID_0,
+	.sr_e2                               = XMC_CCU4_SLICE_SR_ID_0,
 
-    const XMC_CCU4_SLICE_EVENT_CONFIG_t PWM_CCU4_0_event2_config = 
-    {
-      .mapped_input        = XMC_CCU4_SLICE_INPUT_A,
-      .edge                = XMC_CCU4_SLICE_EVENT_EDGE_SENSITIVITY_NONE,
-      .level               = XMC_CCU4_SLICE_EVENT_LEVEL_SENSITIVITY_ACTIVE_LOW,
-      .duration            = XMC_CCU4_SLICE_EVENT_FILTER_DISABLED,
-    };
+	.event0_config_ptr                   = &PWM_CCU4_0_event0_config,
+	.event1_config_ptr                   = &PWM_CCU4_0_event1_config,
+	.event2_config_ptr                   = &PWM_CCU4_0_event2_config,
 
+	.ext_start_event                     = XMC_CCU4_SLICE_EVENT_NONE,
+	.ext_start_mode                      = XMC_CCU4_SLICE_START_MODE_TIMER_START,
 
-    const XMC_GPIO_CONFIG_t  PWM_CCU4_0_ch1_out0_config    =
-    {
-      .mode                = XMC_GPIO_MODE_OUTPUT_PUSH_PULL_ALT4,
-      .input_hysteresis    = XMC_GPIO_INPUT_HYSTERESIS_STANDARD,
-      .output_level        = XMC_GPIO_OUTPUT_LEVEL_LOW
-    };
+	.ext_stop_event                      = XMC_CCU4_SLICE_EVENT_NONE,
+	.ext_stop_mode                       = XMC_CCU4_SLICE_END_MODE_TIMER_STOP,
 
-    const PWM_CCU4_CONFIG_t  PWM_CCU4_0_config_handle =
-    {
-      .start_control                       = true,      
-      .period_value                        = 639U,
-      .compare_value                       = 576U,
+	.ext_count_dir_event                 = XMC_CCU4_SLICE_EVENT_NONE,
 
-      .int_per_match                       = false,
-      .int_cmp_match_up                    = false,
-      .int_cmp_match_down                  = false,
+	.ext_gate_event                      = XMC_CCU4_SLICE_EVENT_NONE,
 
-      .int_one_match_down                  = false,
-      .int_e0                              = false,
-      .int_e1                              = false,
-      .int_e2                              = false,
+	.ext_count_event                     = XMC_CCU4_SLICE_EVENT_NONE,
 
-      .sr_per_match                        = XMC_CCU4_SLICE_SR_ID_0,
-      .sr_cmp_match_up                     = XMC_CCU4_SLICE_SR_ID_0,
-      .sr_cmp_match_down                   = XMC_CCU4_SLICE_SR_ID_0,
+	.ext_load_event                      = XMC_CCU4_SLICE_EVENT_NONE,
 
-      .sr_one_match_down                   = XMC_CCU4_SLICE_SR_ID_0,
-      .sr_e0                               = XMC_CCU4_SLICE_SR_ID_0,
-      .sr_e1                               = XMC_CCU4_SLICE_SR_ID_0,
-      .sr_e2                               = XMC_CCU4_SLICE_SR_ID_0,
+	.ext_mod_event                       = XMC_CCU4_SLICE_EVENT_NONE,
+	.ext_mod_mode                        = XMC_CCU4_SLICE_MODULATION_MODE_CLEAR_ST_OUT,
+	.ext_mod_sync                        = false,
 
-      .event0_config_ptr                   = &PWM_CCU4_0_event0_config,
-      .event1_config_ptr                   = &PWM_CCU4_0_event1_config,
-      .event2_config_ptr                   = &PWM_CCU4_0_event2_config,
+	.ext_override_edge_event             = XMC_CCU4_SLICE_EVENT_NONE,
 
-      .ext_start_event                     = XMC_CCU4_SLICE_EVENT_NONE,
-      .ext_start_mode                      = XMC_CCU4_SLICE_START_MODE_TIMER_START,
+	.ext_override_level_event            = XMC_CCU4_SLICE_EVENT_NONE,
 
-      .ext_stop_event                      = XMC_CCU4_SLICE_EVENT_NONE,
-      .ext_stop_mode                       = XMC_CCU4_SLICE_END_MODE_TIMER_STOP,
+	.ext_trap_enable                     = false,
+	.ext_trap_event                      = XMC_CCU4_SLICE_EVENT_NONE,
+	.ext_trap_sync                       = true,
+	.ext_trap_exit                       = XMC_CCU4_SLICE_TRAP_EXIT_MODE_AUTOMATIC,
 
-      .ext_count_dir_event                 = XMC_CCU4_SLICE_EVENT_NONE,
+	.mcm_shadow_txfr_mode                = XMC_CCU4_MULTI_CHANNEL_SHADOW_TRANSFER_SW_SLICE3,    
 
-      .ext_gate_event                      = XMC_CCU4_SLICE_EVENT_NONE,
+	.ccu4_cc4_slice_timer_ptr            = &PWM_CCU4_0_timer_handle,
 
-      .ext_count_event                     = XMC_CCU4_SLICE_EVENT_NONE,
+	.gpio_ch_out_enable                  = true,
+	.gpio_ch_out_ptr                     = (XMC_GPIO_PORT_t *) PORT0_BASE,
+	.gpio_ch_out_pin                     = 3U,
+	.gpio_ch_out_config_ptr              = &PWM_CCU4_0_ch1_out0_config,    
 
-      .ext_load_event                      = XMC_CCU4_SLICE_EVENT_NONE,
+	.global_ccu4_handle                   = (GLOBAL_CCU4_t*) &GLOBAL_CCU4_0,
+};
 
-      .ext_mod_event                       = XMC_CCU4_SLICE_EVENT_NONE,
-      .ext_mod_mode                        = XMC_CCU4_SLICE_MODULATION_MODE_CLEAR_ST_OUT,
-      .ext_mod_sync                        = false,
+PWM_CCU4_t PWM_CCU4_0 =
+{
+	.config_ptr                          = &PWM_CCU4_0_config_handle,
+	.ccu4_module_ptr                     = (XMC_CCU4_MODULE_t*) CCU40_BASE,
+	.ccu4_slice_ptr                      = (XMC_CCU4_SLICE_t*) CCU40_CC43,
+	.slice_number                        = 3U,
+	.kernel_number                       = 0U,
+	.shadow_txfr_msk                     = (uint32_t)XMC_CCU4_SHADOW_TRANSFER_SLICE_3,
+	.dither_shadow_txfr_msk              = (uint32_t)XMC_CCU4_SHADOW_TRANSFER_DITHER_SLICE_3,
+	.prescaler_shadow_txfr_msk           = (uint32_t)XMC_CCU4_SHADOW_TRANSFER_PRESCALER_SLICE_3,
 
-      .ext_override_edge_event             = XMC_CCU4_SLICE_EVENT_NONE,
+	.state                               = PWM_CCU4_STATE_UNINITIALIZED,
+	.sym_duty                            = 1000U,
 
-      .ext_override_level_event            = XMC_CCU4_SLICE_EVENT_NONE,
-
-      .ext_trap_enable                     = false,
-      .ext_trap_event                      = XMC_CCU4_SLICE_EVENT_NONE,
-      .ext_trap_sync                       = true,
-      .ext_trap_exit                       = XMC_CCU4_SLICE_TRAP_EXIT_MODE_AUTOMATIC,
-
-      .mcm_shadow_txfr_mode                = XMC_CCU4_MULTI_CHANNEL_SHADOW_TRANSFER_SW_SLICE3,    
-
-      .ccu4_cc4_slice_timer_ptr            = &PWM_CCU4_0_timer_handle,
-
-      .gpio_ch_out_enable                  = true,
-      .gpio_ch_out_ptr                     = (XMC_GPIO_PORT_t *) PORT0_BASE,
-      .gpio_ch_out_pin                     = 3U,
-      .gpio_ch_out_config_ptr              = &PWM_CCU4_0_ch1_out0_config,    
-
-      .global_ccu4_handle                   = (GLOBAL_CCU4_t*) &GLOBAL_CCU4_0,
-    };
-
-    PWM_CCU4_t PWM_CCU4_0 =
-    {
-      .config_ptr                          = &PWM_CCU4_0_config_handle,
-      .ccu4_module_ptr                     = (XMC_CCU4_MODULE_t*) CCU40_BASE,
-      .ccu4_slice_ptr                      = (XMC_CCU4_SLICE_t*) CCU40_CC43,
-      .slice_number                        = 3U,
-      .kernel_number                       = 0U,
-      .shadow_txfr_msk                     = (uint32_t)XMC_CCU4_SHADOW_TRANSFER_SLICE_3,
-      .dither_shadow_txfr_msk              = (uint32_t)XMC_CCU4_SHADOW_TRANSFER_DITHER_SLICE_3,
-      .prescaler_shadow_txfr_msk           = (uint32_t)XMC_CCU4_SHADOW_TRANSFER_PRESCALER_SLICE_3,
-
-      .state                               = PWM_CCU4_STATE_UNINITIALIZED,
-      .sym_duty                            = 1000U,
-
-    };
+};
 
 /* This function initializes the app */
 PWM_CCU4_STATUS_t PWM_CCU4_Init(PWM_CCU4_t* handle_ptr)

@@ -8,8 +8,7 @@
 #define _LOS_CONFIG_H
 
 #include "los_typedef.h"
-#include "los_printf.h"
-#include "stdio.h"
+#include <stdio.h>
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -298,14 +297,6 @@ extern char _PT0_END;
  * Configuration system wake-up info to open
  */
 #define OS_SR_WAKEUP_INFO                                   YES
-
-/**
- * @ingroup los_config
- * Configuration library function is included
- */
-#ifndef LOSCFG_LIB_LIBC
-#define LOSCFG_LIB_LIBC
-#endif
 
 /* Declaration of Huawei LiteOS module initialization functions*/
 
@@ -783,8 +774,6 @@ extern void osTaskMonInit(void);
  * @since Huawei LiteOS V100R001C00
  */
 extern uint32_t osCpupInit(void);
-
-extern void osBackTrace(void);
 
 #ifdef __cplusplus
 #if __cplusplus

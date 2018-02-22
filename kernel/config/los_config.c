@@ -31,12 +31,12 @@
  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
  * applicable export control laws and regulations.
  *---------------------------------------------------------------------------*/
-
 #include "los_sys.h"
 #include "los_tick.h"
 #include "los_task.ph"
 #include "los_config.h"
 
+#include "los_demo_debug.h"
 
 #ifdef __cplusplus
 #if __cplusplus
@@ -88,7 +88,7 @@ void osEnableFPU(void)
 
     if (uwRet != LOS_OK)
     {
-        PRINT_ERR("osTickStart error\n");
+        dprintf("osTickStart error\n");
     }
 		
     return uwRet;
@@ -125,7 +125,7 @@ void osEnableFPU(void)
     uwRet = osMemSystemInit();
     if (uwRet != LOS_OK)
     {
-        PRINT_ERR("osMemSystemInit error %d\n", uwRet);
+        dprintf("osMemSystemInit error %d\n", uwRet);
         return uwRet;
     }
 
@@ -141,7 +141,7 @@ void osEnableFPU(void)
     uwRet =osTaskInit();
     if (uwRet != LOS_OK)
     {
-        PRINT_ERR("osTaskInit error\n");
+        dprintf("osTaskInit error\n");
         return uwRet;
     }
 
@@ -170,7 +170,7 @@ void osEnableFPU(void)
         uwRet = osQueueInit();
         if (uwRet != LOS_OK)
         {
-            PRINT_ERR("osQueueInit error\n");
+            dprintf("osQueueInit error\n");
             return uwRet;
         }
     }
@@ -181,7 +181,7 @@ void osEnableFPU(void)
         uwRet = osSwTmrInit();
         if (uwRet != LOS_OK)
         {
-            PRINT_ERR("osSwTmrInit error\n");
+            dprintf("osSwTmrInit error\n");
             return uwRet;
         }
     }
@@ -209,8 +209,6 @@ void osEnableFPU(void)
     return LOS_OK;
 }
 
-
-void osBackTrace(void){}
 
 #ifdef __cplusplus
 #if __cplusplus
