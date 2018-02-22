@@ -40,7 +40,6 @@
 #define _LOS_SYS_H
 
 #include "los_base.h"
-#include "los_hwi.h"
 
 #ifdef __cplusplus
 #if __cplusplus

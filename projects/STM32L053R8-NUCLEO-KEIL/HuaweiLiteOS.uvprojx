@@ -10,7 +10,8 @@
       <TargetName>LiteOS</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060061::V5.06 update 1 (build 61)::ARMCC</pCCUsed>
+      <pCCUsed>5060528::V5.06 update 5 (build 528)::ARMCC</pCCUsed>
+      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32L053R8Tx</Device>
@@ -273,7 +274,7 @@
               <OCR_RVCT4>
                 <Type>1</Type>
                 <StartAddress>0x8000000</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x100000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -298,7 +299,7 @@
               <OCR_RVCT9>
                 <Type>0</Type>
                 <StartAddress>0x20000000</StartAddress>
-                <Size>0x2000</Size>
+                <Size>0x20000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
                 <Type>0</Type>
@@ -328,11 +329,14 @@
             <v6LangP>1</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>RAM_SIZE_LEVEL_0</Define>
+              <Define>RAM_SIZE_LEVEL_0,LOS_STM32L053XX</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\kernel\include;..\..\kernel\base\include;..\..\kernel\config;..\..\kernel\cmsis;..\..\kernel\link\keil;..\..\kernel\cpu\arm\cortex-m0+;..\..\example\include;..\..\platform\STM32L053_Nucleo;..\..\BSP\STM32L053R8Tx\Inc;..\..\BSP\STM32L053R8Tx\Drivers\STM32L0xx_HAL_Driver\Inc;..\..\BSP\STM32L053R8Tx\Drivers\STM32L0xx_HAL_Drive\Inc\Legacy;..\..\BSP\STM32L053R8Tx\Drivers\CMSIS\Device\ST\STM32L0xx\Include;..\..\BSP\STM32L053R8Tx\Drivers\CMSIS\Include</IncludePath>
+              <IncludePath>..\..\kernel\include;..\..\kernel\base\include;..\..\kernel\config;..\..\kernel\cmsis;..\..\kernel\link\keil;..\..\kernel\cpu\arm\cortex-m0+;..\..\example\include;..\..\platform\STM32L053_Nucleo;..\..\BSP\STM32L053R8Tx\Inc;..\..\BSP\STM32L053R8Tx\Drivers\STM32L0xx_HAL_Driver\Inc;..\..\BSP\STM32L053R8Tx\Drivers\STM32L0xx_HAL_Drive\Inc\Legacy;..\..\BSP\STM32L053R8Tx\Drivers\CMSIS\Device\ST\STM32L0xx\Include;..\..\BSP\STM32L053R8Tx\Drivers\CMSIS\Include;..\..\kernel\cpu\arm\cortex-m0plus;..\..\hal\STM3L0xx\CMSIS\Include;..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -345,6 +349,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <uClangAs>0</uClangAs>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -468,22 +473,22 @@
             <File>
               <FileName>los_hw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\kernel\cpu\arm\cortex-m0+\los_hw.c</FilePath>
+              <FilePath>..\..\kernel\cpu\arm\cortex-m0plus\los_hw.c</FilePath>
             </File>
             <File>
               <FileName>los_hw_tick.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\kernel\cpu\arm\cortex-m0+\los_hw_tick.c</FilePath>
+              <FilePath>..\..\kernel\cpu\arm\cortex-m0plus\los_hw_tick.c</FilePath>
             </File>
             <File>
               <FileName>los_hwi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\kernel\cpu\arm\cortex-m0+\los_hwi.c</FilePath>
+              <FilePath>..\..\kernel\cpu\arm\cortex-m0plus\los_hwi.c</FilePath>
             </File>
             <File>
-              <FileName>los_dispatch_keil.s</FileName>
+              <FileName>los_dispatch_cortexm0.s</FileName>
               <FileType>2</FileType>
-              <FilePath>..\..\kernel\cpu\arm\cortex-m0+\los_dispatch_keil.s</FilePath>
+              <FilePath>..\..\kernel\cpu\arm\cortex-m0plus\los_dispatch_cortexm0.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -599,13 +604,6 @@
         </Group>
         <Group>
           <GroupName>startup</GroupName>
-          <Files>
-            <File>
-              <FileName>startup_stm32l053xx.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>..\..\platform\STM32L053_NUCLEO\startup_stm32l053xx.s</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>user</GroupName>
@@ -613,12 +611,276 @@
             <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\user\main.c</FilePath>
+              <FilePath>..\..\platform\STM32L053_NUCLEO\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_msp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\platform\STM32L053_NUCLEO\stm32l0xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_it.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\platform\STM32L053_NUCLEO\stm32l0xx_it.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\platform\STM32L053_NUCLEO\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\platform\STM32L053_NUCLEO\gpio.c</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>library</GroupName>
+          <Files>
+            <File>
+              <FileName>stm32l0xx_hal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_adc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_adc_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_comp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_comp.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_comp_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_comp_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_cortex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_cortex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_crc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_crc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_crc_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_dac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_dac.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_dac_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_dac_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_dma.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_i2c_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_i2c_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_lptim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_lptim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_pcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_pcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_pcd_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_pcd_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_pwr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_pwr.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_pwr_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_pwr_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_rcc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rcc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_rcc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rcc_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_rng.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rng.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_rtc_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_rtc_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_tim_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_uart_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_uart_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l0xx_hal_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hal\STM3L0xx\STM32L0xx_HAL_Driver\Src\stm32l0xx_hal_usart.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>retarget_io_drv</GroupName>
+          <Files>
+            <File>
+              <FileName>retarget_io_drv.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\platform\STM32L053_NUCLEO\retarget_io_drv.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>::Board Support</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::CMSIS</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Compiler</GroupName>
+        </Group>
+        <Group>
+          <GroupName>::Device</GroupName>
         </Group>
       </Groups>
     </Target>
   </Targets>
+
+  <RTE>
+    <apis>
+      <api Capiversion="1.0.0" Cclass="Board Support" Cgroup="Buttons" exclusive="0">
+        <package name="MDK-Middleware" schemaVersion="1.4" url="http://www.keil.com/pack/" vendor="Keil" version="7.5.0"/>
+        <targetInfos>
+          <targetInfo name="LiteOS"/>
+        </targetInfos>
+      </api>
+      <api Capiversion="1.0.0" Cclass="Board Support" Cgroup="LED" exclusive="0">
+        <package name="MDK-Middleware" schemaVersion="1.4" url="http://www.keil.com/pack/" vendor="Keil" version="7.5.0"/>
+        <targetInfos>
+          <targetInfo name="LiteOS"/>
+        </targetInfos>
+      </api>
+    </apis>
+    <components>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.0.2" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.2.0"/>
+        <targetInfos>
+          <targetInfo name="LiteOS"/>
+        </targetInfos>
+      </component>
+      <component Cbundle="ARM Compiler" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="User" Cvendor="Keil" Cversion="1.2.1" condition="ARMCC Cortex-M">
+        <package name="ARM_Compiler" schemaVersion="1.4.9" url="http://www.keil.com/pack/" vendor="Keil" version="1.3.3"/>
+        <targetInfos>
+          <targetInfo name="LiteOS"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="1.00" Cbundle="NUCLEO-L053R8" Cclass="Board Support" Cgroup="Buttons" Cvendor="Keil" Cversion="1.0.0" condition="L053R8 CMSIS Device">
+        <package name="STM32NUCLEO_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.0"/>
+        <targetInfos>
+          <targetInfo name="LiteOS"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="1.00" Cbundle="NUCLEO-L053R8" Cclass="Board Support" Cgroup="LED" Cvendor="Keil" Cversion="1.0.0" condition="L053R8 CMSIS Device">
+        <package name="STM32NUCLEO_BSP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.0"/>
+        <targetInfos>
+          <targetInfo name="LiteOS"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.6.0" condition="STM32L053 CMSIS">
+        <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.1"/>
+        <targetInfos>
+          <targetInfo name="LiteOS"/>
+        </targetInfos>
+      </component>
+    </components>
+    <files>
+      <file attr="config" category="source" condition="Compiler ARMCC" name="Device\Source\ARM\startup_stm32l053xx.s" version="1.6.0">
+        <instance index="0">RTE\Device\STM32L053R8Tx\startup_stm32l053xx.s</instance>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.6.0" condition="STM32L053 CMSIS"/>
+        <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.1"/>
+        <targetInfos>
+          <targetInfo name="LiteOS"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="source" name="Device\Source\system_stm32l0xx.c" version="1.6.0">
+        <instance index="0">RTE\Device\STM32L053R8Tx\system_stm32l0xx.c</instance>
+        <component Cclass="Device" Cgroup="Startup" Cvendor="Keil" Cversion="1.6.0" condition="STM32L053 CMSIS"/>
+        <package name="STM32L0xx_DFP" schemaVersion="1.2" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.1"/>
+        <targetInfos>
+          <targetInfo name="LiteOS"/>
+        </targetInfos>
+      </file>
+    </files>
+  </RTE>
 
 </Project>

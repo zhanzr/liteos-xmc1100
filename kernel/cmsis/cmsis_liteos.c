@@ -53,6 +53,8 @@ osStatus osKernelStart(void)
     return osOK;
 }
 
+extern uint64_t g_ullTickCount;
+
 uint32_t osKernelSysTick (void)
 {
     //todo: need to use external clock source

@@ -40,9 +40,9 @@
 #include "los_mux.ph"
 
 #include "los_hw.h"
-#ifdef LOSCFG_LIB_LIBC
-#include "string.h"
-#endif
+#include "los_hwi.h"
+
+#include <string.h>
 
 #include <cmsis_compiler.h>
 

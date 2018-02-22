@@ -36,6 +36,8 @@
 
 #include "los_tick.h"
 
+#include "los_hwi.h"
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {
@@ -64,6 +66,7 @@ Input      : None
 Output     : None
 Return     : current tick
 *****************************************************************************/
+extern uint64_t g_ullTickCount;
  uint64_t LOS_TickCountGet (void)
 {
     return g_ullTickCount;

@@ -7,10 +7,8 @@
 /******************************************************************************
     here include some special hearder file you need
 ******************************************************************************/
-#ifdef LOS_STM32L053XX
 #include "stm32l0xx_hal.h"
-extern UART_HandleTypeDef huart2;
-#endif
+UART_HandleTypeDef huart2;
 
 void _Error_Handler(char * file, int line)
 {

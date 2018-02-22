@@ -1,42 +1,19 @@
-/*----------------------------------------------------------------------------
- * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice, this list of
- * conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
- * provided with the distribution.
- * 3. Neither the name of the copyright holder nor the names of its contributors may be used
- * to endorse or promote products derived from this software without specific prior written
- * permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *---------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------
- * Notice of Export Control Law
- * ===============================================
- * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
- * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
- * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
- * applicable export control laws and regulations.
- *---------------------------------------------------------------------------*/
+//Tiny OS Hardware driver.
+//This file is only for Cortex M0 core, for others cores, use conditional directive to use other drivers.
+//
+//TODO: Modify the code according to the CMSIS and modern ANSI/ISO C Standard
 
+//This IS a part of the kernel.
+//
+//Author: zhanzr<zhanzr@foxmail.com>
+//Date	:	2/21/2018
  /**@defgroup los_hwi Hardware interrupt
    *@ingroup kernel
  */
 #ifndef _LOS_HWI_H
 #define _LOS_HWI_H
+
+#include <cmsis_compiler.h>
 
 #include "los_base.h"
 #include "los_sys.h"
@@ -48,47 +25,16 @@ extern "C" {
 #endif /* __cplusplus */
 
 /**
- * @ingroup los_hwi
- * Define the type of a hardware interrupt number.
- */
-typedef UINT32                                              HWI_HANDLE_T;
-
-/**
- * @ingroup los_hwi
- * Define the type of a hardware interrupt priority.
- */
-typedef UINT16                                              HWI_PRIOR_T;
-
-/**
- * @ingroup los_hwi
- * Define the type of hardware interrupt mode configurations.
- */
-typedef UINT16                                              HWI_MODE_T;
-
-/**
- * @ingroup los_hwi
- * Define the type of the parameter used for the hardware interrupt creation function. The function of this parameter varies among platforms.
- */
-typedef UINT32                                              HWI_ARG_T;
-
-/**
  * @ingroup  los_hwi
  * Define the type of a hardware interrupt handling function.
  */
-typedef VOID (* HWI_PROC_FUNC)(void);
-
-/**
- * @ingroup  los_hwi
- * Define the type of a hardware interrupt vector table function.
- */
-typedef VOID (**HWI_VECTOR_FUNC)(void);
-
+typedef void (* HWI_PROC_FUNC)(void);
 
 /**
  * @ingroup los_hwi
  * Count of interrupts.
  */
-extern UINT32  g_vuwIntCount;
+extern uint32_t  g_vuwIntCount;
 
 /**
  * @ingroup los_hwi
@@ -134,21 +80,21 @@ extern UINT32  g_vuwIntCount;
 
 /**
  * @ingroup los_hwi
- * Count of M0+ system interrupt vector.
+ * Count of M0 system interrupt vector.
  */
-#define OS_M0PLUS_SYS_VECTOR_CNT   16
+#define OS_M0_SYS_VECTOR_CNT        16
 
 /**
  * @ingroup los_hwi
- * Count of M0+ IRQ interrupt vector.
+ * Count of M0 IRQ interrupt vector.
  */
-#define OS_M0PLUS_IRQ_VECTOR_CNT   32
+#define OS_M0_IRQ_VECTOR_CNT        32
 
 /**
  * @ingroup los_hwi
- * Count of M0+ interrupt vector.
+ * Count of M0 interrupt vector.
  */
-#define OS_M0PLUS_VECTOR_CNT            (OS_M0PLUS_SYS_VECTOR_CNT + OS_M0PLUS_IRQ_VECTOR_CNT)
+#define OS_M0_VECTOR_CNT            (OS_M0_SYS_VECTOR_CNT + OS_M0_IRQ_VECTOR_CNT)
 
 /**
  * @ingroup los_hwi
@@ -240,7 +186,7 @@ extern UINT32  g_vuwIntCount;
  * @ingroup los_hwi
  * Boot interrupt vector table.
  */
-extern UINT32 _BootVectors[];
+extern uint32_t _BootVectors[];
 
 /**
  * @ingroup los_hwi
@@ -300,7 +246,8 @@ extern UINT32 _BootVectors[];
  * @ingroup los_hwi
  * Vector table offset register.
  */
-#define OS_NVIC_VTOR                0xE000ED08
+ //No VTOR in Cortex M0
+//#define OS_NVIC_VTOR                0xE000ED08
 
 /**
  * @ingroup los_hwi
@@ -313,42 +260,6 @@ extern UINT32 _BootVectors[];
  * System exception priority register.
  */
 #define OS_NVIC_EXCPRI_BASE         0xE000ED18
-
-/**
- * @ingroup los_hwi
- * Interrupt enable register ,uwHwiNum Set 1
- */
-#define nvicSetIRQ(uwHwiNum)   \
-    do { \
-         *(volatile UINT32 *)(OS_NVIC_SETENA_BASE + ((uwHwiNum >> 5) << 2)) = 1 << ((uwHwiNum) & 0x1F);  \
-       } while (0)
-
-/**
- * @ingroup los_hwi
- * Interrupt enable register ,uwHwiNum Clear 0
- */
-#define nvicClrIRQ(uwHwiNum)   \
-    do { \
-         *(volatile UINT32 *)(OS_NVIC_CLRENA_BASE + ((uwHwiNum >> 5) << 2)) = 1 << ((uwHwiNum) & 0x1F);  \
-       } while (0)
-
-/**
- * @ingroup los_hwi
- * Interrupt Priority-Level Registers ,uwHwiNum Set ucPri.
- */
-#define nvicSetIrqPRI(uwHwiNum, ucPri) \
-    do { \
-         *(volatile UINT8 *)(OS_NVIC_PRI_BASE + (uwHwiNum)) = (UINT8)(0x80 | (ucPri));    \
-       } while (0)
-
-/**
- * @ingroup los_hwi
- * System exception priority register ,uwExcNum Set ucPri.
- */
-#define nvicSetExcPRI(uwExcNum, ucPri) \
-    do { \
-         *(volatile UINT8 *)(OS_NVIC_EXCPRI_BASE + ((uwExcNum) - 4)) = (UINT8)(ucPri);    \
-       } while (0)
 
 /**
  * @ingroup los_hwi
@@ -414,23 +325,23 @@ extern UINT32 _BootVectors[];
  * @ingroup los_hwi
  * hardware interrupt form mapping handling function array.
  */
-extern HWI_PROC_FUNC m_pstHwiForm[OS_M0PLUS_VECTOR_CNT];
+extern HWI_PROC_FUNC m_pstHwiForm[OS_M0_VECTOR_CNT];
 
 /**
  * @ingroup los_hwi
  * hardware interrupt Slave form mapping handling function array.
  */
-extern HWI_PROC_FUNC m_pstHwiSlaveForm[OS_M0PLUS_VECTOR_CNT];
+extern HWI_PROC_FUNC m_pstHwiSlaveForm[OS_M0_VECTOR_CNT];
 
-extern VOID Reset_Handler(VOID);
+extern void Reset_Handler(void);
 
 /**
  * @ingroup los_hwi
  * Set interrupt vector table.
  */
 #define osSetVector(uwNum, pfnVector)       \
-    m_pstHwiForm[uwNum + OS_M0PLUS_SYS_VECTOR_CNT] = osInterrupt;\
-    m_pstHwiSlaveForm[uwNum + OS_M0PLUS_SYS_VECTOR_CNT] = pfnVector;
+    m_pstHwiForm[uwNum + OS_M0_SYS_VECTOR_CNT] = osInterrupt;\
+    m_pstHwiSlaveForm[uwNum + OS_M0_SYS_VECTOR_CNT] = pfnVector;
 
 
 /**
@@ -448,11 +359,11 @@ extern VOID Reset_Handler(VOID);
  * <li>Before executing an interrupt on a platform, refer to the chip manual of the platform.</li>
  * </ul>
  *
- * @param  uwHwiNum   [IN] Type#HWI_HANDLE_T: hardware interrupt number. The value range applicable for a Cortex-M4 platform is [0,240].
- * @param  usHwiPrio  [IN] Type#HWI_PRIOR_T: hardware interrupt priority. Ignore this parameter temporarily.
- * @param  usMode     [IN] Type#HWI_MODE_T: hardware interrupt mode. Ignore this parameter temporarily.
+ * @param  uwHwiNum   [IN] Type#uint32_t: hardware interrupt number. The value range applicable for a Cortex-M4 platform is [0,240].
+ * @param  usHwiPrio  [IN] Type#uint16_t: hardware interrupt priority. Ignore this parameter temporarily.
+ * @param  usMode     [IN] Type#uint16_t: hardware interrupt mode. Ignore this parameter temporarily.
  * @param  pfnHandler [IN] Type#HWI_PROC_FUNC: interrupt handler used when a hardware interrupt is triggered.
- * @param  uwArg      [IN] Type#HWI_ARG_T: input parameter of the interrupt handler used when a hardware interrupt is triggered.
+ * @param  uwArg      [IN] Type#uint32_t: input parameter of the interrupt handler used when a hardware interrupt is triggered.
  *
  * @retval #OS_ERRNO_HWI_PROC_FUNC_NULL               0x02000901: Null hardware interrupt handling function.
  * @retval #OS_ERRNO_HWI_NUM_INVALID                     0x02000900: Invalid interrupt number.
@@ -464,11 +375,11 @@ extern VOID Reset_Handler(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_HwiCreate( HWI_HANDLE_T  uwHwiNum,
-                           HWI_PRIOR_T   usHwiPrio,
-                           HWI_MODE_T    usMode,
+extern uint32_t LOS_HwiCreate( uint32_t  uwHwiNum,
+                           uint16_t   usHwiPrio,
+                           uint16_t    usMode,
                            HWI_PROC_FUNC pfnHandler,
-                           HWI_ARG_T     uwArg
+                           uint32_t     uwArg
                            );
 
 
@@ -490,7 +401,7 @@ extern UINT32 LOS_HwiCreate( HWI_HANDLE_T  uwHwiNum,
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID  osInterrupt(VOID);
+extern void  osInterrupt(void);
 
 
 
@@ -512,7 +423,7 @@ extern VOID  osInterrupt(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 osIntNumGet(VOID);
+extern uint32_t osIntNumGet(void);
 
 
 
@@ -534,7 +445,7 @@ extern UINT32 osIntNumGet(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID  osResetVector(VOID);
+extern void  osResetVector(void);
 
 
 
@@ -556,7 +467,7 @@ extern VOID  osResetVector(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID  osHwiDefaultHandler(VOID);
+extern void  osHwiDefaultHandler(void);
 
 
 
@@ -579,7 +490,7 @@ extern VOID  osHwiDefaultHandler(VOID);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern VOID  PendSV_Handler(VOID);
+extern void  PendSV_Handler(void);
 
  /**
  *@ingroup los_hwi
@@ -602,7 +513,7 @@ extern VOID  PendSV_Handler(VOID);
  *@see LOS_IntRestore
  *@since Huawei LiteOS V100R001C00
  */
-extern UINTPTR LOS_IntUnLock(VOID);
+extern uint32_t* LOS_IntUnLock(void);
 
 
 
@@ -627,7 +538,7 @@ extern UINTPTR LOS_IntUnLock(VOID);
  *@see LOS_IntRestore
  *@since Huawei LiteOS V100R001C00
  */
-extern UINTPTR LOS_IntLock(VOID);
+extern uint32_t LOS_IntLock(void);
 
 
 
@@ -644,7 +555,7 @@ extern UINTPTR LOS_IntLock(VOID);
  *<li>This API can be called only after all interrupts are disabled, and the input parameter value should be the value returned by calling the all interrupt disabling API.</li>
  *</ul>
  *
- *@param uvIntSave [IN] CPSR value obtained before all interrupts are disabled.
+ *@param uwIntSave [IN] CPSR value obtained before all interrupts are disabled.
  *
  *@retval None.
  *@par Dependency:
@@ -652,7 +563,7 @@ extern UINTPTR LOS_IntLock(VOID);
  *@see LOS_IntLock
  *@since Huawei LiteOS V100R001C00
  */
-extern VOID LOS_IntRestore(UINTPTR uvIntSave);
+extern void LOS_IntRestore(uint32_t uwIntSave);
 
 
 
@@ -671,7 +582,7 @@ extern VOID LOS_IntRestore(UINTPTR uvIntSave);
  * <li>Before executing an interrupt on a platform, refer to the chip manual of the platform.</li>
  * </ul>
  *
- * @param  uwHwiNum   [IN] Type#HWI_HANDLE_T: hardware interrupt number. The value range applicable for a Cortex-M4 platform is [0,240].
+ * @param  uwHwiNum   [IN] Type#uint32_t: hardware interrupt number. The value range applicable for a Cortex-M4 platform is [0,240].
  *
  * @retval #OS_ERRNO_HWI_NUM_INVALID              0x02000900: Invalid interrupt number.
  * @retval #LOS_OK                                  0: The interrupt is successfully delete.
@@ -680,53 +591,7 @@ extern VOID LOS_IntRestore(UINTPTR uvIntSave);
  * @see None.
  * @since Huawei LiteOS V100R001C00
  */
-extern UINT32 LOS_HwiDelete(HWI_HANDLE_T uwHwiNum);
-
-/**
- *@ingroup los_hwi
- *@brief Get interrupt number.
- *
- *@par Description:
- *<ul>
- *<li>This API is used to get irq number .</li>
- *</ul>
- *@attention
- *<ul>
- *<li>This API can be called only when an irq come up .</li>
- *</ul>
- *
- *@param None.
- *
- *@retval UINT32 irq number.
- *@par Dependency:
- *<ul><li>los_hwi.h: the header file that contains the API declaration.</li></ul>
- *@see None
- *@since Huawei LiteOS V100R001C00
- */
-extern UINT32 LOS_IntNumGet(VOID);
-
-/**
- *@ingroup los_hwi
- *@brief diable interrupts.
- *
- *@par Description:
- *<ul>
- *<li>This API is used to disable interrupts .</li>
- *</ul>
- *@attention
- *<ul>
- *<li>This API can be called only in osTaskExit() .</li>
- *</ul>
- *
- *@param None.
- *
- *@retval None.
- *@par Dependency:
- *<ul><li>los_hwi.h: the header file that contains the API declaration.</li></ul>
- *@see None
- *@since Huawei LiteOS V100R001C00
- */
-extern VOID osDisableIRQ(VOID);
+extern uint32_t LOS_HwiDelete(uint32_t uwHwiNum);
 
 #ifdef __cplusplus
 #if __cplusplus

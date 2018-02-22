@@ -235,7 +235,7 @@ __attribute__((always_inline)) inline bool LOS_ListEmpty(LOS_DL_LIST *pstNode)
  *@see
  *@since Huawei LiteOS V100R001C00
  */
-#define OFFSET_OF_FIELD(type, field)    ((UINT32)&(((type *)0)->field))
+#define OFFSET_OF_FIELD(type, field)    ((uint32_t)&(((type *)0)->field))
 
 /**
  *@ingroup los_list

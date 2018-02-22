@@ -14,13 +14,6 @@ extern "C" {
 #include <assert.h>
 #include <stdarg.h> 
 	
-#include <XMC1100.h>
-#include <xmc_scu.h>
-#include <xmc_rtc.h>
-#include <xmc_uart.h>
-#include <xmc_gpio.h>
-#include <xmc_flash.h>
-	
 #include "los_demo_entry.h"
 #include "los_task.h"
 #include "los_bsp_uart.h"

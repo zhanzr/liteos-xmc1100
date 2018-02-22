@@ -37,6 +37,7 @@
 #include "los_task.ph"
 
 #include "los_config.h"
+#include "los_hwi.h"
 
 typedef struct {
     uint32_t uwMemUsed;

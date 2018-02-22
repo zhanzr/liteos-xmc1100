@@ -11,7 +11,7 @@
 /* while use bsp code to start system tick, don't use LOS header */
 #define INCLUDE_LOS_HEADER
 #ifdef INCLUDE_LOS_HEADER
-#include "los_tick.ph"
+#include "los_tick.h"
 #include "los_base.h"
 #include "los_task.ph"
 #include "los_swtmr.h"
@@ -21,11 +21,7 @@
 /******************************************************************************
     here include some special hearder file you need
 ******************************************************************************/
-#ifdef LOS_STM32L053XX
 #include "stm32l0xx_hal.h"
-#endif
-
-
 
 /*****************************************************************************
     global var
@@ -124,29 +120,14 @@ void SystemClock_Config(void)
 unsigned int osTickStart(void)
 {
     unsigned int uwRet = 0;
-    
+	
     /* This code section LOS need, so don't change it */
-    g_ucycle_per_tick = sys_clk_freq / tick_per_second;
+    g_ucycle_per_tick = SystemCoreClock / tick_per_second;
     LOS_SetTickSycle(g_ucycle_per_tick);
     
-    /* 
-      Set system tick relaod register valude, current register valude and start
-      system tick exception.
-      Note: here can be replaced by some function , for example in Stm32 bsp
-      you can just call SysTick_Config(sys_clk_freq/tick_per_second);
-    */
-#ifdef LOS_STM32L053XX
-    SystemClock_Config();
     SysTick_Config(g_ucycle_per_tick);
-#else
-    *(volatile UINT32 *)OS_SYSTICK_RELOAD_REG = g_ucycle_per_tick - 1;
-    *((volatile UINT8 *)OS_NVIC_EXCPRI_BASE + (((UINT32)(-1) & 0xF) - 4)) = ((7 << 4) & 0xff);
-    *(volatile UINT32 *)OS_SYSTICK_CURRENT_REG = 0;
-    *(volatile UINT32 *)OS_SYSTICK_CONTROL_REG = (1 << 2) | (1 << 1) | (1 << 0);
-#endif
     
     return uwRet;
-
 }
 
 /*****************************************************************************
@@ -189,19 +170,19 @@ void LosAdapIntInit(void)
         you can just call SCB->VTOR = osGetVectorAddr(); and
         NVIC_SetPriorityGrouping(OS_NVIC_AIRCR_PRIGROUP);
     */
-    if (g_use_ram_vect)
-    {
-        *(volatile UINT32 *)OS_NVIC_VTOR = osGetVectorAddr();
-        *(volatile UINT32 *)OS_NVIC_AIRCR = (0x05FA0000 | OS_NVIC_AIRCR_PRIGROUP << 8);
-    }
+//    if (g_use_ram_vect)
+//    {
+//        *(volatile uint32_t *)OS_NVIC_VTOR = osGetVectorAddr();
+//        *(volatile uint32_t *)OS_NVIC_AIRCR = (0x05FA0000 | OS_NVIC_AIRCR_PRIGROUP << 8);
+//    }
 
     return;
 }
 
 /*****************************************************************************
- Function    : LosAdapIrpEnable
- Description : external interrupt enable, and set priority 
-               this function is called by LOS_HwiCreate(), 
+ Function    : LosAdapIrqEnable
+ Description : external interrupt enable, and set priority
+               this function is called by LOS_HwiCreate(),
                so here can use bsp func to inplemente it 
                Note : if don't use LOS_HwiCreate(), leave it empty
  Input       : irqnum: external interrupt number
@@ -209,25 +190,19 @@ void LosAdapIntInit(void)
  Output      : None
  Return      : None
  *****************************************************************************/
-void LosAdapIrpEnable(unsigned int irqnum, unsigned short prior)
-{
-    /*
-        enable irq , for example in stm32 bsp you can use 
-        NVIC_EnableIRQ((IRQn_Type)irqnum);
-    */
-    nvicSetIRQ(irqnum);
-    /*
-        set irq priority , for example in stm32 bsp you can use 
-        NVIC_SetPriority((IRQn_Type)irqnum, prior);
-    */
-    nvicSetIrqPRI(irqnum, prior << 4);
-    return;
+void LosAdapIrqEnable(unsigned int irqnum, unsigned short prior)
+{       
+	NVIC_EnableIRQ((IRQn_Type)irqnum);
+    
+	NVIC_SetPriority((IRQn_Type)irqnum, prior);
+
+	return;
 }
 
 /*****************************************************************************
  Function    : LosAdapIrqDisable
  Description : external interrupt disable
-               this function is called by LOS_HwiDelete(), so use bsp func 
+               this function is called by LOS_HwiDelete(), so use bsp func
                to inplemente it
                Note : if don't use LOS_HwiDelete(), leave it empty
  Input       : irqnum: external interrupt number
@@ -236,15 +211,10 @@ void LosAdapIrpEnable(unsigned int irqnum, unsigned short prior)
  *****************************************************************************/
 void LosAdapIrqDisable(unsigned int irqnum)
 {
-    /*
-        disable irq, for example in stm32 bsp you can use 
-        NVIC_DisableIRQ((IRQn_Type)irqnum);
-    */
-    nvicClrIRQ(irqnum);
+    NVIC_DisableIRQ((IRQn_Type)irqnum);
     return;
 }
 
- 
 /*****************************************************************************
  Function    : LOS_EvbSetup
  Description : enable the device on the dev baord

@@ -38,6 +38,7 @@
 #include "los_priqueue.ph"
 #include "los_task.ph"
 #include "los_hw.h"
+#include "los_hwi.h"
 
 #ifdef __cplusplus
 #if __cplusplus

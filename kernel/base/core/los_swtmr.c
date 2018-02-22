@@ -38,10 +38,8 @@
 #include "los_memory.ph"
 #include "los_queue.ph"
 #include "los_task.ph"
-#include "los_hwi.h"
-#ifdef LOSCFG_LIB_LIBC
-#include "string.h"
-#endif
+
+#include <string.h>
 
 #ifdef __cplusplus
 #if __cplusplus

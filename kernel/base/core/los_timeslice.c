@@ -66,6 +66,7 @@ extern "C" {
  Output       : None
  Return       : None
  *****************************************************************************/
+extern uint64_t g_ullTickCount;
  void osTimesliceCheck(void)
 {
     if (g_stTaskTimeSlice.pstTask != g_stLosTask.pstRunTask)
