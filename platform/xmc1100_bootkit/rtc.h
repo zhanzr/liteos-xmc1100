@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <assert.h>
 
+#include <xmc1100.h>
 #include <xmc_scu.h>
 #include <xmc_rtc.h>
 

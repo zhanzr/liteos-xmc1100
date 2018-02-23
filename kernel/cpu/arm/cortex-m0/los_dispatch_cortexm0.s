@@ -1,5 +1,5 @@
 ;Tiny OS Hardware driver.
-;This file is only for Cortex M0 core, for others cores, use conditional directive to use other drivers.
+;This file is only for Cortex M0 or binary compatible cores, for others cores, use conditional directive to use other drivers.
 ;
 ;This IS a part of the kernel.
 ;
@@ -69,6 +69,7 @@ LOS_StartToRun
     CPSIE   I
     BX      R6
     NOP
+	
     ALIGN
     AREA KERNEL, CODE, READONLY
     THUMB

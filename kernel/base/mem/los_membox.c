@@ -31,13 +31,11 @@
  * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
  * applicable export control laws and regulations.
  *---------------------------------------------------------------------------*/
+#include <string.h>
 
 #include "los_membox.inc"
 #include "los_base.ph"
 #include "los_hwi.h"
-#ifdef LOSCFG_LIB_LIBC
-#include "string.h"
-#endif
 
 #define OS_MEMBOX_NEXT(addr, uwBlkSize) (LOS_MEMBOX_NODE *)((uint8_t *)(addr) + (uwBlkSize))
 

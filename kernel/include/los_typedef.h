@@ -49,7 +49,6 @@ extern "C" {
 #endif /* __cplusplus */
 
 #define YES                                                 (1)
-
 #define NO                                                  (0)
 
 #ifndef LOS_OK
@@ -60,7 +59,6 @@ extern "C" {
 #define LOS_NOK                                             (1)
 #endif
 
-#define OS_FAIL                                             (1)
 #define OS_ERROR                                            (uint32_t)(-1)
 
 #ifdef __cplusplus

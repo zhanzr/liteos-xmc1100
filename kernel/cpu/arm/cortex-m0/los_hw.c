@@ -11,7 +11,7 @@
 #include "los_hw.h"
 #include "los_sys.ph"
 #include "los_priqueue.ph"
-
+#include "los_hwi.h"
 
 #ifdef __cplusplus
 #if __cplusplus
