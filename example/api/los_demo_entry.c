@@ -16,7 +16,6 @@ extern "C" {
 	
 #include "los_demo_entry.h"
 #include "los_task.h"
-#include "los_bsp_uart.h"
 
 static uint32_t g_uwDemoTaskID;
     

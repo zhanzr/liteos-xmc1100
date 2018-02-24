@@ -103,11 +103,14 @@
 /* test ALL */
 //#define LOS_KERNEL_TEST_ALL
 
-
+#ifdef __cplusplus
+ extern "C" {
+#endif
+	 
 extern void LOS_Demo_Entry(void);
 
-
-
+#ifdef __cplusplus
+}
 #endif
 
-
+#endif

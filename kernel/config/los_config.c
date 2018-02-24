@@ -48,17 +48,15 @@ extern "C" {
 
 uint8_t *m_aucSysMem0;
 uint32_t g_sys_mem_addr_end = 0;
+	
+volatile bool g_osTickStarted;
+	
 extern uint8_t g_ucMemStart[];
 extern uint32_t osTickInit(uint32_t uwSystemClock, uint32_t uwTickPerSecond);
 extern uint32_t   g_uwTskMaxNum;
 
 extern const unsigned char g_use_ram_vect;
 	
-void osEnableFPU(void)
-{
-    *(volatile uint32_t *)0xE000ED88 |= ((3UL << (10*2))|(3UL << (11*2)));
-    //SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));
-}
 /*****************************************************************************
  Function    : osRegister
  Description : Configuring the maximum number of tasks
@@ -91,6 +89,7 @@ void osEnableFPU(void)
         dprintf("osTickStart error\n");
     }
 		
+		g_osTickStarted = true;
     return uwRet;
 }
 /*****************************************************************************

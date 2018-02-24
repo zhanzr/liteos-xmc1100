@@ -13,9 +13,6 @@ extern "C" {
 #include "los_task.h"
 #include "los_demo_debug.h"
 
-#include "los_bsp_led.h"
-#include "los_bsp_uart.h"
-
 #include "los_api_task.h"
 #include "los_api_dynamic_mem.h"
 #include "los_api_static_mem.h"
@@ -28,6 +25,7 @@ extern "C" {
 #include "los_api_systick.h"
 #include "los_api_list.h"
 
+#include "retarget_io_drv.h"
 
 /*****************************************************************************
     global var

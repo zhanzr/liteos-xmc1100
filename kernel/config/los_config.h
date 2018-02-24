@@ -21,7 +21,8 @@ extern "C" {
  * @ingroup los_config
  * System clock (unit: HZ)
  */
-#define OS_SYS_CLOCK                                    32000000
+	//TODO:Always prefer the CMSIS definition
+//#define OS_SYS_CLOCK                                    48000000
 /**
 * @ingroup los_config
 * limit addr range when search for  'func local(frame pointer)' or 'func name'
@@ -41,6 +42,7 @@ extern char __bss_start;
  * @ingroup los_config
  * Number of Ticks in one second
  */
+ //TODO: Integrate this value with the CubeMX generated definition
 #define LOSCFG_BASE_CORE_TICK_PER_SECOND                1000
 
 

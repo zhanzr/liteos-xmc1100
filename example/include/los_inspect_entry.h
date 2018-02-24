@@ -41,6 +41,10 @@
 
 #include "los_typedef.h"
 
+#ifdef __cplusplus
+ extern "C" {
+#endif
+	 
 ///LiteOS Inspect status.
 typedef enum  {
     LOS_INSPECT_STU_START         =  0xFF,
@@ -77,6 +81,10 @@ extern void LOS_Inspect_Entry(void);
 extern uint32_t LOS_InspectByID(enInspectID InspectID);
 
 extern uint32_t LOS_InspectStatusSetByID(enInspectID InspectID,enInspectStu InspectStu);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //_LOS_INSPECT_ENTRY_H
 

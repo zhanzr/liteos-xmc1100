@@ -30,13 +30,6 @@
 #include "XMC1000_TSE.h"
 #include "rtc.h"
 
-int stdout_putchar (int ch)
-{
-	XMC_UART_CH_Transmit(XMC_UART0_CH1, (uint8_t)ch);
-	
-	return ch;
-}
-
 static uint32_t g_uwboadTaskID;
 static  void LOS_BoardExampleTskfunc(void)
 {

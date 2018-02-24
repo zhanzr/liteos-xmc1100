@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#include "los_config.h"
+
 #ifdef __cplusplus
 #if __cplusplus
 extern "C" {

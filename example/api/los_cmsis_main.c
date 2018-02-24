@@ -1,4 +1,4 @@
-#include "cmsis_os.h"
+#include <cmsis_os.h>
 
 #define TASK_CMSIS_STACK_SIZE_TEST 0x200
 

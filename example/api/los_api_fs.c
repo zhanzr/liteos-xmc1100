@@ -2,10 +2,6 @@
 #include "los_sys.h"
 #include "los_task.ph"
 
-#include "los_bsp_led.h"
-//#include "los_bsp_key.h"
-#include "los_bsp_uart.h"
-
 #ifdef LOS_FLASH
 
 #include "los_fs.h"

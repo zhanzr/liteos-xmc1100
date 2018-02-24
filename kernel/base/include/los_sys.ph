@@ -79,7 +79,7 @@ extern "C" {
  */
 inline uint64_t osCycle2MS(uint64_t udwCycle)
 {
-    return (uint64_t)((udwCycle / (OS_SYS_CLOCK / OS_SYS_MS_PER_SECOND)));
+    return (uint64_t)((udwCycle / (SystemCoreClock / OS_SYS_MS_PER_SECOND)));
 }
 
 /**
@@ -103,7 +103,7 @@ inline uint64_t osCycle2MS(uint64_t udwCycle)
  */
 inline uint64_t osCycle2US(uint64_t udwCycle)
 {
-    uint64_t udwTmp = OS_SYS_CLOCK / OS_SYS_US_PER_SECOND;
+    uint64_t udwTmp = SystemCoreClock / OS_SYS_US_PER_SECOND;
     return (uint64_t)(udwCycle / udwTmp);
 }
 

@@ -43,8 +43,8 @@
 extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
-
- void LOS_Reboot(void)
+	
+void LOS_Reboot(void)
 {
 #ifdef USE_DUMP_EXPORT
     /*restart the UART and send the dump info to UART  (m_stExcInfo and m_aucTaskArray)*/
@@ -81,7 +81,7 @@ Return     : cycle number corresponding to each tick
 *****************************************************************************/
  uint32_t LOS_CyclePerTickGet(void)
 {
-    return OS_SYS_CLOCK / LOSCFG_BASE_CORE_TICK_PER_SECOND;/*lint !e160*/
+    return SystemCoreClock / LOSCFG_BASE_CORE_TICK_PER_SECOND;/*lint !e160*/
 }
 
 /*****************************************************************************
@@ -132,7 +132,7 @@ Return     : LOS_OK on success ,or error code on failure
     }
 
     udwCpuTick = ((uint64_t)pstCpuTick->uwCntHi << OS_SYS_MV_32_BIT) | pstCpuTick->uwCntLo;
-    temp = udwCpuTick / (((double)OS_SYS_CLOCK) / OS_SYS_MS_PER_SECOND); /*lint !e160 !e653*/
+    temp = udwCpuTick / (((double)SystemCoreClock) / OS_SYS_MS_PER_SECOND); /*lint !e160 !e653*/
     udwCpuTick = (uint64_t)temp;
 
     *puwMsLo = (uint32_t)udwCpuTick;
@@ -160,7 +160,7 @@ Return     : LOS_OK on success ,or error code on failure
     }
 
     udwCpuTick = ((uint64_t)pstCpuTick->uwCntHi << OS_SYS_MV_32_BIT) | pstCpuTick->uwCntLo;
-    temp = udwCpuTick / (((double)OS_SYS_CLOCK) / OS_SYS_US_PER_SECOND); /*lint !e160 !e653*/
+    temp = udwCpuTick / (((double)SystemCoreClock) / OS_SYS_US_PER_SECOND); /*lint !e160 !e653*/
     udwCpuTick = (uint64_t)temp;
 
     *puwUsLo = (uint32_t)udwCpuTick;

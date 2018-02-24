@@ -47,6 +47,7 @@ extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
 
+extern uint32_t SystemCoreClock;
 
 /**
  *@ingroup los_sys
