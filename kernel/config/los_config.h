@@ -21,8 +21,6 @@ extern "C" {
  * @ingroup los_config
  * System clock (unit: HZ)
  */
-	//TODO:Always prefer the CMSIS definition
-//#define OS_SYS_CLOCK                                    48000000
 /**
 * @ingroup los_config
 * limit addr range when search for  'func local(frame pointer)' or 'func name'
@@ -57,7 +55,7 @@ extern char __bss_start;
  * @ingroup los_config
  * Maximum number of used hardware interrupts, including Tick timer interrupts.
  */
-#define LOSCFG_PLATFORM_HWI_LIMIT                       96
+#define LOSCFG_PLATFORM_HWI_LIMIT                       16
 
 /****************************** Task module configuration ********************************/
 /**
@@ -70,14 +68,14 @@ extern char __bss_start;
  * @ingroup los_config
  * Maximum supported number of tasks except the idle task rather than the number of usable tasks
  */
-#define LOSCFG_BASE_CORE_TSK_LIMIT                      7
+#define LOSCFG_BASE_CORE_TSK_LIMIT                      6
 
 /**
  * @ingroup los_config
  * Size of the idle task stack
  */
 #if defined (RAM_SIZE_LEVEL_0)
-#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            (size_t)(0x2D0)     // IDLE task stack
+#define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            (size_t)(0x100)     // IDLE task stack
 #elif defined (RAM_SIZE_LEVEL_1)
 #define LOSCFG_BASE_CORE_TSK_IDLE_STACK_SIZE            (size_t)(0x300)     // IDLE task stack
 #elif defined (RAM_SIZE_LEVEL_2)
@@ -90,7 +88,7 @@ extern char __bss_start;
  * Default task stack size
  */
 #if defined (RAM_SIZE_LEVEL_0)
-#define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         (size_t)(0x200)     // default stack
+#define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         (size_t)(0x180)     // default stack
 #elif defined (RAM_SIZE_LEVEL_1)
 #define LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE         (size_t)(0x2D0)     // default stack
 #elif defined (RAM_SIZE_LEVEL_2)
@@ -102,7 +100,7 @@ extern char __bss_start;
  * @ingroup los_config
  * Minimum stack size.
  */
-#define LOS_TASK_MIN_STACK_SIZE                         (ALIGN(0x130, 16))
+#define LOS_TASK_MIN_STACK_SIZE                         (ALIGN(0x100, 16))
 
 /**
  * @ingroup los_config
@@ -120,13 +118,13 @@ extern char __bss_start;
  * @ingroup los_config
  * Configuration item for task (stack) monitoring module tailoring
  */
-#define LOSCFG_BASE_CORE_TSK_MONITOR                    YES
+#define LOSCFG_BASE_CORE_TSK_MONITOR                    NO
 
 /**
  * @ingroup los_config
  * Configuration item for performance moniter unit
  */
-#define OS_INCLUDE_PERF                                 YES
+#define OS_INCLUDE_PERF                                 NO
 
 /**
  * @ingroup los_config
@@ -152,7 +150,7 @@ extern char __bss_start;
  * Maximum supported number of semaphores
  */
 #if defined (RAM_SIZE_LEVEL_0)
-#define LOSCFG_BASE_IPC_SEM_LIMIT                       5              // the max sem-numb
+#define LOSCFG_BASE_IPC_SEM_LIMIT                       3              // the max sem-numb
 #else
 #define LOSCFG_BASE_IPC_SEM_LIMIT                       10              // the max sem-numb
 #endif
@@ -168,7 +166,7 @@ extern char __bss_start;
  * Maximum supported number of mutexes
  */
 #if defined (RAM_SIZE_LEVEL_0)
-#define LOSCFG_BASE_IPC_MUX_LIMIT                       5              // the max mutex-num
+#define LOSCFG_BASE_IPC_MUX_LIMIT                       3              // the max mutex-num
 #else
 #define LOSCFG_BASE_IPC_MUX_LIMIT                       10              // the max mutex-num
 #endif
@@ -184,7 +182,7 @@ extern char __bss_start;
  * Maximum supported number of queues rather than the number of usable queues
  */
 #if defined (RAM_SIZE_LEVEL_0)
-#define LOSCFG_BASE_IPC_QUEUE_LIMIT                     5              //the max queue-numb
+#define LOSCFG_BASE_IPC_QUEUE_LIMIT                     3              //the max queue-numb
 #elif defined (RAM_SIZE_LEVEL_1)
 #define LOSCFG_BASE_IPC_QUEUE_LIMIT                     7              //the max queue-numb
 #elif defined (RAM_SIZE_LEVEL_2)
@@ -205,7 +203,7 @@ extern char __bss_start;
  * Maximum supported number of software timers rather than the number of usable software timers
  */
 #if defined (RAM_SIZE_LEVEL_0)
-#define LOSCFG_BASE_CORE_SWTMR_LIMIT                    4                   // the max SWTMR numb
+#define LOSCFG_BASE_CORE_SWTMR_LIMIT                    2                   // the max SWTMR numb
 #elif defined (RAM_SIZE_LEVEL_1)
 #define LOSCFG_BASE_CORE_SWTMR_LIMIT                    7                   // the max SWTMR numb
 #elif defined (RAM_SIZE_LEVEL_2)
@@ -252,7 +250,7 @@ extern char _PT0_END;
  * Memory size
  */
 #if defined (RAM_SIZE_LEVEL_0)
-#define OS_SYS_MEM_SIZE                                     0x00001650          // 1A00
+#define OS_SYS_MEM_SIZE                                     0x00001000         
 #elif defined (RAM_SIZE_LEVEL_1)
 #define OS_SYS_MEM_SIZE                                     0x00002800          // size
 #elif defined (RAM_SIZE_LEVEL_2)

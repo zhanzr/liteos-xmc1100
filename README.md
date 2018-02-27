@@ -19,3 +19,6 @@ The Cortex M0/M0+/M1 core does not offer LDEX/STEX instructions. Without switchi
 
 2/24/2018
 	STM32F072 Port works now.
+	
+2/27/2018
+	With only 6K SRAM, the F042 board doesn't work now. Need more work.

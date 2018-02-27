@@ -16,7 +16,6 @@
         EXPORT  PendSV_Handler
         
         IMPORT  g_stLosTask
-        IMPORT  g_pfnTskSwitchHook
         IMPORT  g_bTaskScheduled
 
 OS_NVIC_INT_CTRL            EQU     0xE000ED04

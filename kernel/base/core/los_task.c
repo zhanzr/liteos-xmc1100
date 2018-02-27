@@ -63,10 +63,7 @@ extern int sys_suspend(void);
  LOS_DL_LIST                    g_stTskRecyleList;
   TSK_SORTLINK_ATTRIBUTE_S            g_stTskSortLink;
   bool                                g_bTaskScheduled;
-/*lint -e64 -e552*/
-#if (LOSCFG_BASE_CORE_TSK_MONITOR == YES)
-TSKSWITCHHOOK g_pfnTskSwitchHook = NULL;
-#endif /* LOSCFG_BASE_CORE_TSK_MONITOR == YES */
+
 
 /*****************************************************************************
  Function : osTskIdleBGD
