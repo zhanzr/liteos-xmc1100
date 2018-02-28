@@ -217,7 +217,7 @@ extern "C"{
     if (g_usLosTaskLock)
     {
         uwRetErr = LOS_ERRNO_MUX_PEND_IN_LOCK;
-        dprintf("!!!LOS_ERRNO_MUX_PEND_IN_LOCK!!!\n");
+        PRINT_ERR("!!!LOS_ERRNO_MUX_PEND_IN_LOCK!!!\n");
         goto errre_uniMuxPend;
     }
 

@@ -70,7 +70,7 @@ extern void hal_clock_irqclear(void);
 
     #if (LOSCFG_BASE_CORE_SWTMR == YES)
     if (osSwtmrScan() != LOS_OK){
-        dprintf("%s, %d\n", __FUNCTION__, __LINE__);
+        PRINT_ERR("%s, %d\n", __FUNCTION__, __LINE__);
     }
     #endif
 }

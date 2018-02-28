@@ -44,7 +44,6 @@ extern "C" {
 #endif /* __cpluscplus */
 #endif /* __cpluscplus */
 
-
 void Example_TransformTime(void)
 {
     uint32_t uwMs;

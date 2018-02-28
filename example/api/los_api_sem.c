@@ -56,7 +56,6 @@ static uint32_t g_TestTaskID01,g_TestTaskID02;
 /*信号量结构体ID*/
 static uint32_t g_usSemID;
 
-
 static void Example_SemTask1(void)
 {
     uint32_t uwRet;

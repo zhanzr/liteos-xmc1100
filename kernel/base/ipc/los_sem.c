@@ -205,14 +205,14 @@ extern "C"{
     if (OS_INT_ACTIVE)
     {
         uwRetErr = LOS_ERRNO_SEM_PEND_INTERR;
-        dprintf("!!!LOS_ERRNO_SEM_PEND_INTERR!!!\n");
+        PRINT_ERR("!!!LOS_ERRNO_SEM_PEND_INTERR!!!\n");
         goto errre_uniSemPend;
     }
 
     if (g_usLosTaskLock)
     {
         uwRetErr = LOS_ERRNO_SEM_PEND_IN_LOCK;
-        dprintf("!!!LOS_ERRNO_SEM_PEND_IN_LOCK!!!\n");
+        PRINT_ERR("!!!LOS_ERRNO_SEM_PEND_IN_LOCK!!!\n");
         goto errre_uniSemPend;
     }
 

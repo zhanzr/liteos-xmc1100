@@ -151,7 +151,7 @@ void osMemSpitNode(void *pPool,
     pstListHead = OS_MEM_HEAD(pPool, pstNewFreeNode->uwSizeAndFlag);
     if (NULL == pstListHead)
     {
-        dprintf("%s %d\n", __FUNCTION__, __LINE__);
+        PRINT_ERR("%s %d\n", __FUNCTION__, __LINE__);
         return;
     }
 
@@ -190,7 +190,7 @@ void osMemFreeNode(LOS_MEM_DYN_NODE *pstNode, void *pPool)
         pstListHead = OS_MEM_HEAD(pPool, pstPreNode->uwSizeAndFlag);
         if (NULL == pstListHead)
         {
-            dprintf("%s %d\n", __FUNCTION__, __LINE__);
+            PRINT_ERR("%s %d\n", __FUNCTION__, __LINE__);
             return;
         }
 
@@ -208,7 +208,7 @@ void osMemFreeNode(LOS_MEM_DYN_NODE *pstNode, void *pPool)
         pstListHead = OS_MEM_HEAD(pPool, pstNode->uwSizeAndFlag);
         if (NULL == pstListHead)
         {
-            dprintf("%s %d\n", __FUNCTION__, __LINE__);
+            PRINT_ERR("%s %d\n", __FUNCTION__, __LINE__);
             return;
         }
 
@@ -392,7 +392,7 @@ void *osMemAllocWithCheck(void *pPool, uint32_t  uwSize)
     pstAllocNode = osMemFindSuitableFreeBlock(pPool, uwAllocSize);
     if (pstAllocNode == NULL)
     {
-        dprintf("[%s] No suitable free block, require free node size: 0x%x\n", __FUNCTION__, uwAllocSize);
+        PRINT_ERR("[%s] No suitable free block, require free node size: 0x%x\n", __FUNCTION__, uwAllocSize);
         return NULL;
     }
     if ((uwAllocSize + OS_MEM_NODE_HEAD_SIZE + OS_MEM_ALIGN_SIZE) <= pstAllocNode->uwSizeAndFlag)
@@ -487,7 +487,7 @@ void osMemMergeNodeForReAllocBigger(void *pPool, uint32_t uwAllocSize, LOS_MEM_D
     pstListHead = OS_MEM_HEAD(pPool, pstNewNode->uwSizeAndFlag);
     if (NULL == pstListHead)
     {
-        dprintf("%s %d\n", __FUNCTION__, __LINE__);
+        PRINT_ERR("%s %d\n", __FUNCTION__, __LINE__);
         LOS_IntRestore(uwIntSave);
         return OS_ERROR;
     }
@@ -668,7 +668,7 @@ void osMemMergeNodeForReAllocBigger(void *pPool, uint32_t uwAllocSize, LOS_MEM_D
         if (uwSize == 0)
         {
             if (LOS_MemFree((void *)pPool, (void *)pPtr) != LOS_OK)
-                 dprintf("%s, %d\n", __FUNCTION__, __LINE__);
+                 PRINT_ERR("%s, %d\n", __FUNCTION__, __LINE__);
             break;
         }
 

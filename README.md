@@ -22,3 +22,11 @@ The Cortex M0/M0+/M1 core does not offer LDEX/STEX instructions. Without switchi
 	
 2/27/2018
 	With only 6K SRAM, the F042 board doesn't work now. Need more work.
+	
+2/28/2018	
+	Maintaince commit. Plan to name this OS as NeMOS(Next generation eMbedded Operating System).
+	Remove the hal folder. The HAL libraries are maintained by Code Generator or user. It's up to the user to choose which version/fashion of the HAL libraries to be used with
+	their application. The OS layer should not dictate an arbitary version of HAL(will be quickly become unmaintained).
+
+	So all the ports from the original project will need rewrite, and they will be deleted from this reposity.
+	

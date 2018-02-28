@@ -31,23 +31,23 @@ void Example_FsTsk(void)
     /************************* MCU flash FS *********************************************/
     //mount the file system
     res_flash = LOS_fmount("1:",1);
-    LOS_EvbUartPrintf("\r\n f_mount res_flash = [%d] \r\n",res_flash);
+    LOS_EvbUartPrintf("\n f_mount res_flash = [%d] \n",res_flash);
     
     //If there is no file system,format to create the file system.
     if(res_flash == LOS_FS_NO_FILESYSTEM)
     {
         res_flash = LOS_fmkfs("1:",0,0);                    //format
-        LOS_EvbUartPrintf("\r\n f_mkfs res_flash=%d",res_flash);
+        LOS_EvbUartPrintf("\n f_mkfs res_flash=%d",res_flash);
         res_flash = LOS_fmount("1:",0);                     //After formatting,cancel the mount first.
         res_flash = LOS_fmount("1:",1);                     //mount
-        LOS_EvbUartPrintf("\r\n remount res_flash = [%d] \r\n",res_flash);
+        LOS_EvbUartPrintf("\n remount res_flash = [%d] \n",res_flash);
     }
     
     //File system test: written test. Open the file, if there is no file, create it.
     fnew = LOS_fopen("1:LiteOS.txt", LOS_FS_CREATE_ALWAYS | LOS_FS_WRITE );
     if(0 != fnew)
     {
-        LOS_EvbUartPrintf("\r\nWrite = [%s] ", textFileBuffer);
+        LOS_EvbUartPrintf("\nWrite = [%s] ", textFileBuffer);
         bw = LOS_fwrite(textFileBuffer,1, sizeof(textFileBuffer),fnew);
         if(0 == bw)
         {
@@ -57,12 +57,12 @@ void Example_FsTsk(void)
             LOS_fclose(fnew);
             return;
         }   
-        LOS_EvbUartPrintf("\r\nbw = [%d] ", bw);
+        LOS_EvbUartPrintf("\nbw = [%d] ", bw);
         LOS_fclose(fnew);
     }
     else
     {
-        LOS_EvbUartPrintf("\r\ncreate file failed.");
+        LOS_EvbUartPrintf("\ncreate file failed.");
         LOS_EvbLedControl(LOS_LED2, LED_ON);
         return;
     }
@@ -86,7 +86,7 @@ void Example_FsTsk(void)
     else
     {
         LOS_EvbLedControl(LOS_LED1, LED_ON);
-        LOS_EvbUartPrintf("\r\nRead sucess buffer = [%s],br = [%d]", buffer,br);
+        LOS_EvbUartPrintf("\nRead sucess buffer = [%s],br = [%d]", buffer,br);
     }
     
     /* Close open files */

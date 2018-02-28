@@ -439,7 +439,7 @@ extern int sys_suspend(void);
         {
             if (LOS_SemPost((uint32_t)(((SEM_CB_S *)pstTaskCB->pThreadJoin)->usSemID)) != LOS_OK)
             {
-                dprintf("osTaskEntry LOS_SemPost fail!\n");
+                PRINT_ERR("osTaskEntry LOS_SemPost fail!\n");
             }
             pstTaskCB->pThreadJoin = NULL;
         }

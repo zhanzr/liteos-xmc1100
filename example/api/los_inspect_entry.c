@@ -74,7 +74,7 @@ uint32_t LOS_InspectStatusSetByID(enInspectID InspectID,enInspectStu InspectStu)
 
     if(InspectID >= LOS_INSPECT_BUFF)
     {
-        dprintf("\r\nInspectID = [%d] Err.\r\n",InspectID);
+        dprintf("\nInspectID = [%d] Err.\n",InspectID);
         return LOS_NOK;
     }
 
@@ -89,7 +89,7 @@ uint32_t LOS_InspectStatusSetByID(enInspectID InspectID,enInspectStu InspectStu)
 
     if(LOS_INSPECT_BUFF == ulIndex)
     {
-        dprintf("\r\nInspectID = [%d] not find.\r\n",InspectID);
+        dprintf("\nInspectID = [%d] not find.\n",InspectID);
         return LOS_NOK;
     }
     else
@@ -112,7 +112,7 @@ uint32_t LOS_InspectByID(enInspectID InspectID)
     
     if(InspectID >= LOS_INSPECT_BUFF)
     {
-        dprintf("\r\nInspectID = [%d] Err.\r\n",InspectID);
+        dprintf("\nInspectID = [%d] Err.\n",InspectID);
         return LOS_NOK;
     }
     
@@ -122,7 +122,7 @@ uint32_t LOS_InspectByID(enInspectID InspectID)
         {
             if(NULL == gInspect[ulIndex].Inspectfunc)
             {
-                dprintf("InspectID = [%d] Err,Inspectfunc is NULL.\r\n\r\n",InspectID);
+                dprintf("InspectID = [%d] Err,Inspectfunc is NULL.\n\n",InspectID);
                 return LOS_NOK;
             }
             
@@ -131,13 +131,13 @@ uint32_t LOS_InspectByID(enInspectID InspectID)
             do{
                 if((LOS_INSPECT_STU_SUCCESS == gInspect[ulIndex].Status) && (ulRet == LOS_OK))
                 {
-                    dprintf("Inspect %s success\r\n\r\n",gInspect[ulIndex].name);
+                    dprintf("Inspect %s success\n\n",gInspect[ulIndex].name);
                     enCurStatus = LOS_INSPECT_STU_SUCCESS;
                 }
                 else if(LOS_INSPECT_STU_ERROR == gInspect[ulIndex].Status)
                 {
                     enCurStatus = LOS_INSPECT_STU_ERROR;
-                    dprintf("Inspect %s error,gInspectErrCnt = [%d]\r\n\r\n",gInspect[ulIndex].name,gInspectErrCnt);
+                    dprintf("Inspect %s error,gInspectErrCnt = [%d]\n\n",gInspect[ulIndex].name,gInspectErrCnt);
                 }
                 
                 (void)LOS_TaskDelay(100);
@@ -173,7 +173,7 @@ static void LOS_Inspect_TskDeal(void)
     gInspectErrCnt = 0;
       
      /* output a message on hyperterminal using printf function */
-    dprintf("\r\nLos Inspect start.\r\n");
+    dprintf("\nLos Inspect start.\n");
       
     for(int index = 0;index < LOS_INSPECT_BUFF;index++)
     {
@@ -187,7 +187,7 @@ static void LOS_Inspect_TskDeal(void)
         }
     }
      
-    dprintf("Inspect completed,gInspectErrCnt = [%d]\r\n\r\n",gInspectErrCnt);
+    dprintf("Inspect completed,gInspectErrCnt = [%d]\n\n",gInspectErrCnt);
 }
 
 /*****************************************************************************
