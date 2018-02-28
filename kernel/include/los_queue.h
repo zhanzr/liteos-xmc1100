@@ -383,7 +383,7 @@ typedef struct tagQueueInfo
  *@param uwFlags            [IN]    Queue mode. This parameter is not in use temporarily.
  *@param usMaxMsgSize       [IN]    Node size. The value range is [1,0xffff].
  *
- *@retval   #LOS_OK                                         0x00000000: The message queue is successfully created.
+ *@retval   #OS_OK                                         0x00000000: The message queue is successfully created.
  *@retval   #OS_ERRNO_QUEUE_CB_UNAVAILABLE                  0x02000604: The upper limit of the number of created queues is exceeded.
  *@retval   #OS_ERRNO_QUEUE_CREATE_NO_MEMORY                0x02000602: Insufficient memory for queue creation.
  *@retval   #OS_ERRNO_QUEUE_CREAT_PTR_NULL             0x0200060c: Null pointer.
@@ -420,7 +420,7 @@ extern uint32_t LOS_QueueCreate(char *pcQueueName,
  *@param uwBufferSize     [IN]        Passed-in buffer size, which must not be 0. The value range is [1,0xffffffff].
  *@param uwTimeOut        [IN]        Expiry time. The value range is [0,LOS_WAIT_FOREVER].
  *
- *@retval   #LOS_OK                                     0x00000000: The queue is successfully read.
+ *@retval   #OS_OK                                     0x00000000: The queue is successfully read.
  *@retval   #OS_ERRNO_QUEUE_READ_INVALID                0x0200060e: The handle of the queue that is being read is invalid.
  *@retval   #OS_ERRNO_QUEUE_READ_PTR_NULL               0x0200060f: The pointer passed in during queue reading is null.
  *@retval   #OS_ERRNO_QUEUE_READSIZE_ISZERO             0x02000610: The buffer size passed in during queue reading is 0.
@@ -458,7 +458,7 @@ extern uint32_t LOS_QueueRead(uint32_t uwQueueID,
  *@param uwBufferSize     [IN]        Passed-in buffer size, which must not be 0. The value range is [1,0xffffffff].
  *@param uwTimeOut        [IN]        Expiry time. The value range is [0,LOS_WAIT_FOREVER].
  *
- *@retval   #LOS_OK                                     0x00000000: The data is successfully written into the queue.
+ *@retval   #OS_OK                                     0x00000000: The data is successfully written into the queue.
  *@retval   #OS_ERRNO_QUEUE_WRITE_INVALID               0x02000611: The queue handle passed in during queue writing is invalid.
  *@retval   #OS_ERRNO_QUEUE_WRITE_PTR_NULL              0x02000612: The pointer passed in during queue writing is null.
  *@retval   #OS_ERRNO_QUEUE_WRITESIZE_ISZERO            0x02000613: The buffer size passed in during queue writing is 0.
@@ -492,7 +492,7 @@ extern uint32_t LOS_QueueWrite(uint32_t uwQueueID,
   *
   *@param uwQueueID     [IN]      Queue ID. The value range is [1,LOSCFG_BASE_IPC_QUEUE_LIMIT].
   *
-  *@retval   #LOS_OK                            0x00000000: The queue is successfully deleted.
+  *@retval   #OS_OK                            0x00000000: The queue is successfully deleted.
   *@retval   #OS_ERRNO_QUEUE_NOT_FOUND          0x02000605: The queue cannot be found.
   *@retval   #OS_ERRNO_QUEUE_NOT_CREATE         0x0200060a: The queue handle passed in when the queue is being deleted is incorrect.
   *@retval   #OS_ERRNO_QUEUE_IN_TSKUSE          0x02000608: The queue that blocks a task cannot be deleted.

@@ -35,7 +35,7 @@
 #ifndef _LOS_MUX_PH
 #define _LOS_MUX_PH
 
-#include "los_task.ph"
+#include "los_task.h"
 
 #include "los_mux.h"
 

@@ -69,7 +69,7 @@ uint32_t Example_Interrupt(void)
     
     LOS_IntRestore(uwIntSave);
     
-    return LOS_OK;
+    return OS_OK;
 }
 
 

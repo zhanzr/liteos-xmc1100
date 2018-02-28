@@ -1,4 +1,4 @@
-//Tiny OS Hardware driver.
+//NeMOS Hardware driver.
 //This file is only for Cortex M0 core, for others cores, use conditional directive to use other drivers.
 //
 //This IS a part of the kernel.
@@ -21,6 +21,7 @@ extern void LOS_TickHandler(void);
 extern void LosAdapIrqEnable(unsigned int irqnum, unsigned short prior);
 extern void LosAdapIrqDisable(unsigned int irqnum);
 extern void LosAdapIntInit(void);
+extern void PendSV_Handler(void);
 extern void SysTick_Handler(void);
 /*lint -restore*/
 uint32_t  g_vuwIntCount = 0;
@@ -174,7 +175,7 @@ uint32_t osGetVectorAddr(void)
 
     LOS_IntRestore(uwIntSave);
 
-    return LOS_OK;
+    return OS_OK;
 
 }
 
@@ -183,7 +184,7 @@ uint32_t osGetVectorAddr(void)
  Description : Delete hardware interrupt
  Input       : uwHwiNum   --- hwi num to delete
  Output      : None
- Return      : LOS_OK on success or error code on failure
+ Return      : OS_OK on success or error code on failure
  *****************************************************************************/
  uint32_t LOS_HwiDelete(uint32_t uwHwiNum)
 {
@@ -202,9 +203,22 @@ uint32_t osGetVectorAddr(void)
 
     LOS_IntRestore(uwIntSave);
 
-    return LOS_OK;
+    return OS_OK;
 }
 
+uint32_t LOS_IntLock(void)
+{
+	uint32_t ret = __get_PRIMASK();
+	    
+	__disable_irq();
+	
+	return ret;
+}
+
+void LOS_IntRestore(uint32_t uwIntSave)
+{
+	__set_PRIMASK(uwIntSave);
+}
 
 #ifdef __cplusplus
 #if __cplusplus

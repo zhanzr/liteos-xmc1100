@@ -65,7 +65,7 @@
 
 #include "los_sys.h"
 #include "los_tick.h"
-#include "los_task.ph"
+#include "los_task.h"
 #include "los_config.h"
 
 #include "los_inspect_entry.h"
@@ -200,7 +200,7 @@ void LOS_BoardExampleEntry(void)
     stTaskInitParam.usTaskPrio = 10;
     uwRet = LOS_TaskCreate(&g_uwboadTaskID, &stTaskInitParam);
 
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         return;
     }
@@ -268,13 +268,13 @@ int main(void)
 
     /*Init LiteOS kernel */
     uwRet = LOS_KernelInit();
-    if (uwRet != LOS_OK) {
-        return LOS_NOK;
+    if (uwRet != OS_OK) {
+        return OS_NOK;
     }
     /* Enable LiteOS system tick interrupt */
     uwRet = LOS_EnableTick();
-    if (uwRet != LOS_OK) {
-        return LOS_NOK;
+    if (uwRet != OS_OK) {
+        return OS_NOK;
     }
 
     LOS_Demo_Entry();

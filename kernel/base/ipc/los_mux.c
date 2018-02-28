@@ -1,42 +1,15 @@
-/*----------------------------------------------------------------------------
- * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice, this list of
- * conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
- * provided with the distribution.
- * 3. Neither the name of the copyright holder nor the names of its contributors may be used
- * to endorse or promote products derived from this software without specific prior written
- * permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *---------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------
- * Notice of Export Control Law
- * ===============================================
- * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
- * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
- * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
- * applicable export control laws and regulations.
- *---------------------------------------------------------------------------*/
+//NeMOS mutex relevant function.
+//
+//This IS a part of the kernel.
+//
+//Author: zhanzr<zhanzr@foxmail.com>
+//Date	:	2/28/2018
 
 #include "los_mux.inc"
 
 #include "los_memory.ph"
 #include "los_priqueue.ph"
-#include "los_task.ph"
+#include "los_task.h"
 #include "los_hw.h"
 #include "los_hwi.h"
 
@@ -60,7 +33,7 @@ extern "C"{
  Description  : Initializes the mutex,
  Input        : None
  Output       : None
- Return       : LOS_OK on success ,or error code on failure
+ Return       : OS_OK on success ,or error code on failure
  *****************************************************************************/
  uint32_t osMuxInit(void)
 {
@@ -84,7 +57,7 @@ extern "C"{
             LOS_ListTailInsert(&g_stUnusedMuxList, &pstMuxNode->stMuxList);
         }
     }
-    return LOS_OK;
+    return OS_OK;
 }
 
 /*****************************************************************************
@@ -92,7 +65,7 @@ extern "C"{
  Description  : Create a mutex,
  Input        : None
  Output       : puwMuxHandle ------ Mutex operation handle
- Return       : LOS_OK on success ,or error code on failure
+ Return       : OS_OK on success ,or error code on failure
  *****************************************************************************/
   uint32_t  LOS_MuxCreate (uint32_t *puwMuxHandle)
 {
@@ -122,7 +95,7 @@ extern "C"{
     LOS_ListInit(&pstMuxCreated->stMuxList);
     *puwMuxHandle               = (uint32_t)pstMuxCreated->ucMuxID;
     LOS_IntRestore(uwIntSave);
-    return LOS_OK;
+    return OS_OK;
 }
 
 /*****************************************************************************
@@ -130,7 +103,7 @@ extern "C"{
  Description  : Delete a mutex,
  Input        : uwMuxHandle------Mutex operation handle
  Output       : None
- Return       : LOS_OK on success ,or error code on failure
+ Return       : OS_OK on success ,or error code on failure
  *****************************************************************************/
  uint32_t LOS_MuxDelete(uint32_t uwMuxHandle)
 {
@@ -157,7 +130,7 @@ extern "C"{
 
    LOS_IntRestore(uwIntSave);
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 /*****************************************************************************
@@ -166,7 +139,7 @@ extern "C"{
  Input        : uwMuxHandle ------ Mutex operation handleone,
                 uwTimeOut  ------- waiting time,
  Output       : None
- Return       : LOS_OK on success ,or error code on failure
+ Return       : OS_OK on success ,or error code on failure
  *****************************************************************************/
  uint32_t LOS_MuxPend(uint32_t uwMuxHandle, uint32_t uwTimeout)
 {
@@ -198,14 +171,14 @@ extern "C"{
         pstMuxPended->pstOwner = pstRunTsk;
         pstMuxPended->usPriority = pstRunTsk->usPriority;
         LOS_IntRestore(uwIntSave);
-        return LOS_OK;
+        return OS_OK;
     }
 
     if (pstMuxPended->pstOwner == pstRunTsk)
     {
         pstMuxPended->usMuxCount++;
         LOS_IntRestore(uwIntSave);
-        return LOS_OK;
+        return OS_OK;
     }
 
     if (!uwTimeout)
@@ -255,7 +228,7 @@ extern "C"{
         goto error_uniMuxPend;
     }
 
-    return LOS_OK;
+    return OS_OK;
 
 errre_uniMuxPend:
     (void)LOS_IntRestore(uwIntSave);
@@ -268,7 +241,7 @@ error_uniMuxPend:
  Description  : Specify the mutex V operation,
  Input        : uwMuxHandle ------ Mutex operation handle,
  Output       : None
- Return       : LOS_OK on success ,or error code on failure
+ Return       : OS_OK on success ,or error code on failure
  *****************************************************************************/
  uint32_t LOS_MuxPost(uint32_t uwMuxHandle)
 {
@@ -302,7 +275,7 @@ error_uniMuxPend:
     if (--(pstMuxPosted->usMuxCount) != 0)
     {
         LOS_IntRestore(uwIntSave);
-        return LOS_OK;
+        return OS_OK;
     }
 
     if ((pstMuxPosted->pstOwner->usPriority) != pstMuxPosted->usPriority)
@@ -340,7 +313,7 @@ error_uniMuxPend:
         (void)LOS_IntRestore(uwIntSave);
     }
 
-    return LOS_OK;
+    return OS_OK;
 }
 #endif /*(LOSCFG_BASE_IPC_MUX == YES)*/
 

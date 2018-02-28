@@ -57,7 +57,7 @@ void Example_TransformTime(void)
 
 uint32_t Example_GetTick(void)
 {
-    uint32_t uwRet = LOS_OK;
+    uint32_t uwRet = OS_OK;
     uint32_t uwcyclePerTick;
     uint64_t uwTickCount1,uwTickCount2;
 
@@ -82,20 +82,20 @@ uint32_t Example_GetTick(void)
     if((uwTickCount2 - uwTickCount1) >= 200)
     {
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_SYSTIC,LOS_INSPECT_STU_SUCCESS);
-        if (LOS_OK != uwRet)  
+        if (OS_OK != uwRet)  
         {
             dprintf("Set Inspect Status Err\n");
         }
-        return LOS_OK;   
+        return OS_OK;   
     }
     else
     {
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_SYSTIC,LOS_INSPECT_STU_ERROR);
-        if (LOS_OK != uwRet)  
+        if (OS_OK != uwRet)  
         {
             dprintf("Set Inspect Status Err\n");
         }
-        return LOS_NOK; 
+        return OS_NOK; 
     }
 }
 

@@ -1,4 +1,4 @@
-//Tiny OS Hardware driver.
+//NeMOS Hardware driver.
 //This file is only for Cortex M0 core, for others cores, use conditional directive to use other drivers.
 //
 //This IS a part of the kernel.
@@ -9,7 +9,7 @@
 #include "los_tick.h"
 
 #include "los_base.h"
-#include "los_task.ph"
+#include "los_task.h"
 #include "los_swtmr.h"
 #include "los_hwi.h"
 

@@ -122,7 +122,7 @@ extern unsigned int osGetVectorAddr(void);
               in your own system.
  Input       : None
  Output      : None
- Return      : LOS_OK
+ Return      : OS_OK
  *****************************************************************************/
 unsigned int osTickStart(void)
 {
@@ -139,7 +139,7 @@ unsigned int osTickStart(void)
                this is used for arm cortex-M3/M4
  Input       : None
  Output      : None
- Return      : LOS_OK
+ Return      : OS_OK
  *****************************************************************************/
 void LosAdapIntInit(void)
 {

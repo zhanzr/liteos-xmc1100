@@ -1,7 +1,7 @@
 
 #include "los_sys.h"
 #include "los_tick.h"
-#include "los_task.ph"
+#include "los_task.h"
 #include "los_config.h"
 
 #include "los_demo_debug.h"
@@ -44,7 +44,7 @@ extern const unsigned char g_use_ram_vect;
  Description : enable system  start function
  Input       : None
  Output      : None
- Return      : LOS_OK
+ Return      : OS_OK
  *****************************************************************************/
  uint32_t LOS_EnableTick(void)
 {
@@ -52,7 +52,7 @@ extern const unsigned char g_use_ram_vect;
 
     uwRet = osTickStart();
 
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         PRINT_ERR("osTickStart error\n");
     }
@@ -65,11 +65,11 @@ extern const unsigned char g_use_ram_vect;
  Description : Task start function
  Input       : None
  Output      : None
- Return      : LOS_OK
+ Return      : OS_OK
  *****************************************************************************/
  uint32_t LOS_Start(void)
 {
-    uint32_t uwRet = LOS_OK;
+    uint32_t uwRet = OS_OK;
 
     LOS_StartToRun();
 
@@ -81,7 +81,7 @@ extern const unsigned char g_use_ram_vect;
  Description : System kernel initialization function, configure all system modules
  Input       : None
  Output      : None
- Return      : LOS_OK
+ Return      : OS_OK
  *****************************************************************************/
  int osMain(void)
 {
@@ -90,7 +90,7 @@ extern const unsigned char g_use_ram_vect;
     osRegister();
 
     uwRet = osMemSystemInit();
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         PRINT_ERR("osMemSystemInit error %d\n", uwRet);
         return uwRet;
@@ -106,7 +106,7 @@ extern const unsigned char g_use_ram_vect;
 #endif
 
     uwRet =osTaskInit();
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         PRINT_ERR("osTaskInit error\n");
         return uwRet;
@@ -115,7 +115,7 @@ extern const unsigned char g_use_ram_vect;
 #if (LOSCFG_BASE_IPC_SEM == YES)
     {
         uwRet = osSemInit();
-        if (uwRet != LOS_OK)
+        if (uwRet != OS_OK)
         {
             return uwRet;
         }
@@ -125,7 +125,7 @@ extern const unsigned char g_use_ram_vect;
 #if (LOSCFG_BASE_IPC_MUX == YES)
     {
         uwRet = osMuxInit();
-        if (uwRet != LOS_OK)
+        if (uwRet != OS_OK)
         {
             return uwRet;
         }
@@ -135,7 +135,7 @@ extern const unsigned char g_use_ram_vect;
 #if (LOSCFG_BASE_IPC_QUEUE == YES)
     {
         uwRet = osQueueInit();
-        if (uwRet != LOS_OK)
+        if (uwRet != OS_OK)
         {
             PRINT_ERR("osQueueInit error\n");
             return uwRet;
@@ -146,7 +146,7 @@ extern const unsigned char g_use_ram_vect;
 #if (LOSCFG_BASE_CORE_SWTMR == YES)
     {
         uwRet = osSwTmrInit();
-        if (uwRet != LOS_OK)
+        if (uwRet != OS_OK)
         {
             PRINT_ERR("osSwTmrInit error\n");
             return uwRet;
@@ -159,21 +159,21 @@ extern const unsigned char g_use_ram_vect;
     #endif
 
     uwRet = osIdleTaskCreate();
-    if (uwRet != LOS_OK) {
+    if (uwRet != OS_OK) {
         return uwRet;
     }
 
-    return LOS_OK;
+    return OS_OK;
 }
 
  int LOS_KernelInit(void)
 {
     uint32_t uwRet;
     uwRet = osMain();
-    if (uwRet != LOS_OK) {
-        return LOS_NOK;
+    if (uwRet != OS_OK) {
+        return OS_NOK;
     }
-    return LOS_OK;
+    return OS_OK;
 }
 
 

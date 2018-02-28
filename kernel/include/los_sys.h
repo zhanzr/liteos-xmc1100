@@ -1,36 +1,9 @@
-/*----------------------------------------------------------------------------
- * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice, this list of
- * conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
- * provided with the distribution.
- * 3. Neither the name of the copyright holder nor the names of its contributors may be used
- * to endorse or promote products derived from this software without specific prior written
- * permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *---------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------
- * Notice of Export Control Law
- * ===============================================
- * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
- * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
- * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
- * applicable export control laws and regulations.
- *---------------------------------------------------------------------------*/
+//NeMOS tick / time relevant definition.
+//
+//This IS a part of the kernel.
+//
+//Author: zhanzr<zhanzr@foxmail.com>
+//Date	:	2/28/2018
 
 /**@defgroup los_sys System time
  * @ingroup kernel
@@ -98,21 +71,6 @@ extern uint32_t SystemCoreClock;
  *Solution: None.
  */
 #define LOS_ERRNO_SYS_HOOK_IS_FULL                              LOS_ERRNO_OS_ERROR(LOS_MOD_SYS, 0x14)
-
-/**
- * @ingroup los_typedef
- * system time structure.
- */
-typedef struct tagSysTime
-{
-    uint16_t  uwYear;    /**< value 1970 ~ 2038 or 1970 ~ 2100 */
-    uint8_t   ucMonth;   /**< value 1 - 12 */
-    uint8_t   ucDay;     /**< value 1 - 31 */
-    uint8_t   ucHour;    /**< value 0 - 23 */
-    uint8_t   ucMinute;  /**< value 0 - 59 */
-    uint8_t   ucSecond;  /**< value 0 - 59 */
-    uint8_t   ucWeek;    /**< value 0 - 6  */
-} SYS_TIME_S;
 
 /**
  *@ingroup los_sys
@@ -198,26 +156,6 @@ extern uint32_t LOS_Tick2MS(uint32_t uwTick);
  */
 extern uint32_t LOS_MS2Tick(uint32_t uwMillisec);
 
-/**
- *@ingroup los_sys
- *@brief System reboot.
- *
- *@par Description:
- *This API is used to restart system.
- *@attention
- *<ul>
- *<li></li>
- *</ul>
- *
- *@param None.
- *
- *@retval None.
- *@par Dependency:
- *<ul><li>los_sys.h: the header file that contains the API declaration.</li></ul>
- *@see None.
- *@since Huawei LiteOS V100R001C00
- */
-extern void LOS_Reboot(void);
 #ifdef __cplusplus
 #if __cplusplus
 }

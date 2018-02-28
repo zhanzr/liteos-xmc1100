@@ -1,40 +1,14 @@
-/*----------------------------------------------------------------------------
- * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice, this list of
- * conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
- * provided with the distribution.
- * 3. Neither the name of the copyright holder nor the names of its contributors may be used
- * to endorse or promote products derived from this software without specific prior written
- * permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *---------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------
- * Notice of Export Control Law
- * ===============================================
- * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
- * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
- * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
- * applicable export control laws and regulations.
- *---------------------------------------------------------------------------*/
+//NeMOS memory management function.
+//
+//This IS a part of the kernel.
+//
+//Author: zhanzr<zhanzr@foxmail.com>
+//Date	:	2/28/2018
+
 #include <string.h>
 
 #include "los_memory.inc"
-#include "los_task.ph"
+#include "los_task.h"
 #include "los_hwi.h"
 
 #include "los_demo_debug.h"
@@ -222,7 +196,7 @@ void osMemFreeNode(LOS_MEM_DYN_NODE *pstNode, void *pPool)
  Input       : pPool --Pointer to memory pool
                   pstNode -- the node which need be checked
  Output      : None
- Return      : LOS_OK or LOS_NOK
+ Return      : OS_OK or OS_NOK
 *****************************************************************************/
 #ifdef LOS_DLNK_SAFE_CHECK
 uint32_t osMemCheckUsedNode(void *pPool, LOS_MEM_DYN_NODE *pstNode)
@@ -236,15 +210,15 @@ uint32_t osMemCheckUsedNode(void *pPool, LOS_MEM_DYN_NODE *pstNode)
         if ((pstTmp == pstNode) &&
             OS_MEM_NODE_GET_USED_FLAG(pstTmp->uwSizeAndFlag))
         {
-            return LOS_OK;
+            return OS_OK;
         }
         else if (pstTmp > pstNode)
         {
-            return LOS_NOK;
+            return OS_NOK;
         }
     }
 
-    return LOS_NOK;
+    return OS_NOK;
 }
 
 #elif defined(LOS_DLNK_SIMPLE_CHECK)
@@ -255,22 +229,22 @@ uint32_t osMemCheckUsedNode(void *pPool, LOS_MEM_DYN_NODE *pstNode)
     LOS_MEM_DYN_NODE *pstEndNode = OS_MEM_END_NODE(pPool, pstPoolInfo->uwPoolSize);
     if (!OS_MEM_MIDDLE_ADDR_OPEN_END(pstStartNode, pstNode, pstEndNode))
     {
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     if (!OS_MEM_NODE_GET_USED_FLAG(pstNode->uwSizeAndFlag))
     {
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     if ((!OS_MEM_MAGIC_VALID(pstNode->stFreeNodeInfo.pstPrev))
         //|| (!OS_MEM_MAGIC_VALID(pstNode->stFreeNodeInfo.pstNext))
         )
     {
-        return LOS_NOK;
+        return OS_NOK;
     }
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 #else
@@ -312,40 +286,40 @@ uint32_t osMemCheckUsedNode(void *pPool, LOS_MEM_DYN_NODE *pstNode)
     const LOS_MEM_DYN_NODE *pstNextNode = (const LOS_MEM_DYN_NODE *)NULL;
     if (!osMemIsNodeValid(pstNode, pstStartNode, pstEndNode, (uint8_t *)pPool, pucEndPool))
     {
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     if (!OS_MEM_NODE_GET_USED_FLAG(pstNode->uwSizeAndFlag))
 
     {
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     pstNextNode = OS_MEM_NEXT_NODE(pstNode);
     if (!osMemIsNodeValid(pstNextNode, pstStartNode, pstEndNode, (uint8_t *)pPool, pucEndPool))
     {
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     if (pstNextNode->pstPreNode != pstNode)
     {
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     if (pstNode != pstStartNode)
     {
         if (!osMemIsNodeValid(pstNode->pstPreNode, pstStartNode, pstEndNode, (uint8_t *)pPool, pucEndPool))
         {
-            return LOS_NOK;
+            return OS_NOK;
         }
 
         if (OS_MEM_NEXT_NODE(pstNode->pstPreNode) != pstNode)
         {
-            return LOS_NOK;
+            return OS_NOK;
         }
     }
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 #endif
@@ -459,7 +433,7 @@ void osMemMergeNodeForReAllocBigger(void *pPool, uint32_t uwAllocSize, LOS_MEM_D
  Input       : pPool    --- Pointer to memory pool
                  uwSize  --- Size of memory in bytes to allocate
  Output      : None
- Return      : LOS_OK - Ok, OS_ERROR - Error
+ Return      : OS_OK - Ok, OS_ERROR - Error
 *****************************************************************************/
  uint32_t LOS_MemInit(void *pPool, uint32_t  uwSize)
 {
@@ -501,7 +475,7 @@ void osMemMergeNodeForReAllocBigger(void *pPool, uint32_t uwAllocSize, LOS_MEM_D
     osMemSetMagicNumAndTaskid(pstEndNode);
     LOS_IntRestore(uwIntSave);
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 /*****************************************************************************
@@ -597,11 +571,11 @@ void osMemMergeNodeForReAllocBigger(void *pPool, uint32_t uwAllocSize, LOS_MEM_D
  Input       : pPool --Pointer to memory pool
                   pMem -- the node which need be freed
  Output      : None
- Return      : LOS_OK -Ok,  LOS_NOK -failed
+ Return      : OS_OK -Ok,  OS_NOK -failed
 *****************************************************************************/
  uint32_t LOS_MemFree(void *pPool, void *pMem)
 {
-    uint32_t uwRet = LOS_NOK;
+    uint32_t uwRet = OS_NOK;
     uint32_t uwGapSize = 0;
     uint32_t uwIntSave = LOS_IntLock();
 
@@ -623,7 +597,7 @@ void osMemMergeNodeForReAllocBigger(void *pPool, uint32_t uwAllocSize, LOS_MEM_D
 
         pstNode = (LOS_MEM_DYN_NODE *)((uint32_t)pMem - OS_MEM_NODE_HEAD_SIZE);
         uwRet = osMemCheckUsedNode(pPool, pstNode);
-        if (uwRet == LOS_OK)
+        if (uwRet == OS_OK)
         {
             osMemFreeNode(pstNode, pPool);
         }
@@ -667,7 +641,7 @@ void osMemMergeNodeForReAllocBigger(void *pPool, uint32_t uwAllocSize, LOS_MEM_D
 
         if (uwSize == 0)
         {
-            if (LOS_MemFree((void *)pPool, (void *)pPtr) != LOS_OK)
+            if (LOS_MemFree((void *)pPool, (void *)pPtr) != OS_OK)
                  PRINT_ERR("%s, %d\n", __FUNCTION__, __LINE__);
             break;
         }
@@ -680,7 +654,7 @@ void osMemMergeNodeForReAllocBigger(void *pPool, uint32_t uwAllocSize, LOS_MEM_D
         }
         pstNode = (LOS_MEM_DYN_NODE *)((uint32_t)pPtr - OS_MEM_NODE_HEAD_SIZE);
         uwRet = osMemCheckUsedNode(pPool, pstNode);
-        if (uwRet != LOS_OK)
+        if (uwRet != OS_OK)
         {
             break;
         }

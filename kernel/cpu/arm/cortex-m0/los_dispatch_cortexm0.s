@@ -1,4 +1,4 @@
-;Tiny OS Hardware driver.
+;NeMOS Hardware driver.
 ;This file is only for Cortex M0 or binary compatible cores, for others cores, use conditional directive to use other drivers.
 ;
 ;This IS a part of the kernel.
@@ -7,25 +7,19 @@
 ;Date	:	2/21/2018
 
         PRESERVE8
+		THUMB
 
-        EXPORT  LOS_IntLock
-        EXPORT  LOS_IntUnLock
-        EXPORT  LOS_IntRestore
         EXPORT  LOS_StartToRun
-        EXPORT  osTaskSchedule
         EXPORT  PendSV_Handler
         
         IMPORT  g_stLosTask
         IMPORT  g_bTaskScheduled
 
-OS_NVIC_INT_CTRL            EQU     0xE000ED04
 OS_NVIC_SYSPRI2             EQU     0xE000ED20
 OS_NVIC_PENDSV_PRI          EQU     0xF0F00000
-OS_NVIC_PENDSVSET           EQU     0x10000000
 OS_TASK_STATUS_RUNNING      EQU     0x0010
 
     AREA |.text|, CODE, READONLY
-    THUMB
 
 LOS_StartToRun
     LDR     R4, =OS_NVIC_SYSPRI2
@@ -38,7 +32,6 @@ LOS_StartToRun
 
     MOVS     R0, #2
     MSR     CONTROL, R0
-
 
     LDR     R0, =g_stLosTask
     LDR     R2, [R0, #4]
@@ -68,30 +61,6 @@ LOS_StartToRun
     CPSIE   I
     BX      R6
     NOP
-	
-    ALIGN
-    AREA KERNEL, CODE, READONLY
-    THUMB
-
-LOS_IntLock
-    MRS     R0, PRIMASK
-    CPSID   I
-    BX      LR
-
-LOS_IntUnLock
-    MRS     R0, PRIMASK
-    CPSIE   I
-    BX      LR
-
-LOS_IntRestore
-    MSR     PRIMASK, R0
-    BX      LR
-
-osTaskSchedule
-    LDR     R0, =OS_NVIC_INT_CTRL
-    LDR     R1, =OS_NVIC_PENDSVSET
-    STR     R1, [R0]
-    BX      LR
 
 PendSV_Handler
     MRS     R12, PRIMASK
@@ -146,7 +115,5 @@ _TaskSwitch
 
     MSR     PRIMASK, R12
     BX      LR
-    
-    NOP
-    ALIGN
+		
     END

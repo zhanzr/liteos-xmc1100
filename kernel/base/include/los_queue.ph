@@ -149,7 +149,7 @@ extern void *osQueueMailAlloc(uint32_t uwQueueID, void *pMailPool, uint32_t uwTi
  *@param pMailPool        [IN]        The mail memory poll address.
  *@param pMailMem         [IN]        The mail memory block address.
  *
- *@retval   #LOS_OK                                 0x00000000: The memory free successfully.
+ *@retval   #OS_OK                                 0x00000000: The memory free successfully.
  *@retval   #OS_ERRNO_QUEUE_MAIL_HANDLE_INVALID     0x02000619: The handle of the queue passed-in when the memory for the queue is being freed is invalid.
  *@retval   #OS_ERRNO_QUEUE_MAIL_PTR_INVALID        0x0200061a: The pointer to the memory to be freed is null.
  *@retval   #OS_ERRNO_QUEUE_MAIL_FREE_ERROR         0x0200061b: The memory for the queue fails to be freed.

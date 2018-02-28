@@ -71,7 +71,7 @@ static void *send_Entry(uint32_t uwParam1,
 
         /*将abuf里的数据写入队列*/
         uwRet = LOS_QueueWrite(g_uwQueue, abuf, uwlen, 0);
-        if(uwRet != LOS_OK)
+        if(uwRet != OS_OK)
         {
             dprintf("send message failure,error:%x\n",uwRet);
         }
@@ -88,7 +88,7 @@ static void *recv_Entry(uint32_t uwParam1,
                 uint32_t uwParam4)
 {
     uint32_t uwReadbuf;
-    uint32_t uwRet = LOS_OK;
+    uint32_t uwRet = OS_OK;
     uint32_t uwMsgCount = 0;
 
     while (1)
@@ -96,7 +96,7 @@ static void *recv_Entry(uint32_t uwParam1,
 
         /*读取队列里的数据存入uwReadbuf里*/
         uwRet = LOS_QueueRead(g_uwQueue, &uwReadbuf, 24, 0);
-        if(uwRet != LOS_OK)
+        if(uwRet != OS_OK)
         {
             dprintf("recv message failure,error:%x\n",uwRet);
             break;
@@ -110,7 +110,7 @@ static void *recv_Entry(uint32_t uwParam1,
         (void)LOS_TaskDelay(5);
     }
     /*删除队列*/
-    while (LOS_OK != LOS_QueueDelete(g_uwQueue))
+    while (OS_OK != LOS_QueueDelete(g_uwQueue))
     {
         (void)LOS_TaskDelay(1);
     }
@@ -120,7 +120,7 @@ static void *recv_Entry(uint32_t uwParam1,
     if(API_MSG_NUM == uwMsgCount)
     {
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_MSG,LOS_INSPECT_STU_SUCCESS);
-        if (LOS_OK != uwRet)  
+        if (OS_OK != uwRet)  
         {
             dprintf("Set Inspect Status Err\n");
         }
@@ -128,7 +128,7 @@ static void *recv_Entry(uint32_t uwParam1,
     else
     {
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_MSG,LOS_INSPECT_STU_ERROR);
-        if (LOS_OK != uwRet)  
+        if (OS_OK != uwRet)  
         {
             dprintf("Set Inspect Status Err\n");
         }
@@ -151,7 +151,7 @@ uint32_t Example_MsgQueue(void)
     stInitParam1.uwResved = LOS_TASK_STATUS_DETACHED;
     LOS_TaskLock();//锁住任务，防止新创建的任务比本任务高而发生调度
     uwRet = LOS_TaskCreate(&uwTask1, &stInitParam1);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("create task1 failed!,error:%x\n",uwRet);
         return uwRet;
@@ -160,7 +160,7 @@ uint32_t Example_MsgQueue(void)
     /*创建任务2*/
     stInitParam1.pfnTaskEntry = recv_Entry;
     uwRet = LOS_TaskCreate(&uwTask2, &stInitParam1);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("create task2 failed!,error:%x\n",uwRet);
         return uwRet;
@@ -168,7 +168,7 @@ uint32_t Example_MsgQueue(void)
 
     /*创建队列*/
     uwRet = LOS_QueueCreate("queue", 5, &g_uwQueue, 0, 24);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("create queue failure!,error:%x\n",uwRet);
     }
@@ -176,7 +176,7 @@ uint32_t Example_MsgQueue(void)
     dprintf("create the queue success!\n");
     LOS_TaskUnlock();//解锁任务，只有队列创建后才开始任务调度
     
-    return LOS_OK;
+    return OS_OK;
 }
 
 

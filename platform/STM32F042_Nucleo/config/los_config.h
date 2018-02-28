@@ -144,13 +144,13 @@ extern char __bss_start;
  * @ingroup los_config
  * Define a usable task priority.Highest task priority.
  */
-#define LOS_TASK_PRIORITY_HIGHEST                       0
+#define OS_TASK_PRIORITY_HIGHEST                       0
 
 /**
  * @ingroup los_config
  * Define a usable task priority.Lowest task priority.
  */
-#define LOS_TASK_PRIORITY_LOWEST                        31
+#define OS_TASK_PRIORITY_LOWEST                        31
 
 /****************************** Semaphore module configuration ******************************/
 /**
@@ -327,7 +327,7 @@ extern char _PT0_END;
  * @param: None.
  *
  * @retval #LOS_ERRNO_TSK_NO_MEMORY            0x03000200:Insufficient memory for task creation.
- * @retval #LOS_OK                             0:Task initialization success.
+ * @retval #OS_OK                             0:Task initialization success.
  *
  * @par Dependency:
  * <ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -350,7 +350,7 @@ extern uint32_t osTaskInit(void);
  *
  * @param: None.
  *
- * @retval #LOS_OK                      0:Hardware interrupt initialization success.
+ * @retval #OS_OK                      0:Hardware interrupt initialization success.
  *
  * @par Dependency:
  * <ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -374,7 +374,7 @@ extern void osHwiInit(void);
  * @param: None.
  *
  * @retval #LOS_ERRNO_SEM_NO_MEMORY     0x02000700:The memory is insufficient.
- * @retval #LOS_OK                      0:Semaphore initialization success.
+ * @retval #OS_OK                      0:Semaphore initialization success.
  *
  * @par Dependency:
  * <ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -398,7 +398,7 @@ extern uint32_t osSemInit(void);
  * @param: None.
  *
  * @retval #LOS_ERRNO_MUX_NO_MEMORY     0x02001d00:The memory request fails.
- * @retval #LOS_OK                      0:Mutex initialization success.
+ * @retval #OS_OK                      0:Mutex initialization success.
  *
  * @par Dependency:
  * <ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -423,7 +423,7 @@ extern uint32_t osMuxInit(void);
  *
  * @retval #LOS_ERRNO_QUEUE_MAXNUM_ZERO 0x02000600:The maximum number of queue resources is configured to 0.
  * @retval #LOS_ERRNO_QUEUE_NO_MEMORY   0x02000601:The queue block memory fails to be initialized.
- * @retval #LOS_OK                      0:Queue initialization success.
+ * @retval #OS_OK                      0:Queue initialization success.
  *
  * @par Dependency:
  * <ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -451,7 +451,7 @@ extern uint32_t osQueueInit(void);
  * @retval #LOS_ERRNO_SWTMR_HANDLER_POOL_NO_MEM     0x0200030a:Insufficient memory allocated by membox.
  * @retval #LOS_ERRNO_SWTMR_QUEUE_CREATE_FAILED     0x0200030b:The software timer queue fails to be created.
  * @retval #LOS_ERRNO_SWTMR_TASK_CREATE_FAILED      0x0200030c:The software timer task fails to be created.
- * @retval #LOS_OK                                  0:Software Timers initialization success.
+ * @retval #OS_OK                                  0:Software Timers initialization success.
  *
  * @par Dependency:
  * <ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -497,7 +497,7 @@ extern void LOS_StartToRun(void);
  *
  * @param: None.
  *
- * @retval #LOS_OK                                  0:App_Task initialization success.
+ * @retval #OS_OK                                  0:App_Task initialization success.
  *
  * @par Dependency:
  * <ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -592,7 +592,7 @@ extern void osRegister(void);
  *
  *@param: None.
  *
- *@retval #LOS_OK                                  0:System kernel initialization success.
+ *@retval #OS_OK                                  0:System kernel initialization success.
  *
  *@par Dependency:
  *<ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -615,7 +615,7 @@ extern int osMain(void);
  *
  *@param: None.
  *
- *@retval #LOS_OK  0:System kernel initialization success.
+ *@retval #OS_OK  0:System kernel initialization success.
  *
  *@par Dependency:
  *<ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -638,7 +638,7 @@ extern int LOS_KernelInit(void);
  *
  *@param: None.
  *
- *@retval #LOS_OK                                  0:System kernel initialization success.
+ *@retval #OS_OK                                  0:System kernel initialization success.
  *
  *@par Dependency:
  *<ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -661,7 +661,7 @@ extern uint32_t LOS_EnableTick(void);
  *
  *@param: None.
  *
- *@retval #LOS_OK                                  0:System kernel initialization success.
+ *@retval #OS_OK                                  0:System kernel initialization success.
  *
  *@par Dependency:
  *<ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -684,7 +684,7 @@ extern uint32_t LOS_Start(void);
  *
  *@param: None.
  *
- *@retval #LOS_OK                               0:configure Tick Interrupt success.
+ *@retval #OS_OK                               0:configure Tick Interrupt success.
  *@retval #LOS_ERRNO_TICK_CFG_INVALID           0x02000400:configure Tick Interrupt failed.
  *
  *@par Dependency:
@@ -732,7 +732,7 @@ extern void osTimesliceInit(void);
  *
  * @param: None.
  *
- * @retval #LOS_OK                                  0:System memory initialization success.
+ * @retval #OS_OK                                  0:System memory initialization success.
  * @retval #OS_ERROR                                (uint32_t)(-1):System memory initialization failed.
  *
  * @par Dependency:
@@ -756,7 +756,7 @@ extern uint32_t osMemSystemInit(void);
  *
  * @param: None.
  *
- * @retval #LOS_OK                                  0:Task Monitor initialization success.
+ * @retval #OS_OK                                  0:Task Monitor initialization success.
  *
  * @par Dependency:
  * <ul><li>los_config.h: the header file that contains the API declaration.</li></ul>
@@ -780,7 +780,7 @@ extern void osTaskMonInit(void);
  * @param: None.
  *
  * @retval #LOS_ERRNO_CPUP_NO_MEMORY                0x02001e00:The request for memory fails.
- * @retval #LOS_OK                                  0:CPUP initialization success.
+ * @retval #OS_OK                                  0:CPUP initialization success.
  *
  * @par Dependency:
  * <ul><li>los_config.h: the header file that contains the API declaration.</li></ul>

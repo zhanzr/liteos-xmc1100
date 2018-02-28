@@ -175,7 +175,7 @@ extern "C" {
  *@retval #LOS_ERRNO_SEM_PTR_NULL    0x02000703: The passed-in puwSemHandle value is NULL.
  *@retval #LOS_ERRNO_SEM_OVERFLOW    0x02000709: The passed-in uwCount value is greater than the maximum number of available semaphores.
  *@retval #LOS_ERRNO_SEM_ALL_BUSY    0x02000704: No semaphore control structure is available.
- *@retval #LOS_OK   0: The semaphore is successfully created.
+ *@retval #OS_OK   0: The semaphore is successfully created.
  *@par Dependency:
  *<ul><li>los_sem.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_EventDelete
@@ -198,7 +198,7 @@ extern uint32_t LOS_SemCreate(uint16_t usCount, uint32_t *puwSemHandle);
  *
  *@retval #LOS_ERRNO_SEM_INVALID 0x02000702: The passed-in puwSemHandle value is invalid.
  *@retval #LOS_ERRNO_SEM_PENDED  0x0200070a: The queue of the tasks that are waiting on the semaphore control structure is not null.
- *@retval #LOS_OK   0: The semaphore control structure is successfully deleted.
+ *@retval #OS_OK   0: The semaphore control structure is successfully deleted.
  *@par Dependency:
  *<ul><li>los_sem.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_SemCreate
@@ -225,7 +225,7 @@ extern uint32_t LOS_SemDelete(uint32_t uwSemHandle);
  *@retval #LOS_ERRNO_SEM_PEND_INTERR     0x02000706: The API is called during an interrupt, which is forbidden.
  *@retval #LOS_ERRNO_SEM_PEND_IN_LOCK    0x02000706: The task is unable to request a semaphore because task scheduling is locked.
  *@retval #LOS_ERRNO_SEM_TIMEOUT         0x02000707: The request for the semaphore times out.
- *@retval #LOS_OK   0: The semaphore request succeeds.
+ *@retval #OS_OK   0: The semaphore request succeeds.
  *@par Dependency:
  *<ul><li>los_sem.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_SemPost
@@ -248,7 +248,7 @@ extern uint32_t LOS_SemPend(uint32_t uwSemHandle, uint32_t uwTimeout);
  *
  *@retval #LOS_ERRNO_SEM_INVALID     0x02000701: The passed-in puwSemHandle value is invalid.
  *@retval #LOS_ERRNO_SEM_OVERFLOW    0x02000708: The times of semaphore release exceed the maximum times permitted.
- *@retval #LOS_OK                    0: The semaphore is successfully released.
+ *@retval #OS_OK                    0: The semaphore is successfully released.
  *@par Dependency:
  *<ul><li>los_sem.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_SemPend

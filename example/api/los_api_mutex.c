@@ -64,7 +64,7 @@ static void Example_MutexTask1()
     /*申请互斥锁*/
     uwRet=LOS_MuxPend(g_Testmux01, 10);
 
-    if(uwRet == LOS_OK)
+    if(uwRet == OS_OK)
     {
         dprintf("task1 get mutex g_Testmux01.\n");
         /*释放互斥锁*/
@@ -76,13 +76,13 @@ static void Example_MutexTask1()
         dprintf("task1 timeout and try to get  mutex, wait forever.\n");
         /*LOS_WAIT_FOREVER方式申请互斥锁,获取不到时程序阻塞，不会返回*/
         uwRet = LOS_MuxPend(g_Testmux01, LOS_WAIT_FOREVER);
-        if(uwRet == LOS_OK)
+        if(uwRet == OS_OK)
         {
             dprintf("task1 wait forever,got mutex g_Testmux01 success.\n");
             /*释放互斥锁*/
             LOS_MuxPost(g_Testmux01);
             uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_MUTEX,LOS_INSPECT_STU_SUCCESS);
-            if (LOS_OK != uwRet)  
+            if (OS_OK != uwRet)  
             {
                 dprintf("Set Inspect Status Err\n");
             }
@@ -99,7 +99,7 @@ static void Example_MutexTask2()
     dprintf("task2 try to get mutex, wait forever.\n");
     /*申请互斥锁*/
     uwRet=LOS_MuxPend(g_Testmux01, LOS_WAIT_FOREVER);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("task2 LOS_MuxPend failed .\n");
         return;
@@ -135,10 +135,10 @@ uint32_t Example_MutexLock(void)
     stTask1.uwStackSize  = LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE;
     stTask1.usTaskPrio   = 5;
     uwRet = LOS_TaskCreate(&g_TestTaskID01, &stTask1);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("task1 create failed .\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     /*创建任务2*/
@@ -148,10 +148,10 @@ uint32_t Example_MutexLock(void)
     stTask2.uwStackSize  = LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE;
     stTask2.usTaskPrio   = 4;
     uwRet = LOS_TaskCreate(&g_TestTaskID02, &stTask2);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("task2 create failed .\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     /*解锁任务调度*/
@@ -164,20 +164,20 @@ uint32_t Example_MutexLock(void)
 
     /*删除任务1*/
     uwRet = LOS_TaskDelete(g_TestTaskID01);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("task1 delete failed .\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
     /*删除任务2*/
     uwRet = LOS_TaskDelete(g_TestTaskID02);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("task2 delete failed .\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 

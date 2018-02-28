@@ -1,42 +1,15 @@
-/*----------------------------------------------------------------------------
- * Copyright (c) <2013-2015>, <Huawei Technologies Co., Ltd>
- * All rights reserved.
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice, this list of
- * conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice, this list
- * of conditions and the following disclaimer in the documentation and/or other materials
- * provided with the distribution.
- * 3. Neither the name of the copyright holder nor the names of its contributors may be used
- * to endorse or promote products derived from this software without specific prior written
- * permission.
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *---------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------
- * Notice of Export Control Law
- * ===============================================
- * Huawei LiteOS may be subject to applicable export control laws and regulations, which might
- * include those applicable to Huawei LiteOS of U.S. and the country in which you are located.
- * Import, export and usage of Huawei LiteOS in any manner by you shall be in compliance with such
- * applicable export control laws and regulations.
- *---------------------------------------------------------------------------*/
+//NeMOS queue relevant function.
+//
+//This IS a part of the kernel.
+//
+//Author: zhanzr<zhanzr@foxmail.com>
+//Date	:	2/28/2018
 
 #include "los_queue.inc"
 #include "los_membox.ph"
 #include "los_memory.ph"
 #include "los_priqueue.ph"
-#include "los_task.ph"
+#include "los_task.h"
 #include "los_hwi.h"
 #include "los_hw.h"
 
@@ -60,7 +33,7 @@ extern "C"{
  Description : queue initial
  Input       : usMaxQueue  --- Maximum queue count
  Output      : None
- Return      : LOS_OK on success or error code on failure
+ Return      : OS_OK on success or error code on failure
 **************************************************************************/
  uint32_t osQueueInit()
 {
@@ -78,7 +51,7 @@ extern "C"{
 
     memset(g_pstAllQueue, 0, LOSCFG_BASE_IPC_QUEUE_LIMIT * sizeof(QUEUE_CB_S));
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 /**************************************************************************
@@ -88,7 +61,7 @@ extern "C"{
                puwQueueID      --- Queue ID
                usMaxMsgSize    --- Maximum message size in byte
  Output      : ppstQueueCBOut
- Return      : LOS_OK on success or error code on failure
+ Return      : OS_OK on success or error code on failure
 **************************************************************************/
  uint32_t osQueueCreate(uint16_t usLen,
                                       uint32_t *puwQueueID,
@@ -125,7 +98,7 @@ extern "C"{
     pstQueueCB->usQueueState = OS_QUEUE_INUSED;
     *ppstQueueCBOut = pstQueueCB;
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 /**************************************************************************
@@ -208,7 +181,7 @@ extern "C"{
                uwFlags      --- Queue type, FIFO or PRIO
                usMaxMsgSize --- Maximum message size in byte
  Output      : puwQueueID   --- Queue ID
- Return      : LOS_OK on success or error code on failure
+ Return      : OS_OK on success or error code on failure
  *****************************************************************************/
  uint32_t LOS_QueueCreate(char *pcQueueName,
                                           uint16_t usLen,
@@ -240,7 +213,7 @@ extern "C"{
 
     uwIntSave = LOS_IntLock();
     uwRet = osQueueCreate(usLen, puwQueueID, (usMaxMsgSize + sizeof(uint32_t)), &pstQueueCB);
-    if(LOS_OK != uwRet)
+    if(OS_OK != uwRet)
     {
         LOS_IntRestore(uwIntSave);
         return uwRet;
@@ -252,7 +225,7 @@ extern "C"{
 
     LOS_IntRestore(uwIntSave);
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 /*****************************************************************************
@@ -262,7 +235,7 @@ extern "C"{
                uwBufferSize
                uwTimeOut
  Output      : pBufferAddr
- Return      : LOS_OK on success or error code on failure
+ Return      : OS_OK on success or error code on failure
  *****************************************************************************/
  uint32_t LOS_QueueRead(uint32_t  uwQueueID,
                     void *  pBufferAddr,
@@ -273,7 +246,7 @@ extern "C"{
     uint8_t       *pucQueueNode;
     LOS_TASK_CB  *pstRunTsk;
     uint32_t uwIntSave;
-    uint32_t      uwRet = LOS_OK;
+    uint32_t      uwRet = OS_OK;
     uint32_t uwInnerID = uwQueueID - 1;
 
     if ( uwInnerID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
@@ -350,7 +323,7 @@ extern "C"{
         LOS_IntRestore(uwIntSave);
         LOS_Schedule();
 
-        return LOS_OK;
+        return OS_OK;
     }
     else
     {
@@ -370,7 +343,7 @@ QUEUE_END:
                uwBufferSize
                uwTimeOut
  Output      : None
- Return      : LOS_OK on success or error code on failure
+ Return      : OS_OK on success or error code on failure
  *****************************************************************************/
  uint32_t LOS_QueueWrite( uint32_t uwQueueID,
                                      void * pBufferAddr,
@@ -381,7 +354,7 @@ QUEUE_END:
     uint8_t    *pucQueueNode;
     LOS_TASK_CB *pstRunTsk;
     uint32_t uwIntSave;
-    uint32_t  uwRet = LOS_OK;
+    uint32_t  uwRet = OS_OK;
     uint32_t uwInnerID = uwQueueID - 1;
 
     if(uwInnerID >= LOSCFG_BASE_IPC_QUEUE_LIMIT)
@@ -463,7 +436,7 @@ QUEUE_END:
         osQueueWakeUp(&pstQueueCB->stReadList);
         LOS_IntRestore(uwIntSave);
         LOS_Schedule();
-        return LOS_OK;
+        return OS_OK;
     }
     else
     {
@@ -552,7 +525,7 @@ END:
  Input       : uwQueueID   --- QueueID
              : pMailPool   --- MailPool
  Output      :
- Return      : LOS_OK on success or error code on failure
+ Return      : OS_OK on success or error code on failure
  *****************************************************************************/
  uint32_t osQueueMailFree(uint32_t  uwQueueID, void* pMailPool, void* pMailMem)
 {
@@ -599,7 +572,7 @@ END:
     {
         LOS_IntRestore(uwIntSave);
     }
-    return LOS_OK;
+    return OS_OK;
 }
 
 /*****************************************************************************
@@ -607,7 +580,7 @@ END:
  Description : Delete a queue
  Input       : puwQueueID   --- QueueID
  Output      :
- Return      : LOS_OK on success or error code on failure
+ Return      : OS_OK on success or error code on failure
  *****************************************************************************/
  uint32_t LOS_QueueDelete(uint32_t uwQueueID)
 {
@@ -649,7 +622,7 @@ END:
     }
 
     uwRet = LOS_MemFree(m_aucSysMem0, (void *)(pstQueueCB->pucQueue));
-    if (LOS_OK != uwRet)
+    if (OS_OK != uwRet)
     {
         GOTO_QUEUE_END(uwRet);
     }

@@ -181,7 +181,7 @@ extern "C"{
  *
  *@retval #LOS_ERRNO_MUX_PTR_NULL           0x02001d02: The puwMuxHandle pointer is NULL.
  *@retval #LOS_ERRNO_MUX_ALL_BUSY           0x02001d03: The mutex fails to be created because all mutexes in the OS are being in use.
- *@retval #LOS_OK                          0x00000000: The mutex is successfully created.
+ *@retval #OS_OK                          0x00000000: The mutex is successfully created.
  *@par Dependency:
  *<ul><li>los_mux.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_MuxDelete
@@ -204,7 +204,7 @@ extern uint32_t LOS_MuxCreate(uint32_t *puwMuxHandle);
  *
  *@retval #LOS_ERRNO_MUX_INVALID            0x02001d01: The mutex fails to be deleted because it is not usable or it is being in use.
  *@retval #LOS_ERRNO_MUX_PENDED             0x02001d09: The mutex fails to be deleted because it is locked.
- *@retval #LOS_OK                          0x00000000: The mutex is successfully deleted.
+ *@retval #OS_OK                          0x00000000: The mutex is successfully deleted.
  *@par Dependency:
  *<ul><li>los_mux.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_MuxDelete
@@ -234,7 +234,7 @@ extern uint32_t LOS_MuxDelete(uint32_t puwMuxHandle);
  *@retval #LOS_ERRNO_MUX_PEND_INTERR        0x02001d05: The mutex is being locked during an interrupt.
  *@retval #LOS_ERRNO_MUX_PEND_IN_LOCK       0x02001d06: The mutex is waited on when the task scheduling is disabled.
  *@retval #LOS_ERRNO_MUX_TIMEOUT            0x02001d07: The mutex waiting times out.
- *@retval #LOS_OK                          0x00000000: The mutex is successfully locked.
+ *@retval #OS_OK                          0x00000000: The mutex is successfully locked.
  *@par Dependency:
  *<ul><li>los_mux.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_MuxPost
@@ -259,7 +259,7 @@ extern uint32_t LOS_MuxPend(uint32_t uwMuxHandle, uint32_t uwTimeout);
  *@retval #LOS_ERRNO_MUX_INVALID            0x02001d01: The mutex state (for example, the mutex does not exist or is not in use) is not applicable for the current operation.
  *@retval #LOS_ERRNO_MUX_PEND_INTERR        0x02001d05: The mutex is being released during an interrupt.
  *@retval #LOS_ERRNO_MUX_INVALID            0x02001d01: The mutex state (for example, the mutex to be released is owned by another thread) is not applicable for the current operation.
- *@retval #LOS_OK                          0x00000000: The mutex is successfully released.
+ *@retval #OS_OK                          0x00000000: The mutex is successfully released.
  *@par Dependency:
  *<ul><li>los_mux.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_MuxPend

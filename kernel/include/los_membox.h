@@ -112,8 +112,8 @@ typedef LOS_MEMBOX_INFO OS_MEMBOX_S;
  *@param uwBoxSize   [IN] Memory pool size.
  *@param uwBlkSize   [IN] Memory block size.
  *
- *@retval #LOS_NOK  1: The memory pool is successfully initialized.
- *@retval #LOS_OK   0: The memory pool fails to be initialized.
+ *@retval #OS_NOK  1: The memory pool is successfully initialized.
+ *@retval #OS_OK   0: The memory pool fails to be initialized.
  *@par Dependency:
  *<ul>
  *<li>los_membox.h: the header file that contains the API declaration.</li>
@@ -165,8 +165,8 @@ extern void *LOS_MemboxAlloc(void *pPool);
  *@param pPool     [IN] Memory pool address.
  *@param pBox        [IN] Memory block address.
  *
- *@retval #LOS_NOK  1: This memory block fails to be freed.
- *@retval #LOS_OK   0: This memory block is successfully freed.
+ *@retval #OS_NOK  1: This memory block fails to be freed.
+ *@retval #OS_OK   0: This memory block is successfully freed.
  *@par Dependency:
  *<ul>
  *<li>los_membox.h: the header file that contains the API declaration.</li>

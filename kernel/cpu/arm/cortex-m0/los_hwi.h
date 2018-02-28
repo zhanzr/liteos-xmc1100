@@ -1,4 +1,4 @@
-//Tiny OS Hardware driver.
+//NeMOS Hardware driver.
 //This file is only for Cortex M0 core, for others cores, use conditional directive to use other drivers.
 //
 //TODO: Modify the code according to the CMSIS and modern ANSI/ISO C Standard
@@ -369,7 +369,7 @@ extern void Reset_Handler(void);
  * @retval #OS_ERRNO_HWI_NUM_INVALID                     0x02000900: Invalid interrupt number.
  * @retval #OS_ERRNO_HWI_NO_MEMORY                     0x02000903: Insufficient memory for hardware interrupt creation.
  * @retval #OS_ERRNO_HWI_ALREADY_CREATED              0x02000904: The interrupt handler being created has already been created.
- * @retval #LOS_OK                                                       0,               : The interrupt is successfully created.
+ * @retval #OS_OK                                                       0,               : The interrupt is successfully created.
  * @par Dependency:
  * <ul><li>los_hwi.h: the header file that contains the API declaration.</li></ul>
  * @see None.
@@ -469,54 +469,6 @@ extern void  osResetVector(void);
  */
 extern void  osHwiDefaultHandler(void);
 
-
-
-/**
- * @ingroup  los_hwi
- * @brief: Pended System Call.
- *
- * @par Description:
- * PendSV can be pended and is useful for an OS to pend an exception
- * so that an action can be performed after other important tasks are completed.
- *
- * @attention:
- * <ul><li>None.</li></ul>
- *
- * @param:None.
- *
- * @retval:None.
- * @par Dependency:
- * <ul><li>los_hwi.h: the header file that contains the API declaration.</li></ul>
- * @see None.
- * @since Huawei LiteOS V100R001C00
- */
-extern void  PendSV_Handler(void);
-
- /**
- *@ingroup los_hwi
- *@brief Enable all interrupts.
- *
- *@par Description:
- *<ul>
- *<li>This API is used to enable all IRQ and FIQ interrupts in the CPSR.</li>
- *</ul>
- *@attention
- *<ul>
- *<li>None.</li>
- *</ul>
- *
- *@param None.
- *
- *@retval CPSR value obtained after all interrupts are enabled.
- *@par Dependency:
- *<ul><li>los_hwi.h: the header file that contains the API declaration.</li></ul>
- *@see LOS_IntRestore
- *@since Huawei LiteOS V100R001C00
- */
-extern uint32_t* LOS_IntUnLock(void);
-
-
-
  /**
  *@ingroup los_hwi
  *@brief Disable all interrupts.
@@ -538,7 +490,7 @@ extern uint32_t* LOS_IntUnLock(void);
  *@see LOS_IntRestore
  *@since Huawei LiteOS V100R001C00
  */
-extern uint32_t LOS_IntLock(void);
+uint32_t LOS_IntLock(void);
 
 
 
@@ -585,7 +537,7 @@ extern void LOS_IntRestore(uint32_t uwIntSave);
  * @param  uwHwiNum   [IN] Type#uint32_t: hardware interrupt number. The value range applicable for a Cortex-M4 platform is [0,240].
  *
  * @retval #OS_ERRNO_HWI_NUM_INVALID              0x02000900: Invalid interrupt number.
- * @retval #LOS_OK                                  0: The interrupt is successfully delete.
+ * @retval #OS_OK                                  0: The interrupt is successfully delete.
  * @par Dependency:
  * <ul><li>los_hwi.h: the header file that contains the API declaration.</li></ul>
  * @see None.

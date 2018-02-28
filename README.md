@@ -30,3 +30,4 @@ The Cortex M0/M0+/M1 core does not offer LDEX/STEX instructions. Without switchi
 
 	So all the ports from the original project will need rewrite, and they will be deleted from this reposity.
 	
+	Remove some uncessary assemble functions. Improve readability at no performance penalty.

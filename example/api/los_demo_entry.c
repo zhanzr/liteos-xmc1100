@@ -78,7 +78,7 @@ void LOS_Demo_Entry(void)
     stTaskInitParam.usTaskPrio = 30;
     uwRet = LOS_TaskCreate(&g_uwDemoTaskID, &stTaskInitParam);
 
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         dprintf("Api demo test task create failed\n");
         return;

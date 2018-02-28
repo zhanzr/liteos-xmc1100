@@ -1,4 +1,4 @@
-//Tiny OS Hardware driver.
+//NeMOS Hardware driver.
 //This file is only for Cortex M0 core, for others cores, use conditional directive to use other drivers.
 //
 //This IS a part of the kernel.

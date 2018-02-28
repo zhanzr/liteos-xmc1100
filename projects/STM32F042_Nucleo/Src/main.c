@@ -52,7 +52,7 @@
 
 #include "los_sys.h"
 #include "los_tick.h"
-#include "los_task.ph"
+#include "los_task.h"
 #include "los_config.h"
 
 #include "los_inspect_entry.h"
@@ -82,13 +82,13 @@ __IO uint16_t g_ADCBuf[ADC_CHAN_NO*2];
 static uint32_t g_uwboadTaskID;
 static  void LOS_BoardExampleTskfunc(void)
 {
-	HAL_ADC_Start_DMA(&hadc, (uint32_t*)g_ADCBuf, ADC_CHAN_NO);
+//	HAL_ADC_Start_DMA(&hadc, (uint32_t*)g_ADCBuf, ADC_CHAN_NO);
 	
 	while (1)
 	{		
-		printf("%u %u %u\n",
-		g_ADCBuf[0], g_ADCBuf[1], g_ADCBuf[2]
-		);
+//		printf("%u\n",
+//		g_ADCBuf[0]
+//		);
 					
 		LED_Toggle(0);
 		(void)LOS_TaskDelay(4000);
@@ -107,7 +107,7 @@ void LOS_BoardExampleEntry(void)
     stTaskInitParam.usTaskPrio = 10;
     uwRet = LOS_TaskCreate(&g_uwboadTaskID, &stTaskInitParam);
 
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         return;
     }
@@ -155,11 +155,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	HAL_ADC_Start_DMA(&hadc, (uint32_t*)g_ADCBuf, ADC_CHAN_NO);
 	
-	printf("F042 NeMOS @ %u Hz, %u %u %u\n", 
-		SystemCoreClock,
-		*(uint16_t*)(0x1FFFF7B8),
-		*(uint16_t*)(0x1FFFF7C2),
-		*(uint16_t*)(0x1FFFF7BA)
+	printf("NeMOS @ %u Hz\n", 
+		SystemCoreClock
 		);
 		
 //		printf("%08X CC:%u\n", SCB->CPUID, __ARMCC_VERSION);
@@ -168,18 +165,18 @@ int main(void)
   /* USER CODE END 2 */
   /*Init LiteOS kernel */
     uwRet = LOS_KernelInit();
-    if (uwRet != LOS_OK) {
-        return LOS_NOK;
+    if (uwRet != OS_OK) {
+        return OS_NOK;
     }
     /* Enable LiteOS system tick interrupt */
     uwRet = LOS_EnableTick();
-    if (uwRet != LOS_OK) {
-        return LOS_NOK;
+    if (uwRet != OS_OK) {
+        return OS_NOK;
     }
 
-    LOS_Demo_Entry();
+//    LOS_Demo_Entry();
 
-    LOS_Inspect_Entry();
+//    LOS_Inspect_Entry();
 
     LOS_BoardExampleEntry();
 
@@ -190,7 +187,7 @@ int main(void)
   while (1)
   {
 			//Should never come here
-			assert(true);				
+//			assert(true);				
 //		printf("%u %u %u\n",
 //		g_ADCBuf[0], g_ADCBuf[1], g_ADCBuf[2]
 //		);

@@ -52,7 +52,7 @@ extern "C" {
 
 uint32_t Example_list(void)
 {
-    uint32_t uwRet = LOS_OK;
+    uint32_t uwRet = OS_OK;
     
     /*初始化，判断是否为空*/
     dprintf("initial......\n");
@@ -63,7 +63,7 @@ uint32_t Example_list(void)
     if (!LOS_ListEmpty(head))
     {
         dprintf("initial failed\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
     
     /*增加一个节点，在尾端插入一个节点*/
@@ -94,7 +94,7 @@ uint32_t Example_list(void)
     {
         dprintf("delete node success\n");
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_LIST,LOS_INSPECT_STU_SUCCESS);
-        if (LOS_OK != uwRet)  
+        if (OS_OK != uwRet)  
         {
             dprintf("Set Inspect Status Err\n");
         }
@@ -103,13 +103,13 @@ uint32_t Example_list(void)
     {
         dprintf("delete node error\n");
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_LIST,LOS_INSPECT_STU_ERROR);
-        if (LOS_OK != uwRet)  
+        if (OS_OK != uwRet)  
         {
             dprintf("Set Inspect Status Err\n");
         }
     }
     
-    return LOS_OK;
+    return OS_OK;
 }
 
 

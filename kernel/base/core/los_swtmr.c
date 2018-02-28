@@ -1,4 +1,4 @@
-//Tiny OS Soft Timer driver.
+//NeMOS Soft Timer driver.
 //
 //This IS a part of the kernel.
 //
@@ -10,7 +10,7 @@
 #include "los_membox.ph"
 #include "los_memory.ph"
 #include "los_queue.ph"
-#include "los_task.ph"
+#include "los_task.h"
 
 #include "los_hwi.h"
 
@@ -51,7 +51,7 @@ Return     : None
     for ( ; ; )
     {
         uwRet = LOS_QueueRead(m_uwSwTmrHandlerQueue, &pstSwtmrHandle, sizeof(SWTMR_HANDLER_ITEM_P), LOS_WAIT_FOREVER);
-        if (uwRet == LOS_OK)
+        if (uwRet == OS_OK)
         {
             if (pstSwtmrHandle != NULL)
             {
@@ -72,7 +72,7 @@ Function   : osSwTmrTaskCreate
 Description: Create Software Timer
 Input      : None
 Output     : None
-Return     : LOS_OK on success or error code on failure
+Return     : OS_OK on success or error code on failure
 *****************************************************************************/
  uint32_t osSwTmrTaskCreate(void)
 {
@@ -94,7 +94,7 @@ Function   : osSwTmrInit
 Description: Initializes Software Timer
 Input      : None
 Output     : None
-Return     : LOS_OK on success or error code on failure
+Return     : OS_OK on success or error code on failure
 *****************************************************************************/
  uint32_t osSwTmrInit(void)
 {
@@ -131,24 +131,24 @@ Return     : LOS_OK on success or error code on failure
     }
 
     uwRet = LOS_MemboxInit(m_aucSwTmrHandlerPool, sizeof(m_aucSwTmrHandlerPool), sizeof(SWTMR_HANDLER_ITEM_S));
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         return LOS_ERRNO_SWTMR_HANDLER_POOL_NO_MEM;
     }
 
     uwRet = LOS_QueueCreate((char *)NULL, OS_SWTMR_HANDLE_QUEUE_SIZE, &m_uwSwTmrHandlerQueue, 0, sizeof(SWTMR_HANDLER_ITEM_P));
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         return LOS_ERRNO_SWTMR_QUEUE_CREATE_FAILED;
     }
 
     uwRet = osSwTmrTaskCreate();
-    if (LOS_OK != uwRet)
+    if (OS_OK != uwRet)
     {
         return LOS_ERRNO_SWTMR_TASK_CREATE_FAILED;
     }
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 /*****************************************************************************
@@ -273,7 +273,7 @@ Function   : osSwtmrScan
 Description: Tick interrupt interface module of Software Timer
 Input      : None
 Output     : None
-Return     : LOS_OK on success or error code on failure
+Return     : OS_OK on success or error code on failure
 *****************************************************************************/
  uint32_t osSwtmrScan(void)
 {
@@ -284,7 +284,7 @@ Return     : LOS_OK on success or error code on failure
             osSwTmrTimeoutHandle();
         }
     }
-    return LOS_OK;
+    return OS_OK;
 }
 
 /*****************************************************************************
@@ -373,7 +373,7 @@ Input      : uwInterval
              pfnHandler
              uwArg
 Output     : pusSwTmrID
-Return     : LOS_OK on success or error code on failure
+Return     : OS_OK on success or error code on failure
 *****************************************************************************/
  uint32_t LOS_SwtmrCreate(uint32_t  uwInterval,
                                         uint8_t           ucMode,
@@ -425,7 +425,7 @@ Return     : LOS_OK on success or error code on failure
     pstSwtmr->ucState       = OS_SWTMR_STATUS_CREATED;
     *pusSwTmrID = pstSwtmr->usTimerID;
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 /*****************************************************************************
@@ -433,13 +433,13 @@ Function   : LOS_SwtmrStart
 Description: Start software timer
 Input      : usSwTmrID ------- Software timer ID
 Output     : None
-Return     : LOS_OK on success or error code on failure
+Return     : OS_OK on success or error code on failure
 *****************************************************************************/
  uint32_t LOS_SwtmrStart(uint16_t usSwTmrID)
 {
     SWTMR_CTRL_S  *pstSwtmr;
     uint32_t uwIntSave;
-    uint32_t uwRet = LOS_OK;
+    uint32_t uwRet = OS_OK;
     uint16_t usSwTmrCBID;
 
     if (usSwTmrID >= OS_SWTMR_MAX_TIMERID)
@@ -481,13 +481,13 @@ Function   : LOS_SwtmrStop
 Description: Stop software timer
 Input      : usSwTmrID ------- Software timer ID
 Output     : None
-Return     : LOS_OK on success or error code on failure
+Return     : OS_OK on success or error code on failure
 *****************************************************************************/
  uint32_t LOS_SwtmrStop(uint16_t usSwTmrID)
 {
     SWTMR_CTRL_S *pstSwtmr;
     uint32_t uwIntSave;
-    uint32_t uwRet = LOS_OK;
+    uint32_t uwRet = OS_OK;
     uint16_t usSwTmrCBID;
 
     if (usSwTmrID >= OS_SWTMR_MAX_TIMERID)
@@ -530,13 +530,13 @@ Function   : LOS_SwtmrDelete
 Description: Delete software timer
 Input      : usSwTmrID ------- Software timer ID
 Output     : None
-Return     : LOS_OK on success or error code on failure
+Return     : OS_OK on success or error code on failure
 *****************************************************************************/
  uint32_t LOS_SwtmrDelete(uint16_t usSwTmrID)
 {
     SWTMR_CTRL_S  *pstSwtmr;
     uint32_t uwIntSave;
-    uint32_t uwRet = LOS_OK;
+    uint32_t uwRet = OS_OK;
     uint16_t usSwTmrCBID;
 
     if (usSwTmrID >= OS_SWTMR_MAX_TIMERID)

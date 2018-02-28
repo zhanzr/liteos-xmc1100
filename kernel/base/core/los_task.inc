@@ -35,7 +35,7 @@
 #ifndef _LOS_TASK_INC
 #define _LOS_TASK_INC
 
-#include "los_task.ph"
+#include "los_task.h"
 
 #ifdef __cplusplus
 #if __cplusplus

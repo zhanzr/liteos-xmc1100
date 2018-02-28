@@ -283,7 +283,7 @@ typedef struct tagSwTmrCtrl
  *@retval #LOS_ERRNO_SWTMR_ID_INVALID      0x02000306: Invalid software timer ID.
  *@retval #LOS_ERRNO_SWTMR_NOT_CREATED     0x02000307: The software timer is not created.
  *@retval #LOS_ERRNO_SWTMR_STATUS_INVALID  0x02ee030f: Invalid software timer state.
- *@retval #LOS_OK  0: The software timer is successfully started.
+ *@retval #OS_OK  0: The software timer is successfully started.
  *@par Dependency:
  *<ul><li>los_swtmr.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_SwtmrStop
@@ -308,7 +308,7 @@ extern uint32_t LOS_SwtmrStart(uint16_t usSwTmrID);
  *@retval #LOS_ERRNO_SWTMR_NOT_CREATED     0x02000307: The software timer is not created.
  *@retval #LOS_ERRNO_SWTMR_NOT_STARTED     0x0200030e: The software timer is not started.
  *@retval #LOS_ERRNO_SWTMR_STATUS_INVALID  0x0200030f: Invalid software timer state.
- *@retval #LOS_OK   0: The software timer is successfully stopped.
+ *@retval #OS_OK   0: The software timer is successfully stopped.
  *@par Dependency:
  *<ul><li>los_swtmr.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_SwtmrStart
@@ -338,7 +338,7 @@ extern uint32_t LOS_SwtmrStop(uint16_t usSwTmrID);
  *@retval #LOS_ERRNO_SWTMR_PTR_NULL                 0x02000301: The callback function that handles software timer timeout is NULL.
  *@retval #LOS_ERRNO_SWTMR_RET_PTR_NULL             0x02000304: The passed-in software timer ID is NULL.
  *@retval #LOS_ERRNO_SWTMR_MAXSIZE                  0x02000305: The number of software timers exceeds the configured permitted maximum number.
- *@retval #LOS_OK  0: The software timer is successfully created.
+ *@retval #OS_OK  0: The software timer is successfully created.
  *@par Dependency:
  *<ul><li>los_swtmr.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_SwtmrDelete
@@ -362,7 +362,7 @@ extern uint32_t LOS_SwtmrCreate(uint32_t uwInterval, uint8_t ucMode, SWTMR_PROC_
  *@retval #LOS_ERRNO_SWTMR_ID_INVALID               0x02000306: Invalid software timer ID.
  *@retval #LOS_ERRNO_SWTMR_NOT_CREATED              0x02000307: The software timer is not created.
  *@retval #LOS_ERRNO_SWTMR_STATUS_INVALID           0x0200030f: Invalid software timer state.
- *@retval #LOS_OK  0: The software timer is successfully deleted.
+ *@retval #OS_OK  0: The software timer is successfully deleted.
  *@par Dependency:
  *<ul><li>los_swtmr.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_SwtmrCreate

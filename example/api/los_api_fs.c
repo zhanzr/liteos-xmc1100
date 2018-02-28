@@ -1,6 +1,6 @@
 #include <string.h>
 #include "los_sys.h"
-#include "los_task.ph"
+#include "los_task.h"
 
 #ifdef LOS_FLASH
 
@@ -117,11 +117,11 @@ UINT32 Example_FsEntry(void)
     stTaskInitParam.usTaskPrio = 30;
     uwRet = LOS_TaskCreate(&g_uwboadTaskID, &stTaskInitParam);
 
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
-        return LOS_NOK;
+        return OS_NOK;
     }
-    return LOS_OK;
+    return OS_OK;
 }
 
 #endif

@@ -1,4 +1,4 @@
-//Tiny OS Hardware driver.
+//NeMOS Hardware driver.
 //This file is only for Cortex M0 core, for others cores, use conditional directive to use other drivers.
 //
 //This IS a part of the kernel.
@@ -6,10 +6,11 @@
 //Author: zhanzr<zhanzr@foxmail.com>
 //Date	:	2/21/2018
 
+#include "los_config.h"
+
 #include "los_base.h"
-#include "los_task.ph"
+#include "los_task.h"
 #include "los_hw.h"
-#include "los_sys.ph"
 #include "los_priqueue.ph"
 #include "los_hwi.h"
 
@@ -18,6 +19,12 @@
 extern "C" {
 #endif /* __cplusplus */
 #endif /* __cplusplus */
+
+void osTaskSchedule(void)
+{
+#define	OS_NVIC_PENDSVSET	0x10000000	
+	SCB->ICSR = OS_NVIC_PENDSVSET;
+}
 
 /*****************************************************************************
  Function    : osSchedule

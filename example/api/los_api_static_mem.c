@@ -53,10 +53,10 @@ uint32_t Example_StaticMem(void)
     uint32_t uwRet;
     
     uwRet = LOS_MemboxInit( &pBoxMem[0], uwBoxSize, uwBlkSize);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("Mem box init failed\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
     else
     {
@@ -68,7 +68,7 @@ uint32_t Example_StaticMem(void)
     if (NULL == p_num) 
     {
         dprintf("Mem box alloc failed!\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
     dprintf("Mem box alloc ok\n");
     /*赋值*/
@@ -79,11 +79,11 @@ uint32_t Example_StaticMem(void)
      dprintf("clear data ok\n *p_num = %d\n", *p_num);
     /*释放内存*/
     uwRet = LOS_MemboxFree(pBoxMem, p_num);
-    if (LOS_OK == uwRet)
+    if (OS_OK == uwRet)
     {
         dprintf("Mem box free ok!\n");
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_SMEM,LOS_INSPECT_STU_SUCCESS);
-        if (LOS_OK != uwRet)  
+        if (OS_OK != uwRet)  
         {
             dprintf("Set Inspect Status Err\n");
         }
@@ -92,13 +92,13 @@ uint32_t Example_StaticMem(void)
     {
         dprintf("Mem box free failed!\n");
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_SMEM,LOS_INSPECT_STU_ERROR);
-        if (LOS_OK != uwRet)  
+        if (OS_OK != uwRet)  
         {
             dprintf("Set Inspect Status Err\n");
         }
     }
     
-    return LOS_OK;
+    return OS_OK;
 }
 
 

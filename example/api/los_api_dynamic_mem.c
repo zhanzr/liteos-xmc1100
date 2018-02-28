@@ -52,21 +52,21 @@ uint32_t Example_Dyn_Mem(void)
     uint32_t *p_num = NULL;
     uint32_t uwRet;
     uwRet = LOS_MemInit(m_aucSysMem0, OS_SYS_MEM_SIZE);
-    if (LOS_OK == uwRet)
+    if (OS_OK == uwRet)
     {
         dprintf("mempool init ok!\n");
     }
     else
     {
         dprintf("mempool init failed!\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
     /*分配内存*/
     p_num = (uint32_t*)LOS_MemAlloc(m_aucSysMem0, 4);
     if (NULL == p_num)
     {
         dprintf("mem alloc failed!\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
     dprintf("mem alloc ok\n");
     /*赋值*/
@@ -74,11 +74,11 @@ uint32_t Example_Dyn_Mem(void)
     dprintf("*p_num = %d\n", *p_num);
     /*释放内存*/
     uwRet = LOS_MemFree(m_aucSysMem0, p_num);
-    if (LOS_OK == uwRet)
+    if (OS_OK == uwRet)
     {
         dprintf("mem free ok!\n");
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_DMEM,LOS_INSPECT_STU_SUCCESS);
-		if (LOS_OK != uwRet)  
+		if (OS_OK != uwRet)  
 		{
 			dprintf("Set Inspect Status Err\n");
 		}
@@ -87,13 +87,13 @@ uint32_t Example_Dyn_Mem(void)
     {
         dprintf("mem free failed!\n");
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_DMEM,LOS_INSPECT_STU_ERROR);
-		if (LOS_OK != uwRet)  
+		if (OS_OK != uwRet)  
 		{
 			dprintf("Set Inspect Status Err\n");
 		}
-        return LOS_NOK;
+        return OS_NOK;
     }
-    return LOS_OK;
+    return OS_OK;
 }
 
 

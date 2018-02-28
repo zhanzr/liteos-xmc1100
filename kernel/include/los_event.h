@@ -160,7 +160,7 @@ typedef struct tagEvent
  *@param pstEventCB [OUT] Pointer to the event control block to be initialized.
  *
  *@retval #LOS_ERRNO_EVENT_PTR_NULL 0x02001c06: Null pointer.
- *@retval #LOS_OK  0: The event control block is successfully initialized.
+ *@retval #OS_OK  0: The event control block is successfully initialized.
  *@par Dependency:
  *<ul><li>los_event.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_EventClear
@@ -240,7 +240,7 @@ extern uint32_t LOS_EventRead(PEVENT_CB_S pstEventCB, uint32_t uwEventMask, uint
  *
  *@retval #LOS_ERRNO_EVENT_SETBIT_INVALID 0x02001c00: Bit 25 of the event mask cannot be set to an event because it is set to an error code.
  *@retval #LOS_ERRNO_EVENT_PTR_NULL 0x02001c06: Null pointer.
- *@retval #LOS_OK  0: The event is successfully written.
+ *@retval #OS_OK  0: The event is successfully written.
  *@par Dependency:
  *<ul><li>los_event.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_EventPoll | LOS_EventRead
@@ -265,7 +265,7 @@ extern uint32_t LOS_EventWrite(PEVENT_CB_S pstEventCB, uint32_t uwEvents);
  *@param uwEvents       [IN] Mask of the event to be cleared.
  *
  *@retval #LOS_ERRNO_EVENT_PTR_NULL 0x02001c06: Null pointer.
- *@retval #LOS_OK 0: The event is successfully cleared.
+ *@retval #OS_OK 0: The event is successfully cleared.
  *@par Dependency:
  *<ul><li>los_event.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_EventPoll | LOS_EventRead，LOS_EventWrite
@@ -289,7 +289,7 @@ extern uint32_t LOS_EventClear(PEVENT_CB_S pstEventCB, uint32_t uwEvents);
  *@param pstEventCB     [IN/OUT] Pointer to the event control block to be Destoryed.
  *
  *@retval #LOS_ERRNO_EVENT_PTR_NULL 0x02001c06: Null pointer.
- *@retval #LOS_OK 0: The event is successfully cleared.
+ *@retval #OS_OK 0: The event is successfully cleared.
  *@par Dependency:
  *<ul><li>los_event.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_EventPoll | LOS_EventRead，LOS_EventWrite

@@ -85,7 +85,7 @@ typedef struct tagLOS_MEM_DYN_NODE
  *@param uwSize         [IN] Memory size.
  *
  *@retval #OS_ERROR   1: The dynamic memory fails to be initialized.
- *@retval #LOS_OK       0: The dynamic memory is successfully initialized.
+ *@retval #OS_OK       0: The dynamic memory is successfully initialized.
  *@par Dependency:
  *<ul>
  *<li>los_memory.h: the header file that contains the API declaration.</li>
@@ -134,8 +134,8 @@ extern void *LOS_MemAlloc(void *pPool, uint32_t uwSize);
  *@param  pPool  [IN] Pointer to the memory pool that contains the dynamic memory block to be freed.
  *@param  pMem   [IN] Starting address of the memory block to be freed.
  *
- *@retval #LOS_NOK          The memory block fails to be freed because the starting address of the memory block is invalid, or the memory overwriting occurs.
- *@retval #LOS_OK           The memory block is successfully freed.
+ *@retval #OS_NOK          The memory block fails to be freed because the starting address of the memory block is invalid, or the memory overwriting occurs.
+ *@retval #OS_OK           The memory block is successfully freed.
  *@par Dependency:
  *<ul><li>los_memory.h: the header file that contains the API declaration.</li></ul>
  *@see LOS_MemFree

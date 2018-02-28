@@ -1,4 +1,4 @@
-//Tiny OS CMSIS RTOS interface
+//NeMOS CMSIS RTOS interface
 //
 //This IS NOT a part of the kernel.
 //
@@ -15,8 +15,7 @@
 #include "los_queue.ph"
 #include "los_sem.ph"
 #include "los_swtmr.ph"
-#include "los_sys.ph"
-#include "los_task.ph"
+#include "los_task.h"
 #include "los_tick.h"
 
 #include "stdio.h"
@@ -68,7 +67,7 @@ osStatus osKernelInitialize (void)
     osRegister();
 
     ret = osMain();
-    if (ret != LOS_OK)
+    if (ret != OS_OK)
     {
         return osErrorOS;
     }
@@ -103,7 +102,7 @@ osThreadId osThreadCreate(const osThreadDef_t *thread_def, void *argument)
 
     uwRet = LOS_TaskCreate(&uwTskHandle, &stTskInitParam);
 
-    if(LOS_OK != uwRet )
+    if(OS_OK != uwRet )
     {
         return (osThreadId)NULL;
     }
@@ -136,7 +135,7 @@ osStatus osThreadTerminate(osThreadId thread_id)
 
     uwRet = LOS_TaskDelete(((LOS_TASK_CB *)thread_id)->uwTaskID);
 
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
         return osOK;
     else
         return osErrorOS;
@@ -152,7 +151,7 @@ osStatus osThreadYield(void)
 
     uwRet = LOS_TaskYield();
 
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
         return osOK;
     else
         return osErrorOS;
@@ -177,7 +176,7 @@ osStatus osThreadSetPriority(osThreadId thread_id, osPriority priority)
 
     uwRet = LOS_TaskPriSet(((LOS_TASK_CB *)thread_id)->uwTaskID, usPriorityTemp);
 
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
         return osOK;
     else
         return osErrorOS;
@@ -216,7 +215,7 @@ osSemaphoreId osSemaphoreCreate(const osSemaphoreDef_t *semaphore_def, int32_t c
     SemHandle = (uint32_t *)(semaphore_def->puwSemHandle);
     uwRet =  LOS_SemCreate (count,  SemHandle);
 
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
     {
         return (osSemaphoreId)GET_SEM(*SemHandle);
     }
@@ -251,7 +250,7 @@ int32_t osSemaphoreWait(osSemaphoreId semaphore_id, uint32_t millisec)
 
     uwRet = LOS_SemPend(SemID, LOS_MS2Tick(millisec));
 
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
     {
         return ((SEM_CB_S *)semaphore_id)->uwSemCount;
     }
@@ -282,7 +281,7 @@ osStatus osSemaphoreRelease(osSemaphoreId semaphore_id)
     SemID = ((SEM_CB_S *)semaphore_id)->usSemID;
     uwRet = LOS_SemPost(SemID);
 
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
     {
         return osOK;
     }
@@ -322,7 +321,7 @@ osStatus osSemaphoreDelete (osSemaphoreId semaphore_id)
     SemID = ((SEM_CB_S *)semaphore_id)->usSemID;
     uwRet = LOS_SemDelete(SemID);
 
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
     {
         return osOK;
     }
@@ -357,7 +356,7 @@ osMutexId osMutexCreate (const osMutexDef_t *mutex_def)
     MuxHandle = (uint32_t*)(mutex_def->puwMuxHandle);
     uwRet =  LOS_MuxCreate (MuxHandle);
 
-    if(uwRet == LOS_OK)
+    if(uwRet == OS_OK)
     {
         return (osMutexId)GET_MUX(*MuxHandle);
     }
@@ -400,7 +399,7 @@ osStatus osMutexWait (osMutexId mutex_id, uint32_t millisec)
 
     uwRet = LOS_MuxPend(MutID, LOS_MS2Tick(millisec));
 
-    if(uwRet == LOS_OK)
+    if(uwRet == OS_OK)
     {
         return osOK;
     }
@@ -453,7 +452,7 @@ osStatus osMutexRelease (osMutexId mutex_id)
     MutID = ((MUX_CB_S*)mutex_id)->ucMuxID;
     uwRet = LOS_MuxPost(MutID);
 
-    if(uwRet == LOS_OK)
+    if(uwRet == OS_OK)
     {
         return osOK;
     }
@@ -493,7 +492,7 @@ osStatus osMutexDelete (osMutexId mutex_id)
     MutID = ((MUX_CB_S*)mutex_id)->ucMuxID;
     uwRet = LOS_MuxDelete(MutID);
 
-    if(uwRet == LOS_OK)
+    if(uwRet == OS_OK)
     {
         return osOK;
     }
@@ -527,7 +526,7 @@ osPoolId osPoolCreate (const osPoolDef_t *pool_def)
 #endif
 
     uwRet = LOS_MemboxInit(pool_def->pool, uwBoxSize, uwBlkSize);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         return (osPoolId)NULL;
     }
@@ -593,7 +592,7 @@ osMessageQId osMessageCreate(osMessageQDef_t *queue_def, osThreadId thread_id)
         return (osMessageQId)NULL;
     }
     uwRet = LOS_QueueCreate((char *)NULL, (uint16_t)(queue_def->queue_sz), &uwQueueID, 0,(uint16_t)( queue_def->item_sz));
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
     {
         return (osMessageQId)uwQueueID;
     }
@@ -611,7 +610,7 @@ osStatus osMessagePut(const osMessageQId queue_id, uint32_t info, uint32_t milli
     uint32_t uwRet;
 
     uwRet = LOS_QueueWrite((uint32_t)queue_id, (void*)info, sizeof(uint32_t), LOS_MS2Tick(millisec));
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
     {
         uwRet = osOK;
     }
@@ -640,7 +639,7 @@ osEvent osMessageGet(osMessageQId queue_id, uint32_t millisec)
 
     memset(&ret, 0, sizeof(osEvent));
     uwRet = LOS_QueueRead((uint32_t)queue_id, &(ret.value.v), sizeof(uint32_t), LOS_MS2Tick(millisec));
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
     {
         ret.status = osEventMessage;
     }
@@ -678,7 +677,7 @@ osMailQId osMailCreate(osMailQDef_t *queue_def, osThreadId thread_id)
         return (osMailQId)NULL;
     }
     uwRet = LOS_QueueCreate((char *)NULL, (uint16_t)(queue_def->queue_sz), &uwQueueID, 0, sizeof(uint32_t));
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
     {
         *(uint32_t*)(((void **)queue_def->pool) + 0) = uwQueueID;
         uwBlkSize = (queue_def->item_sz + 3) & (~3);
@@ -858,13 +857,13 @@ int32_t osSignalSet (osThreadId thread_id, int32_t signals)
     if (sig.uwEventID == 0xFFFFFFFF)
     {
         uwRet = LOS_EventInit(&(((LOS_TASK_CB *)thread_id)->uwEvent));
-        if (uwRet != LOS_OK)
+        if (uwRet != OS_OK)
         {
             return osErrorOS;
         }
     }
     uwRet = LOS_EventWrite(&(((LOS_TASK_CB *)thread_id)->uwEvent), signals);
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         return osErrorOS;
     }
@@ -891,7 +890,7 @@ int32_t osSignalClear (osThreadId thread_id, int32_t signals)
     sig = ((LOS_TASK_CB *)thread_id)->uwEvent;
     old_sig = sig.uwEventID;
     uwRet = LOS_EventClear(&(((LOS_TASK_CB *)thread_id)->uwEvent), ~(uint32_t)signals);
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         return osErrorValue;
     }
@@ -938,7 +937,7 @@ osEvent osSignalWait (int32_t signals, uint32_t millisec)
     if (sig.uwEventID == 0xFFFFFFFF)
     {
         uwRet = LOS_EventInit(&(((LOS_TASK_CB *)(g_stLosTask.pstRunTask))->uwEvent));
-        if (uwRet != LOS_OK)
+        if (uwRet != OS_OK)
         {
             ret.status = osErrorOS;
             return ret;
@@ -991,7 +990,7 @@ osTimerId osTimerCreate (const osTimerDef_t *timer_def, os_timer_type type, void
                             (SWTMR_PROC_FUNC)(timer_def->ptimer),
                             &usSwTmrID, (uint32_t)argument);
 
-    if (uwRet != LOS_OK)
+    if (uwRet != OS_OK)
     {
         return (osTimerId)NULL;
     }
@@ -1102,7 +1101,7 @@ osStatus osDelay (uint32_t millisec)
 
     uwRet = LOS_TaskDelay(uwInterval);
 
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
     {
         return osEventTimeout;
     }
@@ -1136,7 +1135,7 @@ osEvent osWait (uint32_t millisec)
 
     uwRet = LOS_TaskDelay(uwInterval);
 
-    if (uwRet == LOS_OK)
+    if (uwRet == OS_OK)
     {
         evt.status = osEventTimeout;
     }

@@ -314,7 +314,7 @@
             <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
-            <OneElfS>1</OneElfS>
+            <OneElfS>0</OneElfS>
             <Strict>0</Strict>
             <EnumInt>0</EnumInt>
             <PlainCh>0</PlainCh>
@@ -506,11 +506,6 @@
               <FilePath>../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_dma.c</FilePath>
             </File>
             <File>
-              <FileName>stm32f0xx_hal_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_tim.c</FilePath>
-            </File>
-            <File>
               <FileName>stm32f0xx_hal_flash_ex.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F0xx_HAL_Driver/Src/stm32f0xx_hal_flash_ex.c</FilePath>
@@ -599,11 +594,6 @@
               <FileName>los_memstat.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\kernel\base\mem\los_memstat.c</FilePath>
-            </File>
-            <File>
-              <FileName>los_multipledlinkhead.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\kernel\base\mem\los_multipledlinkhead.c</FilePath>
             </File>
             <File>
               <FileName>los_misc.c</FileName>

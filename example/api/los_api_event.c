@@ -60,7 +60,7 @@ static EVENT_CB_S  example_event;
 void Example_Event(void)
 {
     uint32_t uwEvent;
-    uint32_t uwRet = LOS_OK;
+    uint32_t uwRet = OS_OK;
 
     /*超时 等待方式读事件,超时时间为100 Tick
     若100 Tick 后未读取到指定事件，读事件超时，任务直接唤醒*/
@@ -71,7 +71,7 @@ void Example_Event(void)
     {
         dprintf("Example_Event,read event :0x%x\n",uwEvent);
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_EVENT,LOS_INSPECT_STU_SUCCESS);
-        if (LOS_OK != uwRet)  
+        if (OS_OK != uwRet)  
         {
             dprintf("Set Inspect Status Err\n");
         }
@@ -80,7 +80,7 @@ void Example_Event(void)
     {
         dprintf("Example_Event,read event timeout\n");
         uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_EVENT,LOS_INSPECT_STU_ERROR);
-        if (LOS_OK != uwRet)  
+        if (OS_OK != uwRet)  
         {
             dprintf("Set Inspect Status Err\n");
         }
@@ -95,10 +95,10 @@ uint32_t Example_SndRcvEvent(void)
 
     /*事件初始化*/
     uwRet = LOS_EventInit(&example_event);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("init event failed .\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     /*创建任务*/
@@ -108,20 +108,20 @@ uint32_t Example_SndRcvEvent(void)
     stTask1.uwStackSize  = LOSCFG_BASE_CORE_TSK_DEFAULT_STACK_SIZE;
     stTask1.usTaskPrio   = 5;
     uwRet = LOS_TaskCreate(&g_TestTaskID, &stTask1);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("task create failed .\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     /*写用例任务等待的事件类型*/
     dprintf("Example_TaskEntry_Event write event .\n");
 
     uwRet = LOS_EventWrite(&example_event, event_wait);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("event write failed .\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
 
     /*清标志位*/
@@ -131,14 +131,14 @@ uint32_t Example_SndRcvEvent(void)
 
     /*删除任务*/
     uwRet = LOS_TaskDelete(g_TestTaskID);
-    if(uwRet != LOS_OK)
+    if(uwRet != OS_OK)
     {
         dprintf("task delete failed .\n");
-        return LOS_NOK;
+        return OS_NOK;
     }
 
 
-    return LOS_OK;
+    return OS_OK;
 }
 
 #ifdef __cplusplus

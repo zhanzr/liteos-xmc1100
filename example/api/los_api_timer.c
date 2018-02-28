@@ -66,7 +66,7 @@ static void Timer1_Callback(uint32_t arg)
 
 static void Timer2_Callback(uint32_t arg)
 {
-    uint32_t uwRet = LOS_OK;
+    uint32_t uwRet = OS_OK;
     unsigned long tick_last2;
 
     tick_last2=(uint32_t)LOS_TickCountGet();
@@ -74,7 +74,7 @@ static void Timer2_Callback(uint32_t arg)
     dprintf("g_timercount2=%d\n",g_timercount2);
     dprintf("tick_last2=%lu\n",tick_last2);
     uwRet = LOS_InspectStatusSetByID(LOS_INSPECT_TIMER,LOS_INSPECT_STU_SUCCESS);
-    if (LOS_OK != uwRet)
+    if (OS_OK != uwRet)
     {
         dprintf("Set Inspect Status Err\n");
     }
@@ -84,10 +84,10 @@ uint32_t Example_swTimer(void)
 {
     uint16_t id1;
     uint16_t id2;// timer id
-    uint32_t uwRet = LOS_OK;
+    uint32_t uwRet = OS_OK;
   
     uwRet = LOS_SwtmrCreate(1000, LOS_SWTMR_MODE_ONCE,Timer1_Callback,&id1,1);
-    if(LOS_OK != uwRet)
+    if(OS_OK != uwRet)
     {
         dprintf("create Timer1 failed\n");
     }
@@ -97,7 +97,7 @@ uint32_t Example_swTimer(void)
     }
     
     uwRet = LOS_SwtmrCreate(100,LOS_SWTMR_MODE_PERIOD,Timer2_Callback,&id2,1);
-    if(LOS_OK != uwRet)
+    if(OS_OK != uwRet)
     {
         dprintf("create Timer2 failed\n");
     }
@@ -107,7 +107,7 @@ uint32_t Example_swTimer(void)
     }
     
     uwRet = LOS_SwtmrStart(id1);
-    if(LOS_OK != uwRet)
+    if(OS_OK != uwRet)
     {
         dprintf("start Timer1 failed\n");
     }
@@ -119,7 +119,7 @@ uint32_t Example_swTimer(void)
     (void)LOS_TaskDelay(200);
     
     uwRet = LOS_SwtmrStop(id1);
-    if(LOS_OK != uwRet)
+    if(OS_OK != uwRet)
     {
         dprintf("stop Timer1 failed\n");
     }
@@ -129,7 +129,7 @@ uint32_t Example_swTimer(void)
     }
     
     uwRet = LOS_SwtmrStart(id1);
-    if(LOS_OK != uwRet)
+    if(OS_OK != uwRet)
     {
         dprintf("start Timer1 failed\n");
     }
@@ -137,7 +137,7 @@ uint32_t Example_swTimer(void)
     (void)LOS_TaskDelay(1000);
     
     uwRet = LOS_SwtmrDelete(id1);
-    if(LOS_OK != uwRet)
+    if(OS_OK != uwRet)
     {
         dprintf("delete Timer1 failed\n");
     }
@@ -147,7 +147,7 @@ uint32_t Example_swTimer(void)
     }
     
     uwRet = LOS_SwtmrStart(id2);
-    if(LOS_OK != uwRet)
+    if(OS_OK != uwRet)
     {
         dprintf("start Timer2 failed\n");
     }
@@ -159,18 +159,18 @@ uint32_t Example_swTimer(void)
     (void)LOS_TaskDelay(1000);
     
     uwRet = LOS_SwtmrStop(id2);
-    if(LOS_OK != uwRet)
+    if(OS_OK != uwRet)
     {
         dprintf("stop Timer2 failed\n");
     }
     
     uwRet = LOS_SwtmrDelete(id2);
-    if(LOS_OK != uwRet)
+    if(OS_OK != uwRet)
     {
         dprintf("delete Timer2 failed\n");
     }
     
-    return LOS_OK;
+    return OS_OK;
 }
 
 
